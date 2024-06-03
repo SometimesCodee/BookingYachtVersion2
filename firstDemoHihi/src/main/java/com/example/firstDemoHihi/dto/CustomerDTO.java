@@ -16,6 +16,6 @@ public class CustomerDTO {
     String email;
     String  phone;
     String address;
-    AcountDTO accountDTO;
+    AccountDTO accountDTO;
 
 }

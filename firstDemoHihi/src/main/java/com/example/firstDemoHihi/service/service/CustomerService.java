@@ -1,7 +1,8 @@
 package com.example.firstDemoHihi.service.service;
 
 
-import com.example.firstDemoHihi.dto.AcountDTO;
+import com.example.firstDemoHihi.dto.AccountDTO;
+
 import com.example.firstDemoHihi.dto.CustomerDTO;
 import com.example.firstDemoHihi.entity.Account;
 import com.example.firstDemoHihi.entity.Customer;
@@ -63,7 +64,7 @@ public class CustomerService implements ICustomer {
             for (Customer customer : customerList
             ) {
                 CustomerDTO customerDTO = new CustomerDTO();
-                AcountDTO accountDTO = new AcountDTO();
+                AccountDTO accountDTO = new AccountDTO();
 
 
                 accountDTO.setIdAccount(customer.getAccount().getIdAccount());
@@ -92,7 +93,7 @@ public class CustomerService implements ICustomer {
     @Override
     public CustomerDTO getCustomer(String id) {
         Optional<Customer> customer = customerRepository.findById(id);
-        AcountDTO accountDTO = new AcountDTO();
+        AccountDTO accountDTO = new AccountDTO();
         CustomerDTO customerDTO = new CustomerDTO();
         if (customer.isPresent()) {
             customerDTO.setIdCustomer(id);

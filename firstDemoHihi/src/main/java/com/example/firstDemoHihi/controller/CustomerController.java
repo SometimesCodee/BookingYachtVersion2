@@ -1,13 +1,11 @@
 package com.example.firstDemoHihi.controller;
 
 
-import com.example.firstDemoHihi.payload.request.AccountCreationRequest;
-import com.example.firstDemoHihi.payload.request.AccountUpdate;
-import com.example.firstDemoHihi.payload.request.CustomerCreationRequest;
-import com.example.firstDemoHihi.payload.request.CustomerUpdateRequest;
+import com.example.firstDemoHihi.payload.request.*;
 import com.example.firstDemoHihi.payload.response.DataResponse;
 import com.example.firstDemoHihi.service.implement.IAccount;
 import com.example.firstDemoHihi.service.implement.ICustomer;
+import com.example.firstDemoHihi.service.implement.IWallet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +18,8 @@ public class CustomerController {
     private ICustomer iCustomer;
     @Autowired
     private IAccount iAccount;
-
+    @Autowired
+    private IWallet iWallet;
     @PostMapping("/account/createCustomerAccount")
     public ResponseEntity<?> createAccount(@RequestBody AccountCreationRequest request){
         DataResponse dataResponse= new DataResponse<>();
@@ -91,6 +90,14 @@ public class CustomerController {
     ResponseEntity<?> updateCustomer(@PathVariable String customerId,@RequestBody CustomerUpdateRequest customerUpdateRequest){
         DataResponse dataResponse = new DataResponse<>();
         dataResponse.setData(iCustomer.updateCustomer(customerId, customerUpdateRequest));
+        return new ResponseEntity<>(dataResponse, HttpStatus.OK);
+    }
+
+    @PostMapping("/wallet/create")
+    ResponseEntity<?> createWallet(@RequestBody WalletCreationRequest request){
+        DataResponse dataResponse = new DataResponse();
+        dataResponse.setData(iWallet.createWallet(request));
+
         return new ResponseEntity<>(dataResponse, HttpStatus.OK);
     }
 

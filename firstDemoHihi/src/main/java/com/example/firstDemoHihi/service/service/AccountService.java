@@ -1,7 +1,8 @@
 package com.example.firstDemoHihi.service.service;
 
 
-import com.example.firstDemoHihi.dto.AcountDTO;
+import com.example.firstDemoHihi.dto.AccountDTO;
+
 import com.example.firstDemoHihi.entity.Account;
 import com.example.firstDemoHihi.payload.request.AccountCreationRequest;
 import com.example.firstDemoHihi.payload.request.AccountUpdate;
@@ -46,8 +47,8 @@ public class AccountService implements IAccount {
         return true;
     }
     @Override
-    public List<AcountDTO> getAccountCustomer() {
-        List<AcountDTO> accountDTOList = new ArrayList<>();
+    public List<AccountDTO> getAccountCustomer() {
+        List<AccountDTO> accountDTOList = new ArrayList<>();
 
         try {
             List<Account> accountList = accountRepository.findAll();
@@ -55,7 +56,7 @@ public class AccountService implements IAccount {
             for (Account account : accountList
             ) {
 
-                AcountDTO accountDTO = new AcountDTO();
+                AccountDTO accountDTO = new AccountDTO();
 
                 accountDTO.setIdAccount(account.getIdAccount());
                 accountDTO.setUsername(account.getUsername());
@@ -75,10 +76,10 @@ public class AccountService implements IAccount {
         return accountDTOList;
     }
     @Override
-    public AcountDTO get1Account(String  id)  {
+    public AccountDTO get1Account(String  id)  {
         Optional<Account> account=  accountRepository.findById(id);
 
-        AcountDTO accountDTO = new AcountDTO();
+        AccountDTO accountDTO = new AccountDTO();
         if(account.isPresent()){
             accountDTO.setIdAccount(id);
             accountDTO.setUsername(account.get().getUsername());

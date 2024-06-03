@@ -23,5 +23,5 @@ public class BookingDTO {
     Yacht yacht;
     Customer customer;
     Schedule schedule;
-    Set<BookingDetail> bookingDetailSet;
+    Set<BookingDetailDTO> bookingDetailDTOSet;
 }

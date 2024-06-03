@@ -23,7 +23,7 @@ public class BookingController  {
 
     @PostMapping
     public ResponseEntity<?> newBooking(@RequestBody BookingCreateRequest request) {
-        DataResponse<BookingDTO> dataResponse = new DataResponse<>();
+        DataResponse dataResponse = new DataResponse<>();
         dataResponse.setData(iBooking.newBooking(request));
 
         return new ResponseEntity<>(dataResponse, HttpStatus.OK);

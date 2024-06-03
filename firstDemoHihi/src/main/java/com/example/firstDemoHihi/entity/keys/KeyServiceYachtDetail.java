@@ -12,8 +12,8 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Embeddable
 public class KeyServiceYachtDetail implements Serializable {
-    @Column(name = "id_yacht_details" , length = 255)
-    private String idYachtDetails;
+    @Column(name = "id_yacht_detail" , length = 255)
+    private String idYachtDetail;
 
     @Column(name = "id_service_yacht", length = 255)
     private String idServiceYacht;

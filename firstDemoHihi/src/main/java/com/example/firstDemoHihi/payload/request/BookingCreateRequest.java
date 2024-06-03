@@ -1,9 +1,6 @@
 package com.example.firstDemoHihi.payload.request;
 
-import com.example.firstDemoHihi.entity.BookingDetail;
-import com.example.firstDemoHihi.entity.Customer;
-import com.example.firstDemoHihi.entity.Schedule;
-import com.example.firstDemoHihi.entity.Yacht;
+import com.example.firstDemoHihi.dto.BookingDetailDTO;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -17,9 +14,8 @@ import java.util.Set;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class BookingCreateRequest {
     LocalDateTime bookingTime;
-    long totalPrice;
-    String status;
-    Yacht yacht;
+    String idYacht;
     String idCustomer;
     String idSchedule;
+    Set<BookingDetailRequest> bookingDetailRequestSet;
 }

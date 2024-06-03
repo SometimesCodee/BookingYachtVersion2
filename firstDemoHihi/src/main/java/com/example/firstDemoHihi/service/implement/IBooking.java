@@ -6,6 +6,6 @@ import com.example.firstDemoHihi.payload.request.BookingCreateRequest;
 import java.util.List;
 
 public interface IBooking {
-    BookingDTO newBooking(BookingCreateRequest request);
-    List<BookingDTO> GetBooking();
+    boolean newBooking(BookingCreateRequest request);
+    List<BookingDTO> GetAllBooking();
 }

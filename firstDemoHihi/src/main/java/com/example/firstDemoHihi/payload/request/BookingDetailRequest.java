@@ -11,6 +11,6 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class BookingDetailRequest {
     int roomQuantity;
-    long unitPrice;
     String requirement;
+    String idRoom;
 }

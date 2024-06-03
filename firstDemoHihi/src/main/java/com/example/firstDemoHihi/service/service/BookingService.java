@@ -13,6 +13,7 @@ import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -27,6 +28,7 @@ public class BookingService implements IBooking {
     CustomerRepository customerRepository;
     ScheduleRepository scheduleRepository;
     YachtRepository yachtRepository;
+    RoomRepository roomRepository;
 
     public static final String STATUS_DEFAULT = "waiting";
 
@@ -40,7 +42,7 @@ public class BookingService implements IBooking {
             if (request.getIdSchedule() == null || request.getIdSchedule().isEmpty()) {
                 throw new IllegalArgumentException("Schedule ID is empty");
             }
-            if (request.getIdYacht() == null || request.getIdSchedule().isEmpty()) {
+            if (request.getIdYacht() == null || request.getIdYacht().isEmpty()) {
                 throw new IllegalArgumentException("Yacht ID is empty");
             }
 
@@ -65,30 +67,32 @@ public class BookingService implements IBooking {
                     .schedule(schedule)
                     .build();
 
-            long totalPrice = request.getBookingDetailRequestSet().stream()
-                    .mapToLong(detail -> detail.getRoomQuantity() * detail.getUnitPrice())
-                    .sum();
-
-            booking.setTotalPrice(totalPrice);
-
             // Lưu đối tượng Booking vào cơ sở dữ liệu
             Booking savedBooking = bookingRepository.save(booking);
 
-            // Tạo BookingDetail từ Request
-            Set<BookingDetail> bookingDetails = request.getBookingDetailRequestSet().stream()
-                    .map(bookingDetailRequest -> {
-                        BookingDetail bookingDetail = new BookingDetail();
-                        bookingDetail.setRoomQuantity(bookingDetailRequest.getRoomQuantity());
-                        bookingDetail.setUnitPrice(bookingDetailRequest.getUnitPrice());
-                        bookingDetail.setRequirement(bookingDetailRequest.getRequirement());
-                        bookingDetail.setBooking(savedBooking);
-                        return bookingDetail;
-                    })
-                    .collect(Collectors.toSet());
+            long totalPrice = 0;
 
-            for (BookingDetail bookingDetail : bookingDetails) {
-                bookingDetailRepository.save(bookingDetail);
+            // Tạo BookingDetail từ Request
+            Set<BookingDetail> bookingDetailSet = new HashSet<>();
+            for (BookingDetailRequest detailRequest : request.getBookingDetailRequestSet()) {
+                BookingDetail bookingDetail = new BookingDetail();
+                bookingDetail.setRoomQuantity(detailRequest.getRoomQuantity());
+                bookingDetail.setRequirement(detailRequest.getRequirement());
+                bookingDetail.setBooking(savedBooking);
+
+                Room room = roomRepository.findById(detailRequest.getIdRoom())
+                        .orElseThrow(() -> new IllegalArgumentException("Room does not exist"));
+                bookingDetail.setUnitPrice(room.getPrice());
+
+                totalPrice += bookingDetail.getUnitPrice() * bookingDetail.getRoomQuantity();
+
+                bookingDetailSet.add(bookingDetail);
             }
+
+            savedBooking.setBookingDetailSet(bookingDetailSet);
+            savedBooking.setTotalPrice(totalPrice);
+
+            bookingRepository.save(savedBooking);
 
             return true;
         } catch (Exception e) {

@@ -13,9 +13,9 @@ import java.util.Set;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class BookingCreateRequest {
-    LocalDateTime bookingTime;
     String idYacht;
     String idCustomer;
     String idSchedule;
+    LocalDateTime bookingTime;
     Set<BookingDetailRequest> bookingDetailRequestSet;
 }

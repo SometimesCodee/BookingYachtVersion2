@@ -9,10 +9,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/booking")
@@ -25,6 +22,14 @@ public class BookingController  {
     public ResponseEntity<?> newBooking(@RequestBody BookingCreateRequest request) {
         DataResponse dataResponse = new DataResponse<>();
         dataResponse.setData(iBooking.newBooking(request));
+
+        return new ResponseEntity<>(dataResponse, HttpStatus.OK);
+    }
+
+    @GetMapping
+    public ResponseEntity<?> getAllBookings() {
+        DataResponse dataResponse = new DataResponse<>();
+        dataResponse.setData(iBooking.GetAllBooking());
 
         return new ResponseEntity<>(dataResponse, HttpStatus.OK);
     }

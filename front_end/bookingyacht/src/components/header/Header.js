@@ -1,10 +1,10 @@
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
-import { Link, NavLink } from 'react-router-dom'
-import logo from '../../assets/logo_swp.png'
 import NavDropdown from 'react-bootstrap/NavDropdown';
+import Navbar from 'react-bootstrap/Navbar';
 import { IoCall } from 'react-icons/io5';
+import { NavLink } from 'react-router-dom';
+import logo from '../../assets/logo_swp.png';
 const Header = () => {
     return (
         <Navbar expand="lg" className="bg-body-tertiary">
@@ -14,9 +14,9 @@ const Header = () => {
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
-                        <NavLink to="/duthuyen" className='nav-link'>Tim du thuyen</NavLink>
-                        <NavLink to="/maybay" className='nav-link'>Tim ve may bay</NavLink>
-                        <NavLink to="/doanhnhiep" className='nav-link'>Doanh Nghiep</NavLink>
+                        <NavLink to="/duthuyen" className='nav-link'>Tìm du thuyền</NavLink>
+                        <NavLink to="/maybay" className='nav-link'>Tìm vé máy bay</NavLink>
+                        <NavLink to="/doanhnhiep" className='nav-link'>Doanh Nghiệp</NavLink>
                         <NavLink to="/blog" className='nav-link'>Blog</NavLink>
 
                     </Nav>

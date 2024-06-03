@@ -24,7 +24,7 @@ const FormSearch = () => {
                     <div>
                         <select className='form-select'>
                             <option>1</option>
-                        </select>
+                        </select>z
                     </div>
                     <button size='lg'>Search</button>
                 </div>

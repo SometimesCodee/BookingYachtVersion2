@@ -58,6 +58,7 @@ public class WalletService implements IWallet {
         if(money>= decreaseBalance){
             wallet.setBalance(money-decreaseBalance);
             walletRepository.save(wallet);
+            System.out.println("sdfdsf");
         }
         return money-decreaseBalance;
 

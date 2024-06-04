@@ -1,0 +1,170 @@
+.find-yacht-body {
+    background-image: url('../../assets/section-background.png');
+
+    .find-yacht-content {
+        padding: 80px 32px;
+
+        .select {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            .form-select {
+                border-radius: 25px;
+                width: fit-content;
+            }
+        }
+
+        .search-yacht {
+            background: white;
+            border-radius: 25px;
+            box-shadow: 1px 0px 7px 2px;
+
+            .form-search {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                padding: 20px;
+
+
+                input {
+                    border-radius: 35px;
+                    padding: 10px;
+                }
+
+                select {
+                    border-radius: 35px;
+                }
+
+
+                button {
+                    border-radius: 20px;
+                    border: none;
+                    background-color: rgb(104, 204, 199);
+                    padding: 10px;
+
+                    &:hover {
+                        background: #0aebdccf;
+                    }
+                }
+            }
+        }
+
+        .result-search {
+            .filter-body {
+                border: 1px solid grey;
+                border-radius: 25px;
+                height: fit-content;
+
+                .filter-body-header {
+                    justify-content: space-around;
+                    margin-top: 20px;
+
+                    .filter-body-content {
+                        font-weight: 750;
+                    }
+
+                    button {
+                        border: none;
+                        background-color: unset;
+
+                        &:hover {
+                            color: rgb(104, 204, 199);
+                        }
+                    }
+                }
+
+                .filter-star {
+                    flex-direction: column;
+                    gap: 20px;
+
+                    .star-body-content {
+                        font-weight: 750;
+                    }
+                }
+
+                .filter-extention {
+                    flex-direction: column;
+                    gap: 20px;
+                    margin-bottom: 10px;
+
+                    .extention-body-content {
+                        font-weight: 750;
+                        margin-top: 20px;
+                    }
+                }
+            }
+
+            .infor {
+
+                .infor-body {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 20px;
+
+                    .card {
+                        flex-direction: row;
+                        border: 1px solid red;
+                        border-radius: 25px;
+
+                        img {
+                            border-radius: 25px;
+                            margin: 20px 0;
+                        }
+                    }
+
+                    .card-body {
+                        .card-content {
+                            display: flex;
+                            flex-direction: column;
+                            gap: 20px;
+
+                            .location {
+                                border: none;
+                                width: fit-content;
+                                background-color: rgb(210, 207, 207);
+                                border-radius: 25px;
+                                display: flex;
+                                align-items: center;
+                                padding: 5px;
+                                font-size: 10px;
+                                gap: 3px;
+                            }
+
+                            .name {
+                                font-weight: 700;
+                                font-size: 20px;
+                            }
+
+                            .price {
+                                display: flex;
+                                justify-content: space-between;
+
+                                p {
+                                    font-weight: 700;
+                                    font-size: 20px;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.form-check-input {
+    &:hover {
+        background-color: #0dfdf7;
+    }
+}
+
+.form-check-input:checked {
+    background-color: #0dfdf7;
+    border-color: #3bdee1;
+}
+
+.form-check-input:focus {
+    border-color: #44ad9b;
+    box-shadow: 0px 0px 6px 1px #0dfdf7;
+}

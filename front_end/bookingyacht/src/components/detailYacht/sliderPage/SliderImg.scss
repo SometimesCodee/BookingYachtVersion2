@@ -1,0 +1,44 @@
+//  .slider-page {
+//      border: none;
+//      border-radius: 20px;
+
+//      .slider-image-wrapper {
+//          //  border: 1px solid white;
+//          //  border-radius: 20px;
+//          border: none;
+//          display: flex;
+//          justify-content: center;
+//          align-items: center;
+
+//          img {
+//              border: none;
+//              width: 100%;
+//              height: 500px;
+//              border-radius: 20px;
+//              //    object-fit: contain;
+//          }
+
+//      }
+//      .thumbnail-dots {
+//         display: flex;
+//         overflow-x: auto; /* Thanh cuộn ngang */
+//         padding: 10px 0; /* Khoảng cách trên và dưới các thumbnails */
+//         gap: 10px; /* Khoảng cách giữa các thumbnails */
+//         list-style: none; /* Xóa bỏ dấu chấm của list */
+//         justify-content: center; /* Căn giữa các thumbnails */
+//       }
+//       .thumbnail-image {
+//         width: 50px; /* Điều chỉnh kích thước của thumbnails */
+//         height: 50px;
+//         object-fit: cover; /* Đảm bảo ảnh được căn giữa và giữ nguyên tỉ lệ */
+//         border-radius: 50%; /* Làm cho các thumbnails tròn */
+//         border: 2px solid gray; /* Thêm viền để làm nổi bật các thumbnails */
+//         flex-shrink: 0; /* Đảm bảo kích thước không bị co lại */
+//       }
+//  }
+
+
+.title_page{
+  display: flex;
+  justify-content: space-evenly;
+}

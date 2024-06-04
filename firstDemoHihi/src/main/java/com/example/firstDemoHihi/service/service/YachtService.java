@@ -1,42 +1,42 @@
 package com.example.firstDemoHihi.service.service;
 
-import com.example.firstDemoHihi.dto.LocationDTO;
-import com.example.firstDemoHihi.dto.OwnerDTO;
-import com.example.firstDemoHihi.dto.YachtDTO;
-import com.example.firstDemoHihi.dto.YachtTypeDTO;
+import com.example.firstDemoHihi.dto.*;
+import com.example.firstDemoHihi.entity.Company;
 import com.example.firstDemoHihi.entity.Location;
-import com.example.firstDemoHihi.entity.Owner;
 import com.example.firstDemoHihi.entity.Yacht;
 import com.example.firstDemoHihi.entity.YachtType;
 import com.example.firstDemoHihi.payload.request.YachtRequest;
+import com.example.firstDemoHihi.repository.CompanyRepository;
 import com.example.firstDemoHihi.repository.LocationRepository;
-import com.example.firstDemoHihi.repository.OwnerRepository;
 import com.example.firstDemoHihi.repository.YachtRepository;
 import com.example.firstDemoHihi.repository.YachtTypeRepository;
+import com.example.firstDemoHihi.service.implement.IFile;
 import com.example.firstDemoHihi.service.implement.IYacht;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.web.OffsetScrollPositionHandlerMethodArgumentResolver;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Service
 public class YachtService implements IYacht {
     @Autowired
     YachtRepository yachtRepository;
-
     @Autowired
-    OwnerRepository ownerRepository;
-
+    CompanyRepository companyRepository;
     @Autowired
     LocationRepository locationRepository;
-
     @Autowired
     YachtTypeRepository yachtTypeRepository;
     @Autowired
     private OffsetScrollPositionHandlerMethodArgumentResolver offsetResolver;
+    @Autowired
+    IFile fileService;
 
     @Override
     public List<YachtDTO> getAllYacht() {
@@ -51,6 +51,7 @@ public class YachtService implements IYacht {
                     yachtDTO.setName(yacht.getName());
                     yachtDTO.setImage(yacht.getImage());
                     yachtDTO.setPrice(yacht.getPrice());
+                    yachtDTO.setExist(yacht.getExist());
 
                     YachtTypeDTO yachtTypeDTO = new YachtTypeDTO();
                     yachtTypeDTO.setIdYachtType(yacht.getYachtType().getIdYachtType());
@@ -58,12 +59,15 @@ public class YachtService implements IYacht {
 
                     yachtDTO.setYachtTypeDTO(yachtTypeDTO);
 
-                    OwnerDTO ownerDTO = new OwnerDTO();
-                    ownerDTO.setIdOwner(yacht.getOwner().getIdOwner());
-                    ownerDTO.setName(yacht.getOwner().getName());
-                    ownerDTO.setEmail(yacht.getOwner().getEmail());
+                    CompanyDTO companyDTO = new CompanyDTO();
+                    companyDTO.setIdCompany(yacht.getCompany().getIdCompany());
+                    companyDTO.setName(yacht.getCompany().getName());
+                    companyDTO.setAddress(yacht.getCompany().getAddress());
+                    companyDTO.setLogo(yacht.getCompany().getLogo());
+                    companyDTO.setEmail(yacht.getCompany().getEmail());
+                    companyDTO.setExist(yacht.getCompany().getExist());
 
-                    yachtDTO.setOwnerDTO(ownerDTO);
+                    yachtDTO.setCompanyDTO(companyDTO);
 
                     LocationDTO locationDTO = new LocationDTO();
                     locationDTO.setName(yacht.getLocation().getName());
@@ -83,42 +87,46 @@ public class YachtService implements IYacht {
     }
 
     @Override
-    public boolean insertYacht(YachtRequest yachtRequest) {
+    public boolean insertYacht(String name, MultipartFile image, long price, String idCompany, String idYachtType, String idLocation) {
         try{
-            Yacht yacht = new Yacht();
+            boolean successUpFile =  fileService.save(image);
+            if(successUpFile) {
+                Yacht yacht = new Yacht();
+                yacht.setName(name);
+                yacht.setImage(image.getOriginalFilename());
+                yacht.setPrice(price);
+                yacht.setExist(1);
 
-            yacht.setName(yachtRequest.getName());
-            yacht.setImage(yachtRequest.getImage());
-            yacht.setPrice(yachtRequest.getPrice());
-            yacht.setExist(1);
+                Optional<Company> company = companyRepository.findById(idCompany);
+                if (company.isPresent()) {
+                    yacht.setCompany(company.get());
+                } else {
+                    log.error("loi company");
+                    return false;
+                }
+                Optional<YachtType> yachtType = yachtTypeRepository.findById(idYachtType);
+                if (yachtType.isPresent()) {
+                    yacht.setYachtType(yachtType.get());
+                } else {
+                    log.error("loi yacht type");
+                    return false;
+                }
+                Optional<Location> location = locationRepository.findById(idLocation);
+                if (location.isPresent()) {
+                    yacht.setLocation(location.get());
+                } else {
+                    log.error("loi location");
+                    return false;
+                }
 
-            Optional<Owner> owner = ownerRepository.findById(yachtRequest.getIdOwner());
-            if (owner.isPresent()) {
-                yacht.setOwner(owner.get());
-            } else {
-                return false;
+                yachtRepository.save(yacht);
+
+                return true;
             }
-
-            Optional<YachtType> yachtType = yachtTypeRepository.findById(yachtRequest.getIdYachtType());
-            if (yachtType.isPresent()) {
-                yacht.setYachtType(yachtType.get());
-            } else {
-                return false;
-            }
-
-            Optional<Location> location = locationRepository.findById(yachtRequest.getIdLocation());
-            if (location.isPresent()) {
-                yacht.setLocation(location.get());
-            } else {
-                return false;
-            }
-
-            yachtRepository.save(yacht);
-
-            return true;
         }catch (Exception e){
             System.out.println("insertYacht " + e.getMessage());
         }
+        log.error("loi default");
         return false;
     }
 
@@ -139,15 +147,37 @@ public class YachtService implements IYacht {
     }
 
     @Override
-    public boolean updateYacht(YachtRequest yachtRequest) {
+    public boolean updateYacht(String id, String name,MultipartFile image, long price, String idYachtType, String idLocation) {
+        try{
+            Optional<Yacht> yacht = yachtRepository.findById(id);
+            if (yacht.isPresent()) {
+                Yacht existingYacht = yacht.get();
+                existingYacht.setName(name);
+                existingYacht.setImage(image.getOriginalFilename());
+                existingYacht.setPrice(price);
+
+                YachtType yachtType = new YachtType();
+                yachtType.setIdYachtType(idYachtType);
+                existingYacht.setYachtType(yachtType);
+
+                Location location = new Location();
+                location.setIdLocation(idLocation);
+                existingYacht.setLocation(location);
+
+                yachtRepository.save(existingYacht);
+                return true;
+            }
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
         return false;
     }
 
     @Override
-    public List<YachtDTO> findYachtByOwnerId(String ownerId) {
+    public List<YachtDTO> findYachtByCompanyId(String companyId) {
         List<YachtDTO> yachtDTOList = new ArrayList<>();
         try{
-            List<Yacht> yachtList = yachtRepository.findAllByOwnerId(ownerId);
+            List<Yacht> yachtList = yachtRepository.findAllByCompanyId(companyId);
             if(yachtList != null) {
                 for(Yacht yacht : yachtList){
                     YachtDTO yachtDTO = new YachtDTO();

@@ -14,23 +14,23 @@ const Footer = () => {
             <div className='col-md'>
                 <div className='content-2 row'>
                     <div className='body col-md'>
-                        <span>Gioi Thieu</span>
-                        <NavLink className='nav-link'>Lien He</NavLink>
-                        <NavLink className='nav-link'>Ve Chung Toi</NavLink>
+                        <span>Giới Thiệu</span>
+                        <NavLink className='nav-link'>Liên Hệ</NavLink>
+                        <NavLink className='nav-link'>Về Chúng Tôi</NavLink>
                         <NavLink className='nav-link'>Hotline</NavLink>
                         <NavLink className='nav-link'>Email:PhamIchBo13082003@gmail.com</NavLink>
                     </div>
                     <div className='body col-md'>
-                        <span>Diem Den</span>
-                        <NavLink className='nav-link'>Vinh Ha Long</NavLink>
-                        <NavLink className='nav-link'>Dao Cat Ba</NavLink>
-                        <NavLink className='nav-link'>Vinh Lan Ha</NavLink>
+                        <span>Điểm Đến</span>
+                        <NavLink className='nav-link'>Vịnh Hạ Long</NavLink>
+                        <NavLink className='nav-link'>Đảo Cát Bà</NavLink>
+                        <NavLink className='nav-link'>Vịnh Lan Hạ</NavLink>
                     </div>
                     <div className='body col-md'>
-                        <span>Du Thuyen</span>
+                        <span>Du Thuyền</span>
                         <NavLink className='nav-link'>Blog</NavLink>
-                        <NavLink to='/quy-dinh-chung' className='nav-link'>Quy Dinh Chung</NavLink>
-                        <NavLink to='/cau-hoi-thuong-gap' className='nav-link'>Cau Hoi Thuong Gap</NavLink>
+                        <NavLink to='/quy-dinh-chung' className='nav-link'>Quy Định Chung</NavLink>
+                        <NavLink to='/cau-hoi-thuong-gap' className='nav-link'>Câu Hỏi Thường Gặp</NavLink>
                     </div>
                 </div>
 

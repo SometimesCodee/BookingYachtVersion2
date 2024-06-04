@@ -1,0 +1,58 @@
+.custom-slider {
+  position: relative;
+}
+
+.thumbnail-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 5px 0;
+  z-index: 10;
+}
+
+.thumbnail {
+  margin: 0 5px;
+  cursor: pointer;
+}
+
+.carousel .carousel-control-prev,
+.carousel .carousel-control-next {
+  width: 5%;
+}
+
+.carousel-item {
+  position: relative;
+  transition: transform 0.5s ease; // Adjust transition speed
+}
+
+.carousel-item .img1 {
+  width: 100%;
+  height: 500px;
+  border-radius: 15px;
+}
+
+.thumbnail .img2 {
+  width: 100%;
+  height: 50px;
+  border-radius: 10px;
+}
+
+@media (max-width: 768px) {
+  .thumbnail-container {
+    display: none;
+  }
+
+  .carousel-item .img1 {
+    width: 100%;
+    height: auto;
+  }
+}
+
+.title_page{
+  display: flex;
+  justify-content: space-evenly;
+}

@@ -1,0 +1,52 @@
+.StickyNav {
+    font-family: Arial, sans-serif;
+    border-radius: 5px;
+    width: 70%;
+    margin-left: 100px;
+    margin-top: 0px;
+    padding-top: 0px;
+  }
+  
+  .navbar-sticky {
+    display: flex;
+    // justify-content: space-around;
+    background-color: #F9FAFB;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 100px;
+    z-index: 20;
+    margin-top: 0px;
+    padding-top: 0px;
+    
+  }
+  
+  .navbar-sticky a {
+    padding: 14px 20px;
+    text-decoration: none;
+    color: rgb(29, 28, 28);
+    text-align: center;
+    font-size: 13px;
+  }
+  
+  .navbar-sticky a:hover {
+    background-color: white;
+    color: black;
+  }
+  
+  .navbar-sticky a.active {
+    background-color: #666;
+    color: white;
+  }
+  
+  .content-section-sticky1{
+    padding: 60px 20px;
+    height: 700px;
+  }
+  .content-section-sticky2{
+    padding: 60px 20px;
+    height: 500px;
+  }
+  h2 {
+    margin-top: 0;
+  }
+  

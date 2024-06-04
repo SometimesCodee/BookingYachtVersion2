@@ -2,6 +2,7 @@ package com.example.firstDemoHihi.payload.request;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.springframework.web.multipart.MultipartFile;
 
 @Data
 @Builder
@@ -12,7 +13,6 @@ public class CompanyCreateRequest {
     String idAccount;
     String name;
     String address;
-    String logo;
+    MultipartFile logo;
     String email;
-    int exist;
 }

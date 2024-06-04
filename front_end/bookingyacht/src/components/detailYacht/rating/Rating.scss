@@ -1,0 +1,54 @@
+/* src/App.css */
+// .rating {
+//     display: flex;
+// }
+
+// .star {
+//     cursor: pointer;
+//     font-size: 1.5em;
+//     color: orange;
+// }
+
+// .star.empty {
+//     color: lightgray;
+// }
+
+// .average-rating {
+//     font-size: 2em;
+//     color: orange;
+// }
+
+/* src/App.css */
+.rating {
+    display: flex;
+    gap: 5px;
+    cursor: pointer;
+}
+
+.star {
+    font-size: 1.5em;
+    color: lightgray;
+}
+
+.star.selected {
+    color: orange;
+}
+
+.star.user-rated {
+    color: orange;
+}
+
+.average-rating {
+    font-size: 2em;
+    color: orange;
+}
+.comment{
+    border-radius: 20px;
+}
+.feachback{
+    border: 1px solid rgb(132, 127, 127);
+    border-radius: 20px;
+}
+
+
+

@@ -26,7 +26,7 @@ const ShowYacht = (props) => {
 
             <div className='yacht-header row'>
                 <div className='yacht-title col-md'>
-                    <h4>Du Thuyen Moi <br /> Va Pho Bien Nhat</h4>
+                    <h4>du Thuyền Mới<br /> Và Phổ Biến Nhất</h4>
                     <div>
                         <img src={i_content} />
                     </div>
@@ -57,7 +57,7 @@ const ShowYacht = (props) => {
             <div className='view-all-yacht d-flex'>
                 <NavLink to='/duthuyen' className='nav-link'>
                     <button>
-                        Xem Tat Ca
+                        Xem Tất Cả
                         <GrFormNextLink className='icon-next ml-2' />
                     </button>
                 </NavLink>

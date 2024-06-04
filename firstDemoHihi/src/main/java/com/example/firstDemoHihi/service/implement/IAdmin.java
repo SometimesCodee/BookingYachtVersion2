@@ -7,7 +7,6 @@ import java.util.List;
 
 public interface IAdmin {
     AccountDTO createAccountCompany(AccountCompanyCreationRequest request) throws Exception;
-
     List<AccountDTO> getAllAccountCompanies();
 
 }

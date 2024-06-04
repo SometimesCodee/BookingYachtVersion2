@@ -39,9 +39,9 @@ CREATE TABLE `room_type` (
 
 -- 5 done
 CREATE TABLE `yacht_service` (
-  `id_service_yacht` varchar(255) NOT NULL,
-  `service_name` nvarchar(255) NOT NULL,
-  PRIMARY KEY (`id_service_yacht`)
+  `id_yacht_service` varchar(255) NOT NULL,
+  `service` nvarchar(255) NOT NULL,
+  PRIMARY KEY (`id_yacht_service`)
 ) ;
 
 -- test.wallet definition
@@ -109,20 +109,6 @@ CREATE TABLE `images_room` (
   CONSTRAINT `fk_room_image_id` FOREIGN KEY (`id_room`) REFERENCES `room` (`id_room`)
 ) ;
 
--- test.owner definition
--- xong 11
-CREATE TABLE `owner` (
-  `id_owner` varchar(255) NOT NULL,
-  `name` nvarchar(255) NOT NULL,
-  `email` varchar(255) NOT NULL,
-  `exist` int not null,
-  `id_company` varchar(255) NOT NULL,
-  PRIMARY KEY (`id_owner`),
-  UNIQUE KEY `email` (`email`),
-  KEY `fk_company_id` (`id_company`),
-  CONSTRAINT `fk_id_company` FOREIGN KEY (`id_company`) REFERENCES `company` (`id_company`)
-);
-
 
 -- test.yacht definition
 -- xong 12
@@ -132,15 +118,14 @@ CREATE TABLE `yacht` (
   `image` varchar(255) NOT NULL,
   `price` decimal(10,0) NOT NULL,
   `exist` int not null,
-  `id_owner` varchar(255) NOT NULL,
+  `id_company` varchar(255) NOT NULL,
   `id_yacht_type` varchar(255) NOT NULL,
   `id_location` varchar(255) NOT NULL,
   PRIMARY KEY (`id_yacht`),
-  KEY `fk_owner_yacht_id` (`id_owner`),
   KEY `fk_yacht_type_id` (`id_yacht_type`),
   KEY `fk_location_id` (`id_location`),
+  CONSTRAINT `fk_company_id` FOREIGN KEY (`id_company`) REFERENCES `company` (`id_company`),
   CONSTRAINT `fk_location_id` FOREIGN KEY (`id_location`) REFERENCES `location` (`id_location`),
-  CONSTRAINT `fk_owner_yacht_id` FOREIGN KEY (`id_owner`) REFERENCES `owner` (`id_owner`),
   CONSTRAINT `fk_yacht_type_id` FOREIGN KEY (`id_yacht_type`) REFERENCES `yacht_type` (`id_yacht_type`)
 );
 
@@ -216,11 +201,10 @@ CREATE TABLE `room_room_service` (
 -- 18 done
 CREATE TABLE `yacht_detail_service` (
   `id_yacht_detail` varchar(255) NOT NULL,
-  `id_service_yacht` varchar(255) NOT NULL,
-  PRIMARY KEY (`id_yacht_detail`,`id_service_yacht`),
-  KEY `id_service_yacht` (`id_service_yacht`),
+  `id_yacht_service` varchar(255) NOT NULL,
+  PRIMARY KEY (`id_yacht_detail`,`id_yacht_service`),
   CONSTRAINT `service_yacht_detail_ibfk_1` FOREIGN KEY (`id_yacht_detail`) REFERENCES `yacht_detail` (`id_yacht_detail`),
-  CONSTRAINT `service_yacht_detail_ibfk_2` FOREIGN KEY (`id_service_yacht`) REFERENCES `service_yacht` (`id_service_yacht`)
+  CONSTRAINT `service_yacht_detail_ibfk_2` FOREIGN KEY (`id_yacht_service`) REFERENCES `yacht_service` (`id_yacht_service`)
 );
 
 

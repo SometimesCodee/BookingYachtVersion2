@@ -13,6 +13,8 @@ import java.util.Optional;
 
 @Repository
 public interface YachtRepository extends JpaRepository<Yacht, String> {
-    @Query("SELECT y FROM Yacht y WHERE y.owner.idOwner = :ownerId")
-    List<Yacht> findAllByOwnerId(@Param("ownerId") String ownerId);
+//    @Query("SELECT y FROM Yacht y WHERE y.owner.idOwner = :ownerId")
+//    List<Yacht> findAllByOwnerId(@Param("ownerId") String ownerId);
+    @Query("SELECT y FROM Yacht y WHERE y.company.idCompany = :companyId")
+    List<Yacht> findAllByCompanyId(@Param("companyId") String companyId);
 }

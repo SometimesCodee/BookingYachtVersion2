@@ -11,9 +11,8 @@ public class YachtDTO {
     private String name;
     private String image;
     private long price;
-    private OwnerDTO ownerDTO;
+    private CompanyDTO companyDTO;
     private YachtTypeDTO yachtTypeDTO;
     private LocationDTO locationDTO;
     private int exist;
-
 }

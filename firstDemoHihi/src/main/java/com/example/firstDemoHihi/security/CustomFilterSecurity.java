@@ -50,14 +50,17 @@ public class CustomFilterSecurity {
         http.csrf().disable()
                 .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests
-//                                .requestMatchers("").permitAll()
-//                                .anyRequest().authenticated()
-                                .anyRequest().permitAll()
-                )
+                                .requestMatchers("/api/customer/**", "/api/customer/account/createCustomerAccount").permitAll()
+                                .requestMatchers("/login/**").permitAll() // Cho phép tất cả các yêu cầu đến /login/**
+                                .requestMatchers("/api/admins/**").hasRole("ADMIN") // Chỉ cho phép vai trò ADMIN truy cập /admin/**
+                                .requestMatchers("/api/companies/**").hasRole("COMPANY") // Chỉ cho phép vai trò COMPANY truy cập /company/**
+                                .requestMatchers("/api/customer/booking/**").hasRole("CUSTOMER")  // Chỉ cho phép vai trò CUSTOMER truy cập /customer/**
+                                .requestMatchers("/api/customer/profile/**").hasRole("CUSTOMER")
+                                .anyRequest().authenticated())
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
-                .addFilterBefore(customJwtFilter, UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(customJwtFilter, UsernamePasswordAuthenticationFilter.class); // Thêm filter JWT trước UsernamePasswordAuthenticationFilter
 
         return http.build();
     }

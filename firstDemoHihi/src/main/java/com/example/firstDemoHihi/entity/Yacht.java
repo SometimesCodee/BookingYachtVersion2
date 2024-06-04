@@ -31,8 +31,8 @@ public class Yacht {
     private int exist;
 
     @ManyToOne()
-    @JoinColumn(name = "id_owner", nullable = false)
-    private Owner owner;
+    @JoinColumn(name = "id_company", nullable = false)
+    private Company company;
 
     @ManyToOne()
     @JoinColumn(name = "id_yacht_type", nullable = false)

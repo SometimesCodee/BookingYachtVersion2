@@ -38,5 +38,5 @@ public class Company {
     private Account account;
 
     @OneToMany(mappedBy = "company")
-    private Set<Owner> ownerSet;
+    private Set<Yacht> yachtSet;
 }

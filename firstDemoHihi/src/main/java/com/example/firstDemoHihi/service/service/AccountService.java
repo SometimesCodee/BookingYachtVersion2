@@ -7,7 +7,6 @@ import com.example.firstDemoHihi.entity.Account;
 import com.example.firstDemoHihi.payload.request.AccountCreationRequest;
 import com.example.firstDemoHihi.payload.request.AccountUpdate;
 import com.example.firstDemoHihi.repository.AccountRepository;
-import com.example.firstDemoHihi.repository.OwnerRepository;
 import com.example.firstDemoHihi.service.implement.IAccount;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -23,8 +22,6 @@ public class AccountService implements IAccount {
     private AccountRepository accountRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
-    @Autowired
-    private OwnerRepository ownerRepository;
 
 
     @Override

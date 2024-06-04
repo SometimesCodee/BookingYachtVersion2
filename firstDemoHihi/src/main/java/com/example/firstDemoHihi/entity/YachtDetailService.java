@@ -20,7 +20,7 @@ public class YachtDetailService {
     private YachtDetail yachtDetail;
 
     @ManyToOne()
-    @JoinColumn(name = "id_service_yacht", updatable = false, insertable = false)
+    @JoinColumn(name = "id_yacht_service", updatable = false, insertable = false)
     private YachtService yachtService;
 
 }

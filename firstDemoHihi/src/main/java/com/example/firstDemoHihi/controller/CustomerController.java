@@ -1,7 +1,12 @@
 package com.example.firstDemoHihi.controller;
 
 
+
 import com.example.firstDemoHihi.payload.request.*;
+
+import com.example.firstDemoHihi.payload.request.CustomerCreationRequest;
+import com.example.firstDemoHihi.payload.request.CustomerUpdateRequest;
+
 import com.example.firstDemoHihi.payload.response.DataResponse;
 import com.example.firstDemoHihi.service.implement.IAccount;
 import com.example.firstDemoHihi.service.implement.ICustomer;
@@ -12,10 +17,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/customer")
+@RequestMapping("/api/customer")
 public class CustomerController {
     @Autowired
     private ICustomer iCustomer;
+
     @Autowired
     private IAccount iAccount;
     @Autowired
@@ -57,32 +63,11 @@ public class CustomerController {
         return new ResponseEntity<>(dataResponse, HttpStatus.OK);
     }
 
+
     @PostMapping("/createCustomer")
     ResponseEntity<?> createCustomer(@RequestBody CustomerCreationRequest request){
         DataResponse dataResponse = new DataResponse();
-
         dataResponse.setData(iCustomer.createCustomer(request));
-        return new ResponseEntity<>(dataResponse, HttpStatus.OK);
-    }
-
-    @GetMapping("/getAllCustomer")
-    ResponseEntity<?> customerList(){
-        DataResponse dataResponse = new DataResponse();
-        dataResponse.setData(iCustomer.getAllCustomer());
-        return new ResponseEntity<>(dataResponse, HttpStatus.OK);
-    }
-
-    @GetMapping("/getCustomerById/{customerId}")
-    ResponseEntity<?> getCustomerById(@PathVariable("customerId") String customerId){
-        DataResponse dataResponse = new DataResponse<>();
-        dataResponse.setData(iCustomer.getCustomer(customerId));
-        return new ResponseEntity<>(dataResponse, HttpStatus.OK);
-    }
-
-    @PutMapping("/account/{customerAccountId}")
-    public ResponseEntity<?> updateAccount(@PathVariable String customerAccountId,@RequestBody AccountUpdate request)  {
-        DataResponse dataResponse = new DataResponse();
-        dataResponse.setData(iAccount.updateAccount(customerAccountId, request));
         return new ResponseEntity<>(dataResponse, HttpStatus.OK);
     }
 
@@ -93,6 +78,7 @@ public class CustomerController {
         return new ResponseEntity<>(dataResponse, HttpStatus.OK);
     }
 
+
     @PostMapping("/wallet/create")
     ResponseEntity<?> createWallet(@RequestBody WalletCreationRequest request){
         DataResponse dataResponse = new DataResponse();
@@ -100,6 +86,23 @@ public class CustomerController {
 
         return new ResponseEntity<>(dataResponse, HttpStatus.OK);
     }
+
+    @PutMapping("/wallet/increaseBalance/{customerId}")
+    ResponseEntity<?> increaseBalance(@RequestBody UpdateWalletRequest request, @PathVariable String customerId){
+        DataResponse dataResponse = new DataResponse();
+
+        dataResponse.setData(iWallet.increaseBalance(request, customerId));
+        return new ResponseEntity<>(dataResponse, HttpStatus.OK);
+    }
+
+    @PutMapping("/wallet/decreaseBalance/{customerId}")
+    ResponseEntity<?> decreaseBalance(@RequestBody UpdateWalletRequest request,@PathVariable String customerId ){
+        DataResponse dataResponse = new DataResponse();
+        dataResponse.setData(iWallet.decreaseBalance(request, customerId));
+
+        return new ResponseEntity<>(dataResponse, HttpStatus.OK);
+    }
+
 
 
 }

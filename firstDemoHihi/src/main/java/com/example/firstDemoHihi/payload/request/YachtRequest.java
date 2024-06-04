@@ -1,12 +1,10 @@
 package com.example.firstDemoHihi.payload.request;
 
-import com.example.firstDemoHihi.entity.Location;
-import com.example.firstDemoHihi.entity.Owner;
-import com.example.firstDemoHihi.entity.YachtType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 @Setter
 @Getter
@@ -15,9 +13,10 @@ import lombok.Setter;
 public class YachtRequest {
     private String id;
     private String name;
-    private String image;
+    private MultipartFile image;
     private long price;
-    private String idOwner;
+    private String idCompany;
     private String idYachtType;
     private String idLocation;
+    private int exist;
 }

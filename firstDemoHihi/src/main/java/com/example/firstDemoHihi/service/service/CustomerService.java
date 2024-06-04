@@ -2,7 +2,6 @@ package com.example.firstDemoHihi.service.service;
 
 
 import com.example.firstDemoHihi.dto.AccountDTO;
-
 import com.example.firstDemoHihi.dto.CustomerDTO;
 import com.example.firstDemoHihi.entity.Account;
 import com.example.firstDemoHihi.entity.Customer;
@@ -33,23 +32,17 @@ public class CustomerService implements ICustomer {
             Optional<Account> account = accountRepository.findById(request.getIdAccount());
 
             if (account.isPresent()) {
-                System.out.println("dksfdskfdsjkfjkdskjfdsjfdsfkjdslkjflkjsd");
                 customer.setAccount(account.get());
                 customer.setFullName(request.getFullName());
                 customer.setEmail(request.getEmail());
                 customer.setPhone(request.getPhone());
                 customer.setAddress(request.getAddress());
-                System.out.println("aaaaaaaaaaaaaaaaaaaaaa");
                 customerRepository.save(customer);
-                System.out.println("0000000000000");
                 return true;
             } else {
-                System.out.println("1111111111");
                 return false;
             }
         } catch (Exception e) {
-            System.out.println("Loi: " + e);
-            System.out.println("2222222222222222222222222");
             return false;
         }
     }
@@ -120,7 +113,6 @@ public class CustomerService implements ICustomer {
             Customer customerEntity = customer.get();
             System.out.println(customerEntity);
             try {
-
 
                 customerEntity.setFullName(customerUpdateRequest.getFullName());
                 System.out.println(customerUpdateRequest.getFullName());

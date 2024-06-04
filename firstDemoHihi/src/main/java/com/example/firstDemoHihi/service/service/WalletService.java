@@ -2,6 +2,7 @@ package com.example.firstDemoHihi.service.service;
 
 import com.example.firstDemoHihi.entity.Customer;
 import com.example.firstDemoHihi.entity.Wallet;
+import com.example.firstDemoHihi.payload.request.UpdateWalletRequest;
 import com.example.firstDemoHihi.payload.request.WalletCreationRequest;
 import com.example.firstDemoHihi.repository.CustomerRepository;
 import com.example.firstDemoHihi.repository.WalletRepository;
@@ -34,6 +35,32 @@ public class WalletService implements IWallet {
             return false;
         }
         return false;
+    }
+
+    @Override
+    public long increaseBalance(UpdateWalletRequest request, String id) {
+
+        Wallet wallet = walletRepository.findWalletByCustomerIdCustomer(id);
+
+        long money = wallet.getBalance();
+        long increaseBalance = request.getBalance();
+        wallet.setBalance(money+increaseBalance);
+        walletRepository.save(wallet);
+        return money+increaseBalance;
+    }
+
+    @Override
+    public long decreaseBalance(UpdateWalletRequest request, String id) {
+        Wallet wallet = walletRepository.findWalletByCustomerIdCustomer(id);
+
+        long money = wallet.getBalance();
+        long decreaseBalance = request.getBalance();
+        if(money>= decreaseBalance){
+            wallet.setBalance(money-decreaseBalance);
+            walletRepository.save(wallet);
+        }
+        return money-decreaseBalance;
+
     }
 
 

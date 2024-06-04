@@ -9,6 +9,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -22,13 +23,20 @@ public class LoginController {
     AuthenticationManager authenticationManager;
 
     @PostMapping("/signin")
-    public ResponseEntity<?> signin(@RequestParam String username, @RequestParam String password) {
+    public ResponseEntity<?> signin(@RequestParam String username, @RequestParam String password ) {
         DataResponse dataResponse = new DataResponse();
         try {
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(username, password));
             if (authentication.isAuthenticated()) {
-                String token = jwtHelper.generateToken(username);
+                //Nếu xác thực thành công, lấy vai trò (role) của người dùng từ thông tin xác thực.
+                //Phương thức này trả về một collection chứa các quyền (authorities) của người dùng đã được xác thực.
+                String role = authentication.getAuthorities().stream()
+                        //Trong trường hợp này, phương thức getAuthority() được gọi trên mỗi GrantedAuthority để lấy ra tên của quyền đó.
+                        .map(GrantedAuthority::getAuthority)
+                        .findFirst()// moi user chi co 1 quyen nen lay cai dau tien
+                        .orElse(null);
+                String token = jwtHelper.generateToken(username, role);
                 dataResponse.setData(token);
                 dataResponse.setSuccess(true);
                 return new ResponseEntity<>(dataResponse, HttpStatus.OK);

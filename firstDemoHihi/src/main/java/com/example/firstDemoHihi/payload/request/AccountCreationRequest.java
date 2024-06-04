@@ -11,7 +11,6 @@ import lombok.experimental.FieldDefaults;
 @Builder
 public class AccountCreationRequest {
     String username;
-
     String password;
     String role;
 }

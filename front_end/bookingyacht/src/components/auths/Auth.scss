@@ -1,0 +1,37 @@
+.account {
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.show-password {
+    position: relative;
+
+    i {
+        position: absolute;
+        top: 16px;
+        right: 10px;
+    }
+}
+
+.form-infor {
+    box-shadow: 0 0 16px 2px;
+    border-radius: 25px;
+}
+
+
+
+.loaderIcon {
+    margin-right: 7px;
+    top: 2px;
+    animation: spin 1s infinite linear;
+}
+
+@keyframes spin {
+    from {
+        transform: scale(1) rotate(0deg);
+    }
+
+    to {
+        transform: scale(1) rotate(360deg);
+    }
+}

@@ -39,7 +39,7 @@ public class AdminService implements IAdmin {
         account.setPassword(passwordEncoder.encode(request.getPassword()));
         account.setRole(ROLE_COMPANY);
 
-        // Lưu tài khoản vào db
+        // Lưu account vào db
         Account savedAccount = accountRepository.save(account);
 
         // Tạo AccountCompanyDTO từ Account
@@ -51,7 +51,6 @@ public class AdminService implements IAdmin {
                 .build();
 
         return accountDTO;
-
     }
 
     @Override

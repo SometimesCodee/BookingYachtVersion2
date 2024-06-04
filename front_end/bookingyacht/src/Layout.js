@@ -1,11 +1,8 @@
 import React from 'react';
 import { Route, Routes } from "react-router-dom";
 import App from './App';
-import AdminMananger from './components/admin/indexAdmin/AdminMananger';
 import AdminLayout from './components/admin/navbarAdmin/AdminLayout';
 import AdminHome from './components/admin/pageAdmin/AdminHome';
-import AdminPage1 from './components/admin/pageAdmin/AdminPage1';
-import AdminPage2 from './components/admin/pageAdmin/AdminPage2';
 import HomePage from './components/home/HomePage';
 // import FindYacht from './components/yacht/FindYacht';
 // import RuleYacht from './components/yacht/RuleYacht';
@@ -22,6 +19,8 @@ import HomePage from './components/home/HomePage';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import CompanyManager from './components/admin/managerAdmin/CompanyManager';
+import CustomerManager from './components/admin/managerAdmin/CustomerManager';
 import Blog from './components/blog/Blog';
 import MainPage from './components/detailYacht/mainDetailPage/MainPage';
 import Enterprise from './components/enterprise/Enterprise';
@@ -38,6 +37,7 @@ const Layout = () => {
                     <Route path='/quy-dinh-chung' element={<RuleYacht />} />
                     <Route path='/cau-hoi-thuong-gap' element={<QuestionYacht />} /> */}
                     <Route path='maybay' element={<MainPage />} />
+                    {/* <Route path='login' element={<Login/>}/> */}
                 </Route>
 
                 {/* <Route path='/signin' element={<Signin />} />
@@ -54,10 +54,9 @@ const Layout = () => {
                     <Route path='view-owner' element={<ViewOwner />} />
                 </Route> */}
                 <Route path='/admin' element={<AdminLayout />}>
-                    <Route index element={<AdminHome />} />
-                    <Route path='manager' element={<AdminMananger />} />
-                    <Route path="page1" element={<AdminPage1 />} />
-                    <Route path="page2" element={<AdminPage2 />} />
+                    <Route path='manager' element={<AdminHome/>} />
+                    <Route path="customer" element={<CustomerManager/>} />
+                    <Route path="company" element={<CompanyManager/>} />
                 </Route>
 
             </Routes>

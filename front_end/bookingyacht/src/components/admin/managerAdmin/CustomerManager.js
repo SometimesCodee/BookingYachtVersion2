@@ -1,10 +1,13 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { Button, Table } from 'react-bootstrap';
+import { Button, Modal, Table } from 'react-bootstrap';
 import './Manager.scss';
 const CustomerManager = () => {
     const [customers, setCustomers] = useState([]);
+    const [filteredCustomers, setFilteredCustomers] = useState([]);
     const [selectedCustomer, setSelectedCustomer] = useState(null);
+    const [showModal, setShowModal] = useState(false);
+    const [searchTerm, setSearchTerm] = useState("");
 
     useEffect(() => {
         fetchCustomers();
@@ -14,6 +17,7 @@ const CustomerManager = () => {
         try {
             const response = await axios.get('https://reqres.in/api/users?page=2');
             setCustomers(response.data.data);
+            setFilteredCustomers(response.data.data);
         } catch (error) {
             console.error('Error fetching customers:', error);
         }
@@ -21,6 +25,13 @@ const CustomerManager = () => {
 
     const handleSearchCustomer = value => {
         // Add search logic here
+        setSearchTerm(value);
+        const filtered = customers.filter(customer =>
+            customer.first_name.toLowerCase().includes(value.toLowerCase()) ||
+            customer.last_name.toLowerCase().includes(value.toLowerCase()) ||
+            customer.email.toLowerCase().includes(value.toLowerCase())
+        );
+        setFilteredCustomers(filtered);
     };
 
     // const handleCreateCustomer = event => {
@@ -36,6 +47,12 @@ const CustomerManager = () => {
         // Add delete customer logic here
     };
 
+    const handleCloseModal = () => setShowModal(false);
+    const handleShowModal = (customer) => {
+        setSelectedCustomer(customer);
+        setShowModal(true);
+    };
+
     return (
         <div className="container mt-5">
             <h1>Admin Manager</h1>
@@ -44,7 +61,8 @@ const CustomerManager = () => {
                 <input
                     type="text"
                     className="form-control"
-                    placeholder="Search customer"
+                    placeholder="Search customer by name or email"
+                    value={searchTerm}
                     onChange={e => handleSearchCustomer(e.target.value)}
                 />
             </div>
@@ -58,40 +76,39 @@ const CustomerManager = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {customers.map(customer => (
+                    {filteredCustomers.map(customer => (
                         <tr key={customer.id}>
                             <td>{customer.id}</td>
                             <td>{customer.first_name} {customer.last_name}</td>
                             <td>{customer.email}</td>
                             <td className='button_mana'>
-                                <Button variant="primary" onClick={() => setSelectedCustomer(customer)}>ViewDetail</Button>
+                                <Button variant="primary" onClick={() => handleShowModal(customer)}>View Detail</Button>
                                 <Button variant="dark" onClick={() => handleDeleteCustomer(customer.id)}>Hidden</Button>
                             </td>
                         </tr>
                     ))}
                 </tbody>
             </Table>
-            {/* <Modal show={showCompanyModal} onHide={() => setShowCompanyModal(false)}>
+            <Modal show={showModal} onHide={handleCloseModal}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Create Company Account</Modal.Title>
+                    <Modal.Title>Customer Details</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <Form onSubmit={handleCreateCompany}>
-                        <Form.Group controlId="formCompanyName">
-                            <Form.Label>Name</Form.Label>
-                            <Form.Control type="text" placeholder="Enter company name" name="name" required />
-                        </Form.Group>
-                        <Form.Group controlId="formCompanyEmail">
-                            <Form.Label>Email</Form.Label>
-                            <Form.Control type="email" placeholder="Enter company email" name="email" required />
-                        </Form.Group>
-                        <Button variant="primary" type="submit">
-                            Create
-                        </Button>
-                    </Form>
+                    {selectedCustomer && (
+                        <>
+                            <p><strong>ID:</strong> {selectedCustomer.id}</p>
+                            <p><strong>Name:</strong> {selectedCustomer.first_name} {selectedCustomer.last_name}</p>
+                            <p><strong>Email:</strong> {selectedCustomer.email}</p>
+                            {/* Add other customer details here */}
+                        </>
+                    )}
                 </Modal.Body>
-            </Modal> */}
-
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleCloseModal}>
+                        Close
+                    </Button>
+                </Modal.Footer>
+            </Modal>
         </div>
     );
 };

@@ -5,6 +5,11 @@ import BookNowModal from './BookNowModal';
 import './FormRoom.scss';
 import RoomDetailModal from './RoomDetailModal';
 import RoomItem from './RoomItem';
+const services = [
+    { id: 1, name: 'Bữa sáng', price: 200000 },
+    { id: 2, name: 'Đưa đón sân bay', price: 500000 },
+    { id: 3, name: 'Gói spa', price: 700000 },
+];
 const rooms = [
     { id: 1, name: 'Phòng Delta Suite', size: '33 m²', price: 3550000, maxGuests: 2, image: 'image1.png' },
     { id: 2, name: 'Phòng Ocean Suite', size: '33 m²', price: 3700000, maxGuests: 2, image: 'image2.png' },
@@ -19,12 +24,22 @@ const RoomSelection = () => {
     const [showBookNow, setShowBookNow] = useState(false);
     const [selectedRooms, setSelectedRooms] = useState([]);
     const [totalPrice, setTotalPrice] = useState(0);
-
+    const [selectedServices, setSelectedServices] = useState(rooms.reduce((acc,room)=>({...acc, [room.id] : []}), {}));
     useEffect(() => {
         const newSelectedRooms = rooms.filter(room => quantities[room.id] > 0);
         setSelectedRooms(newSelectedRooms);
-        setTotalPrice(newSelectedRooms.reduce((acc, room) => acc + (room.price * quantities[room.id]), 0));
-    }, [quantities]);
+        const totalRoomPrice = newSelectedRooms.reduce((acc, room) => acc + (room.price * quantities[room.id]), 0);
+        const totalServicePrice = newSelectedRooms.reduce((acc, room) =>{
+            const roomServices = selectedServices[room.id] || [];
+            const roomServicePrice = roomServices.reduce((serviceAcc, serviceId) =>{
+                const service = services.find(s => s.id === serviceId);
+                return serviceAcc + (service ? service.price : 0);
+            }, 0);
+            return acc + (roomServicePrice * quantities[room.id]);
+        } , 0)
+        setTotalPrice(totalRoomPrice + totalServicePrice);
+        // setTotalPrice(newSelectedRooms.reduce((acc, room) => acc + (room.price * quantities[room.id]), 0));
+    }, [quantities, selectedServices]);
 
     const handleQuantityChange = (id, delta) => {
         setQuantities(prevQuantities => ({
@@ -32,9 +47,18 @@ const RoomSelection = () => {
             [id]: Math.max(0, prevQuantities[id] + delta)
         }));
     };
-
+    const handleServiceChange = (roomId, serviceId) => {
+        setSelectedServices(prevServices => {
+            const roomServices = prevServices[roomId] || [];
+            const newRoomServices = roomServices.includes(serviceId)
+                ? roomServices.filter(id => id !== serviceId)
+                : [...roomServices, serviceId];
+            return { ...prevServices, [roomId]: newRoomServices };
+        });
+    };
     const handleReset = () => {
         setQuantities(rooms.reduce((acc, room) => ({ ...acc, [room.id]: 0 }), {}));
+        setSelectedServices(rooms.reduce((acc, room) => ({ ...acc, [room.id]: [] }), {}));
     };
 
     const handleDetail = (room) => {
@@ -58,6 +82,9 @@ const RoomSelection = () => {
                         handleQuantityChange={handleQuantityChange}
                         quantity={quantities[room.id]}
                         handleDetail={handleDetail}
+                        services={services}
+                        selectedServices={selectedServices[room.id] || []}
+                        handleServiceChange={handleServiceChange}
                     />
                 ))}
                 <div className='my-3'>
@@ -78,8 +105,12 @@ const RoomSelection = () => {
                 handleClose={() => setShowDetailRom(false)}
             />
             <BookNowModal
-                selectedRooms={selectedRooms}
+                 selectedRooms={selectedRooms}
                 quantities={quantities}
+                selectedServices={selectedServices}
+                services={services}
+                handleQuantityChange={handleQuantityChange}
+                handleServiceChange={handleServiceChange}
                 totalPrice={totalPrice}
                 show={showBookNow}
                 handleClose={() => setShowBookNow(false)}

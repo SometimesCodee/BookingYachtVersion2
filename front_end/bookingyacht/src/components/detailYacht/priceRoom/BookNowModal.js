@@ -1,11 +1,11 @@
 import React from 'react';
 import { Button, Col, Form, Modal, Row } from 'react-bootstrap';
 
-const BookNowModal = ({ selectedRooms, quantities, totalPrice, show, handleClose }) => {
+const BookNowModal = ({ selectedRooms, quantities, selectedServices, services, handleQuantityChange, handleServiceChange, totalPrice, show, handleClose  }) => {
     const today = new Date();
     const todayString = today.toISOString().split('T')[0];
     return (
-        <Modal show={show} onHide={handleClose}>
+        <Modal show={show} onHide={handleClose} size='xl'>
             <Modal.Header closeButton>
                 <Modal.Title>Đặt Phòng</Modal.Title>
             </Modal.Header>
@@ -18,12 +18,29 @@ const BookNowModal = ({ selectedRooms, quantities, totalPrice, show, handleClose
                         <Col md={6}>
                             <h5>{room.name}</h5>
                             <p>{room.size} - Tối đa: {room.maxGuests}</p>
+                            <div>
+                                <h6>Dịch vụ đã chọn</h6>
+                                {selectedServices[room.id] && selectedServices[room.id].map(serviceId => {
+                                    const service = services.find(s => s.id === serviceId);
+                                    return (
+                                        <div key={serviceId} className="d-flex justify-content-between align-items-center mb-2">
+                                            <span>{service.name}</span>
+                                            <Button variant="danger" size="sm" onClick={() => handleServiceChange(room.id, serviceId)}>Bỏ</Button>
+                                        </div>
+                                    );
+                                })}
+                            </div>
                         </Col>
                         <Col md={2} className="text-end">
                             <h5>{room.price.toLocaleString()} đ</h5>
                         </Col>
-                        <Col md={2} className="d-flex align-items-center justify-content-end">
+                        {/* <Col md={2} className="d-flex align-items-center justify-content-end">
                             <span className="mx-2">x {quantities[room.id]}</span>
+                        </Col> */}
+                        <Col md={2} className="d-flex align-items-center justify-content-end">
+                            <Button variant="outline-primary" onClick={() => handleQuantityChange(room.id, -1)}>-</Button>
+                            <span className="mx-2">{quantities[room.id]}</span>
+                            <Button variant="outline-primary" onClick={() => handleQuantityChange(room.id, 1)}>+</Button>
                         </Col>
                     </Row>
                 ))}

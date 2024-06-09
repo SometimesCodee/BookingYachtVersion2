@@ -16,7 +16,7 @@ const Header = () => (
 const BusinessItem = ({ imgSrc, title, description }) => (
   <div className="business-col">
     <div className="business">
-      <img src={imgSrc} className="img-fluid" alt="Business" />
+        <img src={imgSrc} className="img-fluid" alt="Business"/>
       <div className="content-detail">
         <h6>{title}</h6>
         <p>{description}</p>

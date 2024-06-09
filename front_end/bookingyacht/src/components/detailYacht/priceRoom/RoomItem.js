@@ -1,8 +1,9 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
 import { MdOutlineBedroomParent, MdOutlinePerson } from "react-icons/md";
+import ServiceSelection from './ServiceSelection';
 import './form-sel.scss';
-const RoomItem = ({ room, handleQuantityChange, quantity, handleDetail }) => {
+const RoomItem = ({ room, handleQuantityChange, quantity, handleDetail, services, selectedServices, handleServiceChange }) => {
     return (
         <div key={room.id} className="my-3 p-3 border form-sel">
             <div className="row">
@@ -22,6 +23,11 @@ const RoomItem = ({ room, handleQuantityChange, quantity, handleDetail }) => {
                     <span className="mx-2">{quantity}</span>
                     <Button variant="outline-secondary" onClick={() => handleQuantityChange(room.id, 1)}>+</Button>
                 </div>
+                <ServiceSelection
+                    services={services}
+                    selectedServices={selectedServices}
+                    handleServiceChange={(servicesId) => handleServiceChange(room.id, servicesId)}
+                />
             </div>
         </div>
     );

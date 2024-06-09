@@ -42,6 +42,12 @@
     padding: 60px 20px;
     height: 700px;
   }
+  @media (max-width: 991px) {
+    .content-section-sticky1 {
+        padding: 60px 20px;
+        height: 300px;
+    }
+}
   .content-section-sticky2{
     padding: 60px 20px;
     height: 500px;

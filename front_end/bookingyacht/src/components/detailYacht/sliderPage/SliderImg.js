@@ -1,58 +1,8 @@
-// import 'bootstrap/dist/css/bootstrap.min.css';
-// import React, { useEffect, useState } from "react";
-// import Slider from "react-slick";
-// import "slick-carousel/slick/slick-theme.css";
-// import "slick-carousel/slick/slick.css";
-// import StikyNav from '../stickyNav/StickyNav';
-// import './SliderImg.scss';
-// const SimpleSlider = () => {
-//     const [imageList, setImageList] = useState([]);
-//     useEffect(() => {
-//         fetch('https://reqres.in/api/users')
-//             .then(response => response.json())
-//             .then(data => {
-//                 const avatars = data.data.map(user => user.avatar);
-//                 setImageList(avatars);
-//             });
-//     }, []);
-
-//     const settings = {
-//         dots: true,
-//         infinite: true,
-//         speed: 500,
-//         slidesToShow: 1,
-//         slidesToScroll: 1,
-//     };
-
-//     return (
-//         <div>
-//             <div className='title_page'>
-//                 <h2>Du thuyền Heritage Bình Chuẩn Cát Bà</h2>
-//                 <h3>3,550,000 đ/khách</h3>
-//             </div>
-//             <div>
-//                 <Slider {...settings}>
-//                 {imageList.map((image, index) => (
-//                     <div key={index}>
-//                         <img src={image} alt={`Slide ${index + 1}`} />
-//                     </div>
-//                 ))}
-//                 </Slider>
-//             </div>
-
-//             <div>
-//                 <StikyNav />
-//             </div>
-//         </div>
-
-//     );
-// }
-
 // export default SimpleSlider;
 import React, { useState } from 'react';
 import { Carousel, Image } from 'react-bootstrap';
+import i_content from '../../../assets/image_1.webp';
 import './CustomSlider.scss';
-
 const SimpleSlider = () => {
   const images = [
     { src: 'https://minio.fares.vn/mixivivu-dev/tour/du-thuyen-heritage-binh-chuan-cat-ba/images/nx36g4ggepatgx23.webp', alt: 'First image' },
@@ -91,6 +41,10 @@ const SimpleSlider = () => {
       <div className='title_page'>
         <h2>Du thuyền Heritage Bình Chuẩn Cát Bà</h2>
         <h3>3,550,000 đ/khách</h3>
+        
+      </div>
+      <div>
+        <img src={i_content}/>
       </div>
       <div className='slider_page'>
         <Carousel activeIndex={currentIndex} onSelect={handleSelect} slide={false} indicators={false} interval={null}>

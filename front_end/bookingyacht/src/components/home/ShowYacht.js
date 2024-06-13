@@ -64,7 +64,6 @@ const ShowYacht = (props) => {
             </div>
         </>
     )
-
 }
 
 export default ShowYacht;

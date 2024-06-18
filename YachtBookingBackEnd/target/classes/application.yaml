@@ -28,8 +28,13 @@ jwt:
 fileUpLoad:
   rootPath: D:\UML SWP\uploads
 
-vnpay:
-  api:
-    url: "https://sandbox.vnpayment.vn/paymentv2/"
-    secret-key: "IOMD65I4028IUX9GDIKR3NO583UOKRNW"
-    access-key: "OCFL0E29"
+payment:
+  vnPay:
+    payUrl: https://sandbox.vnpayment.vn/paymentv2/vpcpay.html
+    tmnCode: OCFL0E29
+    secretKey: IOMD65I4028IUX9GDIKR3NO583UOKRNW
+    returnUrl: http://localhost:8080/api/payment/vn-pay-callback
+    apiUrl: https://sandbox.vnpayment.vn/merchant_webapi/api/transaction
+    version: 2.1.0
+    command: pay
+    orderType: other

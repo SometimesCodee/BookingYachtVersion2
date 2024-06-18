@@ -10,7 +10,7 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
-@Table(name ="BlogDetail")
+@Table(name ="blogDetail")
 public class BlogDetail {
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)

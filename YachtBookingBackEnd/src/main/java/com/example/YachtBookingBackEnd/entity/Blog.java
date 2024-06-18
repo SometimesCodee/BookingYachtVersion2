@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Set;
 
@@ -12,7 +14,7 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
-@Table(name ="Blog")
+@Table(name ="blog")
 public class Blog {
 
     @Id
@@ -27,7 +29,7 @@ public class Blog {
     private String description;
 
     @Column(name = "postDate")
-    private Date postDate;
+    private LocalDate postDate;
 
     @Column(name = "image")
     private String image;

@@ -8,7 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name ="BlogImage")
+@Table(name ="blogImage")
 public class BlogImage {
 
     @Id

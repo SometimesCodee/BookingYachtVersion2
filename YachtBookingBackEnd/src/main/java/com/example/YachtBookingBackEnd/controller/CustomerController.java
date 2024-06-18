@@ -12,6 +12,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -31,7 +32,7 @@ public class CustomerController {
     IYachtImage iYachtImage;
     IService iService;
     IYachtService iYachtService;
-
+    IBlog iBlog;
 
 
     @PostMapping("/accounts")
@@ -153,6 +154,15 @@ public class CustomerController {
     public ResponseEntity<?> findYachtByYachtId(@PathVariable String yachtId) {
         DataResponse dataResponse = new DataResponse();
         dataResponse.setData(iYacht.findYachtById(yachtId));
+        return new ResponseEntity<>(dataResponse, HttpStatus.OK);
+    }
+    @PostMapping("/insertBlog")
+    public ResponseEntity<?> insertBlog(@RequestParam String description,
+                                        @RequestParam MultipartFile image,
+                                        @RequestParam LocalDate postDate,
+                                        @RequestParam String title){
+        DataResponse dataResponse = new DataResponse();
+        dataResponse.setData(iBlog.insertBlog(description, image, postDate, title));
         return new ResponseEntity<>(dataResponse, HttpStatus.OK);
     }
 

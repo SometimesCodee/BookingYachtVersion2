@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
+import { Col, FormControl, FormGroup, Row } from 'react-bootstrap';
 import './Home.scss';
-import { Button, Col, FormControl, FormGroup, Row, Container } from 'react-bootstrap';
 
 const FormSearch = () => {
     const init = {
@@ -66,9 +66,9 @@ const FormSearch = () => {
 
                     </div>
                 </form>
-            </div >
+            </div>
 
-        </div >
+        </div>
     )
 };
 

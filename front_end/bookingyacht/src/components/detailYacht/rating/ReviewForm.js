@@ -1,83 +1,58 @@
 // src/ReviewForm.js
 import React, { useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
+import { addFeedback } from '../../../services/ApiServices';
 import './Rating.scss'; // Import the CSS file
 
-const ReviewForm = ({ addReview }) => {
-    const [rating, setRating] = useState(0);
-    const [name, setName] = useState('');
-    const [email, setEmail] = useState('');
-    const [phone, setPhone] = useState('');
-    const [review, setReview] = useState('');
+const ReviewForm = ({addReview, idBooking, idCustomer, idYacht }) => {
+    
+    const [starRating, setStarRating] = useState(0);
+    const [description, setDescription] = useState('');
 
-    const handleSubmit = (e) => {
+    const handleSubmit =  async (e) => {
         e.preventDefault();
-        const newReview = {
-            rating,
-            name,
-            email,
-            phone,
-            review,
-            date: new Date().toLocaleDateString(),
-        };
-        addReview(newReview);
-        setRating(0);
-        setName('');
-        setEmail('');
-        setPhone('');
-        setReview('');
+        const formData = new FormData();
+        formData.append('starRating', starRating);
+        formData.append('description', description);
+        formData.append('date',new Date().toLocaleDateString());
+
+        try{
+           const response = await addFeedback(idBooking,idCustomer,idYacht, formData)
+            addReview(response.data.data)
+            setStarRating(0);
+            setDescription('');
+        }catch(error){
+            console.error('Error adding feedback:', error);
+        }
     };
+
+    const handleStartClick = (rating) =>{
+        setStarRating(rating);
+    }
 
     return (
         <Form onSubmit={handleSubmit}>
             <Form.Group controlId="rating">
                 <Form.Label>Chất lượng</Form.Label>
                 <div className="rating">
-                    {[...Array(5)].map((star, index) => (
+                    {[1,2,3,4,5].map((star) => (
                         <span
-                            key={index}
-                            className={`star ${index < rating ? 'user-rated' : ''}`}
-                            onClick={() => setRating(index + 1)}
+                            key={star}
+                            style={{ color: starRating >= star ? 'orange' : 'gray', cursor: 'pointer', fontSize: '1.5rem' }}
+                            onClick={() => handleStartClick(star)}
                         >
                             ★
                         </span>
                     ))}
                 </div>
             </Form.Group>
-            <Form.Group controlId="name">
-                <Form.Label>Họ và tên</Form.Label>
-                <Form.Control
-                    type="text"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    required
-                />
-            </Form.Group>
-            <Form.Group controlId="email">
-                <Form.Label>Địa chỉ email</Form.Label>
-                <Form.Control
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                />
-            </Form.Group>
-            <Form.Group controlId="phone">
-                <Form.Label>Số điện thoại</Form.Label>
-                <Form.Control
-                    type="text"
-                    value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
-                    required
-                />
-            </Form.Group>
             <Form.Group controlId="review">
                 <Form.Label>Đánh giá của bạn</Form.Label>
                 <Form.Control
                     as="textarea"
                     rows={3}
-                    value={review}
-                    onChange={(e) => setReview(e.target.value)}
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
                     required
                 />
             </Form.Group>

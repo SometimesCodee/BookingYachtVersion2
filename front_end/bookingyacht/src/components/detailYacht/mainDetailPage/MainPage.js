@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from 'react';
+import { Col } from 'react-bootstrap';
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import { getScheduleByYachtApi } from '../../../redux/action/ScheduleAction';
+import { getYachtByYachtIdApi } from '../../../redux/action/YachtAction';
 import RoomSelection from '../priceRoom/RoomSelection';
 import Rating from '../rating/Rating';
 import Map from '../scheduleDetail/Map';
 import SectionHeader from '../sectionHeader/SectionHeade';
 import SimpleSlider from '../sliderPage/SliderImg';
 import './MainPage.scss';
-import { useParams } from 'react-router-dom';
-import { getYachtByYachtId } from '../../../services/ApiServices';
-import { Col } from 'react-bootstrap';
-import { useSelector, useDispatch } from 'react-redux';
-import { getYachtByYachtIdApi } from '../../../redux/action/YachtAction';
-import { getScheduleByYachtApi } from '../../../redux/action/ScheduleAction';
 
 
 
@@ -21,7 +20,7 @@ const MainPage = () => {
   const dispatch = useDispatch();
   const [currentSection, setCurrentSection] = useState('');
   const [selectedSchedule, setSelectedSchedule] = useState('');
-
+  const idCustomer = useSelector((state) => state.account.account.idCustomer)
   useEffect(() => {
     if (yachtId) {
       dispatch(getYachtByYachtIdApi(yachtId))
@@ -139,7 +138,7 @@ const MainPage = () => {
         </div>
 
         <div id="reviews" className="content-section-sticky6 mt-5 mb-5">
-          <Rating />
+          <Rating yachtId={yachtId} idCustomer={idCustomer}/>
         </div>
       </Col>
 

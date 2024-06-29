@@ -241,3 +241,10 @@ export const getScheduleYacht = (yachtId) => {
     return axios.get(`/api/companies/getScheduleByYacht/${yachtId}`);
 }
 
+export const addFeedback = (idBooking, idCustomer, idYacht, formData) => {
+    return axios.post(`http://localhost:8080/api/customer/addFeedback/${idBooking}/${idCustomer}/${idYacht}`, formData);
+};
+
+export const getFeedbackByIdYacht = (yachtId) =>{
+    return axios.get(`http://localhost:8080/api/customer/getFeedbackByYachtId/${yachtId}`);
+}

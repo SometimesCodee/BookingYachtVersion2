@@ -86,7 +86,7 @@ const FormSearch = () => (
 // Component HeaderPage
 const HeaderPage = () => (
   <div className="body-page">
-    <FormSearch />
+    <FormSearch/>
     <div className="container">
       <div className="row">
         <div className="col-lg-6">

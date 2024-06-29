@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Button, ButtonGroup, Col, Container, Row } from 'react-bootstrap';
+import { getFeedbackByIdYacht } from '../../../services/ApiServices';
 import ReviewForm from './ReviewForm';
 import ReviewList from './ReviewList';
-const Rating = () => {
+const Rating = ({yachtId, idBooking, idCustomer}) => {
     const [reviews, setReviews] = useState([]);
-    const [selectedRating, setSelectedRating] = useState(null); // Lưu trữ số sao được chọn
+    const [selectedRating, setSelectedRating] = useState(null);
     const [ratingCounts, setRatingCounts] = useState({
         5: 0,
         4: 0,
@@ -13,28 +14,48 @@ const Rating = () => {
         1: 0
     });
     const [averageRating, setAverageRating] = useState(0);
-    useEffect(() => {
-        const countRatings = () => {
-            const counts = { 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 };
-            let totalRatings = 0;
-            let sumRatings = 0;
-            reviews.forEach(review => {
-                counts[review.rating]++;
-                totalRatings++;
-                sumRatings += review.rating;
-            });
+    useEffect(() =>{
+        const fetchReviews = async () =>{
+            try{
+                const response = await getFeedbackByIdYacht(yachtId)
+                const data = response.data.data;
+                setReviews(data)
+                calculateRatings(data)
+            }catch(error){
+                console.log('Error fetching reviews:', error)
+            }
+        }
+        fetchReviews();
+    }, [yachtId]);
+
+
+    const calculateRatings = (reviews) => {
+        const counts = { 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 };
+        if (reviews.length > 0) {
+            const totalRating = reviews.reduce((acc, review) => {
+                counts[review.starRating]++;
+                return acc + review.starRating;
+            }, 0);
+            setAverageRating((totalRating / reviews.length).toFixed(1));
             setRatingCounts(counts);
-            setAverageRating(totalRatings === 0 ? 0 : sumRatings / totalRatings);
-        };
-        countRatings();
-    }, [reviews]);
+        } else {
+            setAverageRating(0);
+        }
+    };
+    
     const addReview = (review) => {
-        setReviews([...reviews, review]);
+        const updatedReviews = [...reviews, review];
+        setReviews(updatedReviews);
+        calculateRatings(updatedReviews);
     };
 
     const handleSelectRating = (rating) => {
         setSelectedRating(rating === selectedRating ? null : rating);
     };
+
+    const filteredReviews = selectedRating !== null
+    ? reviews.filter(review => review.starRating === selectedRating)
+    : reviews;
 
     return (
         <Container>
@@ -45,16 +66,11 @@ const Rating = () => {
                 </Col>
                 <Col className="text-end">
                     <span style={{ fontSize: '2rem', color: 'red' }}>
-                        {averageRating.toFixed(1)} / 5★
+                        {averageRating} / 5★
                     </span>
-                    <div className="stars" style={{ color: 'red' }}>
-                        {[...Array(5)].map((_, index) => (
-                            <i key={index} className="bi bi-star-fill"></i>
-                        ))}
-                    </div>
                 </Col>
             </Row>
-            <ReviewList reviews={selectedRating !== null ? reviews.filter(review => review.rating === selectedRating) : reviews} />
+            <ReviewList reviews={filteredReviews} />
             <ButtonGroup className="my-3">
                 <Button
                     variant={selectedRating === null ? 'dark' : 'outline-dark'}
@@ -72,9 +88,7 @@ const Rating = () => {
                     </Button>
                 ))}
             </ButtonGroup>
-            <ReviewForm addReview={addReview} />
-
-
+            <ReviewForm addReview={addReview} idBooking={idBooking} idCustomer={idCustomer} yachtId={yachtId}/>
         </Container>
     );
 };

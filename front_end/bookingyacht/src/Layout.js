@@ -30,7 +30,6 @@ import FindYacht from './components/yacht/FindYacht';
 import YachtQuestion from './components/yacht/YachtQuestion';
 import YachtRule from './components/yacht/YachtRule';
 
-import ManageRoomType from './components/company/ManageRoomType';
 import ManageSchedule from './components/company/ManageSchedule';
 import ManageServiceYacht from './components/company/ManageServiceYacht';
 import Page404 from './components/page404/Page404';
@@ -73,7 +72,6 @@ const Layout = () => {
                     <Route path='view-yacht' element={<ViewYacht />} />
                     <Route path='bill' element={<Bill />} />
                     <Route path='profile' element={<ProfileCompany />} />
-                    <Route path='room-type' element={<ManageRoomType />} />
 
                 </Route>
 

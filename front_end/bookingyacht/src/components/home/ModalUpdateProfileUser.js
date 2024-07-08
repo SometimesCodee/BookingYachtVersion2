@@ -23,15 +23,6 @@ const ModalUpdateProfileUser = (props) => {
         }
     }, [profile])
 
-    // const phonenumber = (inputtxt) => {
-    //     var phoneno = "^0[0-9]{9}$";
-    //     if (inputtxt.value.match(phoneno)) {
-    //         return true;
-    //     }
-    //     else {
-    //         return false;
-    //     }
-    // }
 
     const handleUpodateProfile = async () => {
         if (!email || !fullName || !phoneNumber || !address) {

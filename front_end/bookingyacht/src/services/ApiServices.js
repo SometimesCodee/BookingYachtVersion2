@@ -1,6 +1,4 @@
 import axios from '../utils/CustomizeApi';
-import { store } from '../redux/Store';
-
 
 export const register = (email, password) => {
     return axios.post('/api/register', { email, password });

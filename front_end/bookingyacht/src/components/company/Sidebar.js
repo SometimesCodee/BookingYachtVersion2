@@ -14,19 +14,12 @@ import {
 } from 'react-pro-sidebar';
 import React from 'react';
 import sidebarBg from '../../assets/sidebar.jpg';
-import { Link, NavLink, useNavigate, useParams } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { ImProfile } from "react-icons/im";
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { doLogout } from '../../redux/action/UserAction';
-import { FaStar } from "react-icons/fa";
-// import logo from '../../assets/logo_swp.png'
 const Sidebar = (props) => {
-    const { image, collapsed, toggled, handleToggleSidebar } = props;
-
-    const { idCompany } = useParams();
-
-    const idAccount = useSelector(state => state.account.account.idAccount);
-    const navigate = useNavigate();
+    const { collapsed, toggled, handleToggleSidebar } = props;
 
     const dispatch = useDispatch();
 
@@ -93,7 +86,6 @@ const Sidebar = (props) => {
                     <Menu iconShape="circle">
                         <MenuItem
                             icon={<ImProfile />}
-                            idCompany={idCompany}
                         >
                             Profile
                             <Link to='/manage-company/profile' />

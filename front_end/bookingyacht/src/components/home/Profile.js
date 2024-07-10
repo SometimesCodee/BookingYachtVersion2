@@ -10,6 +10,7 @@ import { getProfileCustomer } from '../../services/ApiServices';
 import { toast } from 'react-toastify';
 import Bill from './Bill';
 import BookingHistory from './BookingHistory';
+import BookingOrderHistory from './BookingOrderHistory';
 
 const Profile = () => {
     const [isShowModal, setIsShowModal] = useState(false);
@@ -109,7 +110,7 @@ const Profile = () => {
                     </form>
                 </Tab>
                 <Tab eventKey="Booking History" title="Booking History" >
-                    <BookingHistory />
+                    <BookingOrderHistory />
                 </Tab>
                 <Tab eventKey="Bill" title="Bill">
                     <Bill

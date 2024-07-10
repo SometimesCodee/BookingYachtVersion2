@@ -1,6 +1,7 @@
 package com.example.YachtBookingBackEnd.service.service;
 
 import com.example.YachtBookingBackEnd.entity.*;
+import com.example.YachtBookingBackEnd.entity.key.KeysYachtSchedule;
 import com.example.YachtBookingBackEnd.repository.*;
 import com.example.YachtBookingBackEnd.config.VNPAYConfig;
 import com.example.YachtBookingBackEnd.service.implement.IBookingRoom;
@@ -37,6 +38,7 @@ public class PaymentService implements IPayment {
     ScheduleRepository scheduleRepository;
     YachtServiceRepository yachtServiceRepository;
     YachtRepository yachtRepository;
+    YachtScheduleRepository yachtScheduleRepository;
 
     public static final String DEFAULT_STATUS = "Pending";
 
@@ -47,13 +49,21 @@ public class PaymentService implements IPayment {
      * @param requirement Special requirements
      * @param request HTTP request
      * @param idCustomer Customer ID
-     * @param idSchedule Schedule ID
+     * @param startDate start date of schedule
+     * @param endDate end date of schedule
      * @return URL for VNPAY payment
      */
     @Override
     @Transactional
     public String createVnPayPayment(List<String> selectedRoomIds, List<String> selectedServiceIds, String requirement, HttpServletRequest request,
-                                     String idCustomer, String idSchedule) {
+                                     String idCustomer, String idYacht, LocalDateTime startDate, LocalDateTime endDate) {
+
+        //Validate date range
+        if (startDate.isAfter(endDate)) {
+            log.error("Invalid date range : startDate {} is after endDate {}", startDate, endDate);
+        } else if (startDate.isBefore(LocalDateTime.now())) {
+            log.error("Invalid startDate: startDate {} is before the current time", startDate);
+        }
 
         // Create a new booking order
         BookingOrder bookingOrder = new BookingOrder();
@@ -61,39 +71,64 @@ public class PaymentService implements IPayment {
         bookingOrder.setRequirement(requirement);
         bookingOrder.setStatus(DEFAULT_STATUS);
 
-        // Retrieve customer and schedule information from repositories
+        // Retrieve customer information from repositories
         Customer customer = customerRepository.findById(idCustomer)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid customer ID"));
-        Schedule schedule = scheduleRepository.findById(idSchedule)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid schedule ID"));
         bookingOrder.setCustomer(customer);
-        bookingOrder.setSchedule(schedule);
 
         // Validate and retrieve selected rooms from RoomRepository
         List<Room> selectedRooms = new ArrayList<>();
-        for (String roomId : selectedRoomIds) {
-            Optional<Room> optionalRoom = roomRepository.findById(roomId);
-            Room room = optionalRoom.orElseThrow(() -> new RuntimeException("Invalid room ID: " + roomId));
+        Optional<Schedule> scheduleOptional = scheduleRepository.findByStartDateAndEndDate(startDate, endDate);
 
-            boolean isRoomInYachtInSchedule = roomRepository.isRoomAvailableInSchedule(roomId, idSchedule);
-            if (!isRoomInYachtInSchedule) {
-                throw new IllegalArgumentException("Room " + roomId + " is not available in schedule");
-            }
+        if (scheduleOptional.isPresent()) {
+            bookingOrder.setSchedule(scheduleOptional.get());
 
-            boolean isRoomAvailable = bookingOrderRepository.existsByRoomAndSchedule(room, schedule);
-            if (isRoomAvailable) {
-                throw new RuntimeException("Room " + roomId + " is already booked in schedule");
+            for (String roomId : selectedRoomIds) {
+                Optional<Room> optionalRoom = roomRepository.findById(roomId);
+                Room room = optionalRoom.orElseThrow(() -> new RuntimeException("Invalid room ID: " + roomId));
+
+                boolean isRoomInYachtInSchedule = roomRepository.isRoomAvailableInSchedule(roomId, scheduleOptional.get().getIdSchedule());
+                if (!isRoomInYachtInSchedule) {
+                    throw new IllegalArgumentException("Room " + roomId + " is not available in schedule");
+                }
+
+                boolean isRoomAvailable = bookingOrderRepository.existsByRoomAndSchedule(room, scheduleOptional.get());
+                if (isRoomAvailable) {
+                    throw new RuntimeException("Room " + roomId + " is already booked in schedule");
+                }
+                selectedRooms.add(room);
             }
-            selectedRooms.add(room);
+        } else {
+            Optional<Yacht> yachtOptional = yachtRepository.findById(idYacht);
+            if (yachtOptional.isPresent()) {
+                Schedule newSchedule = new Schedule();
+                newSchedule.setStartDate(startDate);
+                newSchedule.setEndDate(endDate);
+                scheduleRepository.save(newSchedule);
+
+                bookingOrder.setSchedule(newSchedule);
+
+                YachtSchedule yachtSchedule = new YachtSchedule();
+                yachtSchedule.setSchedule(newSchedule);
+                yachtSchedule.setYacht(yachtOptional.get());
+
+                KeysYachtSchedule key = new KeysYachtSchedule(idYacht, newSchedule.getIdSchedule());
+                yachtSchedule.setKeys(key);
+
+                yachtScheduleRepository.save(yachtSchedule);
+            } else {
+                throw new IllegalArgumentException("Yacht with id: " + idYacht + " not found.");
+            }
         }
 
-        // Retrieve selected services from ServiceRepository
+
+        // Validate and retrieve selected services from ServiceRepository
         List<com.example.YachtBookingBackEnd.entity.Service> selectedServices = new ArrayList<>();
         for (String serviceId : selectedServiceIds) {
-            Optional<com.example.YachtBookingBackEnd.entity.Service> optionalService = serviceRepository.findById(serviceId);
-            com.example.YachtBookingBackEnd.entity.Service service = optionalService.orElseThrow(() -> new RuntimeException("Invalid service ID: " + serviceId));
+            com.example.YachtBookingBackEnd.entity.Service service = serviceRepository.findById(serviceId)
+                    .orElseThrow(() -> new RuntimeException("Invalid service ID: " + serviceId));
 
-            String idYacht = yachtRepository.getIdByService(idSchedule);
+//            String idYacht = yachtRepository.getIdByService(scheduleOptional.get().getIdSchedule());
             boolean isServiceExistInYacht = yachtServiceRepository.isServiceExistInYacht(serviceId, idYacht);
             if (!isServiceExistInYacht) {
                 throw new IllegalArgumentException("Service " + serviceId + " is not available");

@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -84,11 +85,13 @@ public class CustomerController {
     public ResponseEntity<?> createVnPayPayment(@RequestParam List<String> selectedRoomIds,
                                                 @RequestParam List<String> selectedServiceIds,
                                                 @RequestParam String requirement,
+                                                @RequestParam String idYacht,
                                                 @RequestParam String idCustomer,
-                                                @RequestParam String idSchedule,
+                                                @RequestParam LocalDateTime startDate,
+                                                @RequestParam LocalDateTime endDate,
                                                 HttpServletRequest request) {
         DataResponse dataResponse = new DataResponse();
-        dataResponse.setData(iPayment.createVnPayPayment(selectedRoomIds, selectedServiceIds, requirement, request, idCustomer, idSchedule));
+        dataResponse.setData(iPayment.createVnPayPayment(selectedRoomIds, selectedServiceIds, requirement, request, idCustomer, idYacht, startDate, endDate));
 
         return new ResponseEntity<>(dataResponse, HttpStatus.OK);
     }

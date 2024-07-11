@@ -56,7 +56,7 @@ const SimpleSlider = ({ yacht }) => {
     <div className="custom-slider">
       <div className='title_page mb-4' style={{ justifyContent: 'space-between', alignItems: 'center' }}>
         <h1 style={{ fontWeight: 'bold', color: '#0E4F4F' }}><span><LuShip color='gold' size={80}></LuShip></span> {yacht.name}</h1>
-        <h3 style={{ color: '#0E4F4F', fontWeight: 'normal' }}>Price: {priceData[yacht.idYacht] ? `${priceData[yacht.idYacht].lowestPrice.toLocaleString()} - ${priceData[yacht.idYacht].highestPrice.toLocaleString()} đ` : 'Loading...'}</h3>
+        <h3 style={{ color: '#0E4F4F', fontWeight: 'normal' }}>Giá: {priceData[yacht.idYacht] ? `${priceData[yacht.idYacht].lowestPrice.toLocaleString()} - ${priceData[yacht.idYacht].highestPrice.toLocaleString()} đ` : 'Loading...'}</h3>
       </div>
 
       <div className='slider_page'>

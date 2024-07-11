@@ -1,9 +1,9 @@
 import logo from '../../assets/logo_swp.png';
 import './Auth.scss';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { login } from '../../services/ApiServices';
 import { toast } from 'react-toastify';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { NavLink } from 'react-router-dom'
 // import { useDispatch, useSelector } from 'react-redux';
 import { ImSpinner10 } from "react-icons/im";
@@ -34,6 +34,14 @@ const Signin = () => {
     // const dispatch = useDispatch();
 
     const navigate = useNavigate();
+    const location = useLocation();
+    const [previousPath, setPreviousPath] = useState('');
+
+    useEffect(() => {
+        if (location.state && location.state.from) {
+            setPreviousPath(location.state.from);
+        }
+    }, [location.state]);
 
     const handleLogin = async () => {
         setLoading(true)
@@ -51,12 +59,15 @@ const Signin = () => {
             } else if (role && role.role === 'ROLE_CUSTOMER') {
                 toast.success("Login Successful");
                 setLoading(false);
-                navigate('/duthuyen');
+                if (previousPath === '/login') {
+                    navigate('/');
+                } else {
+                    navigate(-1);
+                }
             }
         } else {
             toast.error('User Name Or Password Invalid')
             setLoading(false);
-
         }
     }
 

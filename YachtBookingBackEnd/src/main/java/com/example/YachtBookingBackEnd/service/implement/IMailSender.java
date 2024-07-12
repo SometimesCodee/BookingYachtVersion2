@@ -8,4 +8,6 @@ public interface IMailSender {
     void senConfirmMail(String to, String idBooking, String companyName);
 
     void sendCanelMailFromCustomer(String to, String idBooking, String reason);
+
+    void sendMailSuccess(String to, String idBooking,  String startDate, String endDate);
 }

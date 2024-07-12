@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -93,12 +94,19 @@ public class BookingOrderService implements IBookingOrder {
                     bill.setTransaction(bookingOrder.getTransaction());
                     billRepository.save(bill);
 
-                    // Send cancellation email
+                    // Send confirmation email
                     String customerEmail = bookingOrder.getCustomer().getEmail();
                     Company company = companyRepository.findByIdAndExist(idCompany)
                             .orElseThrow(() -> new RuntimeException("Company not found! Try again"));
                     String companyName = company.getName();
                     mailSender.senConfirmMail(customerEmail, idBookingOrder, companyName);
+
+                    //Send success email to customer and company
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                    String formattedStartDate = bookingOrder.getSchedule().getStartDate().format(formatter);
+                    String formattedEndDate = bookingOrder.getSchedule().getEndDate().format(formatter);
+                    mailSender.sendMailSuccess(customerEmail, bookingOrder.getIdBooking(), formattedStartDate, formattedEndDate);
+                    mailSender.sendMailSuccess(company.getEmail(), bookingOrder.getIdBooking(), formattedStartDate, formattedEndDate);
 
                     log.info("Booking order {} confirmed successfully for company {}", idBookingOrder, idCompany);
                     return true;
@@ -170,6 +178,7 @@ public class BookingOrderService implements IBookingOrder {
                      bookingOrder.setReason(reason);
                      bookingOrderRepository.save(bookingOrder);
 
+                     // Send cancel email to customer
                      String customerEmail = bookingOrder.getCustomer().getEmail();
                      mailSender.sendCanelMailFromCustomer(customerEmail, idBooking, reason);
 
@@ -197,20 +206,30 @@ public class BookingOrderService implements IBookingOrder {
             LocalDateTime bookingTime = bookingOrder.getBookingTime();
             boolean isOverdue = now.isAfter(bookingTime.plusHours(24));
             boolean isTransactionSuccess = bookingOrder.getTransaction() != null
-                    && "Success".equals(bookingOrder.getTransaction().getStatus());
+                    && TRANSACTION_SUCCESS.equals(bookingOrder.getTransaction().getStatus());
             boolean isTransactionFailed = bookingOrder.getTransaction() != null
-                    && "Failure".equals(bookingOrder.getTransaction().getStatus());
+                    && TRANSACTION_FAILURE.equals(bookingOrder.getTransaction().getStatus());
             if (isTransactionSuccess && isOverdue) {
-                bookingOrder.setStatus("Confirmed");
+                bookingOrder.setStatus(STATUS_CONFIRMED);
                 bookingOrderRepository.save(bookingOrder);
                 log.info("booking order is auto success");
 
 
-                // Send confirm email
+                // Send confirm email to customer
                 String customerEmail = bookingOrder.getCustomer().getEmail();
                 mailSender.senConfirmMail(customerEmail, bookingOrder.getIdBooking(), "Booking System");
+
+                //Send success email to customer
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                String formattedStartDate = bookingOrder.getSchedule().getStartDate().format(formatter);
+                String formattedEndDate = bookingOrder.getSchedule().getEndDate().format(formatter);
+                mailSender.sendMailSuccess(customerEmail, bookingOrder.getIdBooking(), formattedStartDate, formattedEndDate);
+
+                //Send success email to Company
+                Company company = companyRepository.findCompanyByIdBooking(bookingOrder.getIdBooking());
+                mailSender.sendMailSuccess(company.getEmail(), bookingOrder.getIdBooking(), formattedStartDate, formattedEndDate);
             } else if (isTransactionFailed && isOverdue) {
-                bookingOrder.setStatus("Cancelled");
+                bookingOrder.setStatus(STATUS_CANCELLED);
                 String reason = "Transaction failed after 24 hours";
                 bookingOrder.setReason(reason);
                 bookingOrderRepository.save(bookingOrder);

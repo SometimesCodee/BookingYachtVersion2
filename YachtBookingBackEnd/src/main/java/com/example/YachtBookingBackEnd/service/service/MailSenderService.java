@@ -55,6 +55,20 @@ public class MailSenderService implements IMailSender {
                 "Booking orders will not be refunded for any reason.\n\n" +
                 "Thank you for booking with us.\n\n" +
                 "Best regards, Booking System";
+        sendNewMail(to, subject, body);
+    }
+
+    @Override
+    public void sendMailSuccess(String to, String idBooking, String startDate, String endDate) {
+        String subject = "Yacht Booking Successfully Notice";
+        String body =
+                "Booking order with ID " + idBooking + " has been booked successfully.\n\n" +
+                "Booking schedule:\n\n" +
+                "\tStart date: " + startDate + "\n\n" +
+                "\tEnd date: " + endDate + "\n\n" +
+                "Thank you for use booking system of us.\n\n" +
+                "Best regards, Booking System";
+        sendNewMail(to, subject, body);
     }
 
 

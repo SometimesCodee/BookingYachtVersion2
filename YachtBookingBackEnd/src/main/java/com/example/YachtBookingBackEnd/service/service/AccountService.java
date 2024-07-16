@@ -46,6 +46,7 @@ public class AccountService implements IAccount {
             account.setUsername(username);
             account.setPassword(passwordEncoder.encode(password));
             account.setRole(ROLE_COMPANY);
+            account.setStatus(1);
 
             // Lưu account vào db
             accountRepository.save(account);
@@ -85,6 +86,7 @@ public class AccountService implements IAccount {
             account.setUsername(username);
             account.setPassword(passwordEncoder.encode(password));
             account.setRole(ROLE_CUSTOMER);
+            account.setStatus(1);
 
             // Lưu account vào db
             accountRepository.save(account);

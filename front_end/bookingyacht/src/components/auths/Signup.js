@@ -16,18 +16,25 @@ const Signup = () => {
 
 
     const handleRegister = async () => {
-        let res = await registerCustomer(userName.trim(), password.trim());
         if (userName === '' || password === '' || confrimPassword === '') {
             toast.error('Input not empty')
+            return;
         } else if (userName.length < 3) {
             toast.error('User name must be more than 3 chars')
+            return;
+
         } else if (password.length < 8) {
             toast.error('Password must be at least 8 characters long.')
+            return;
+
         }
         else if (confrimPassword.trim() !== password.trim()) {
             toast.error('Confirm Passwod Fail');
+            return;
+
         }
-        else if (res && res.data.data === true) {
+        let res = await registerCustomer(userName.trim(), password.trim());
+        if (res && res.data.data === true) {
             toast.success('register success')
             navigate(`/information/${res.data.desc}`)
         } else {

@@ -5,7 +5,7 @@ spring:
   datasource:
     url: "jdbc:mysql://avnadmin:AVNS_ya-ZRVgLHLb0IUlDU4M@bookingyacht-dinhvuong2311-b1c2.j.aivencloud.com:12759/defaultdb?ssl-mode=REQUIRED"
     username: avnadmin
-    password: AVNS_ya-ZRVgLHLb0IUIDU4M
+    password:
   jpa:
     hibernate:
       ddl-auto: update

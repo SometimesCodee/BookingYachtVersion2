@@ -7,7 +7,7 @@ on:
     branches: 
       [ master ]
     paths:
-    - 'BookingYachtVersion2/front_end/bookingyacht/**'
+    - 'front_end/bookingyacht/**'
     - '.github/workflows/yacht-booking-fe-ca-AutoDeployTrigger-73bf853f-0507-4df6-8ed7-defce32eb83d.yml'
 
   # Allow manual trigger 
@@ -34,7 +34,7 @@ jobs:
       - name: Build and push container image to registry
         uses: azure/container-apps-deploy-action@v2
         with:
-          appSourcePath: ${{ github.workspace }}
+          appSourcePath: ${{ github.workspace }}/front_end/bookingyacht
           registryUrl: yachtbookingfeacr01.azurecr.io
           registryUsername: ${{ secrets.YACHTBOOKINGFECA_REGISTRY_USERNAME }}
           registryPassword: ${{ secrets.YACHTBOOKINGFECA_REGISTRY_PASSWORD }}

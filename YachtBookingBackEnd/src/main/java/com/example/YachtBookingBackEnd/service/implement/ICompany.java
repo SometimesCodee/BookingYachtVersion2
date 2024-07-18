@@ -25,6 +25,5 @@ public interface ICompany {
 
     List<FeedbackDTO> getFeedbacksByCompanyId(String idCompany);
 
-
     String  changePasswordCompany(String idCompany, String oldPassword, String newPassword, String confirmPassword);
 }

@@ -1,8 +1,6 @@
 package com.example.YachtBookingBackEnd.service.implement;
 
 import com.example.YachtBookingBackEnd.dto.AccountDTO;
-import com.example.YachtBookingBackEnd.dto.CompanyDTO;
-import com.example.YachtBookingBackEnd.payload.request.AccountCompanyCreationRequest;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -26,6 +24,6 @@ public interface IAccount {
 
     boolean insertInfoCompanyByIdAccount(String address, String email, MultipartFile logo, String name, String idAccount);
 
-
+    boolean disableAccountCompany(String idCompany);
 
 }

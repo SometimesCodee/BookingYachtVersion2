@@ -1,6 +1,7 @@
 package com.example.YachtBookingBackEnd.service.service;
 
 import com.example.YachtBookingBackEnd.entity.*;
+import com.example.YachtBookingBackEnd.entity.key.KeysYachtSchedule;
 import com.example.YachtBookingBackEnd.repository.*;
 import com.example.YachtBookingBackEnd.config.VNPAYConfig;
 import com.example.YachtBookingBackEnd.service.implement.IBookingRoom;
@@ -141,7 +142,7 @@ public class PaymentService implements IPayment {
         String vnp_CreateDate = formatter.format(cld.getTime());
         vnp_Params.put("vnp_CreateDate", vnp_CreateDate);
 
-        cld.add(Calendar.MINUTE, 15);
+        cld.add(Calendar.MINUTE, 5); // set timeout for payment process
         String vnp_ExpireDate = formatter.format(cld.getTime());
         vnp_Params.put("vnp_ExpireDate", vnp_ExpireDate);
 
@@ -342,13 +343,13 @@ public class PaymentService implements IPayment {
                 response.put("RspCode", "97");
                 response.put("Message", "Invalid Checksum");
             }
+
+            response.put("redirectUrl", "http://localhost:3000");
         } catch (Exception e) {
             log.error("Lỗi xử lý callback thanh toán: ", e);
             response.put("RspCode", "99");
             response.put("Message", "Unknown error");
         }
-
-        response.put("redirectUrl", "http://localhost:3000");
 
         return response;
     }

@@ -90,6 +90,7 @@ public class CustomerController {
         dataResponse.setData(iCustomer.getCustomer(customerId));
         return new ResponseEntity<>(dataResponse, HttpStatus.OK);
     }
+
     @PostMapping("/payment")
     public ResponseEntity<?> createVnPayPayment(@RequestParam List<String> selectedRoomIds,
                                                 @RequestParam List<String> selectedServiceIds,

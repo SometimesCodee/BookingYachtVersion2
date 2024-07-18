@@ -121,4 +121,11 @@ public class AdminController {
     }
 
 
+    @PutMapping("/accounts/disableCompany/{idCompany}")
+    ResponseEntity<?> disableAccountCompany(@PathVariable String idCompany) {
+        DataResponse dataResponse = new DataResponse();
+        dataResponse.setData(iAccount.disableAccountCompany(idCompany));
+
+        return new ResponseEntity<>(dataResponse, HttpStatus.OK);
+    }
 }

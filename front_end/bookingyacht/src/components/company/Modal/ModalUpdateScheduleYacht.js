@@ -22,31 +22,31 @@ const ModalUpdateScheduleYacht = (props) => {
 
     const handleUpdateScheduleYacht = async () => {
         if (!getStartDate || !getEndDate) {
-            toast.error('Không được để trống ngày đi hoặc ngày về');
+            toast.error('Start date or End date is empty');
             return;
         }
 
         const now = Date.now();
         if (new Date(getStartDate).getTime() <= now) {
-            toast.error('Ngày đi phải trước ' + formatDateTime(now));
+            toast.error('Start date must before ' + formatDateTime(now));
             return;
         }
 
         //check start date is before end date 
         if (new Date(getStartDate).getTime() >= new Date(getEndDate).getTime()) {
-            toast.error('Start date must be before end date');
+            toast.error('Start date must be before End date');
             return;
         }
 
         let res = await updateScheduleYacht(yachtId.idYacht, scheduleUpdate.idSchedule, getStartDate, getEndDate);
         if (res && res.data.data === true) {
-            toast.success("Update schedule successfully");
+            toast.success("Updated schedule successfully");
             setStartDate('');
             setEndDate('');
             handleClose();
             await props.getScheduleYacht();
         } else {
-            toast.error("Update fail");
+            toast.error("Update failure");
         }
     }
 
@@ -64,13 +64,13 @@ const ModalUpdateScheduleYacht = (props) => {
         <div>
             <Modal size='xl' show={show} onHide={handleClose} autoFocus>
                 <Modal.Header closeButton>
-                    <Modal.Title>Chỉnh sửa lịch trình thuyền</Modal.Title>
+                    <Modal.Title>Edit Schedule</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <Form>
                         <Row className="mb-3">
                             <Form.Group as={Col} >
-                                <Form.Label>Ngày đi</Form.Label>
+                                <Form.Label>Start date</Form.Label>
                                 <FormControl
                                     type="datetime-local"
                                     value={getStartDate}
@@ -79,7 +79,7 @@ const ModalUpdateScheduleYacht = (props) => {
                             </Form.Group>
 
                             <Form.Group as={Col} >
-                                <Form.Label>Ngày về</Form.Label>
+                                <Form.Label>End date</Form.Label>
                                 <FormControl
                                     type="datetime-local"
                                     value={getEndDate}
@@ -92,10 +92,10 @@ const ModalUpdateScheduleYacht = (props) => {
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>
-                        Đóng
+                        Close
                     </Button>
                     <Button variant="primary" onClick={handleUpdateScheduleYacht}>
-                        Lưu
+                        Save
                     </Button>
                 </Modal.Footer>
             </Modal>

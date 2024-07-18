@@ -9,6 +9,7 @@ import { Form, FormControl } from 'react-bootstrap';
 import { createScheduleYacht, deleteScheduleYacht, getScheduleYacht } from "../../services/ApiServices";
 import { toast } from "react-toastify";
 import ModalUpdateScheduleYacht from "./Modal/ModalUpdateScheduleYacht";
+import ReactPaginate from 'react-paginate';
 
 
 
@@ -22,11 +23,13 @@ const ManageSchedule = () => {
     const [getEndDate, setEndDate] = useState('');
     const [getScheduleUpdate, setScheduleUpdate] = useState({});
 
-
+    const [currentPage, setCurrentPage] = useState(0);
+    const [pageCount, setPageCount] = useState(0);
+    const itemsPerPage = 5;
 
     useEffect(() => {
         fetchScheduleYacht()
-    }, [])
+    }, [yachtId, currentPage])
 
     const handleClose = () => {
         setShowModalUpdateScheduleYacht(false)
@@ -36,28 +39,30 @@ const ManageSchedule = () => {
         let res = await getScheduleYacht(yachtId.idYacht)
         //check data empty or not
         if (res && res.data.data) {
+            const totalPages = Math.ceil(res.data.data.length / itemsPerPage);
+            setPageCount(totalPages);
             setSchedule(res.data.data)
         } else {
-            toast.error("Không tìm thấy lịch trình")
+            toast.error("Can not found schedule")
             console.log("can not found schedule")
         }
     }
 
     const handleCreateYachtSchedule = async () => {
         if (!getStartDate || !getEndDate) {
-            toast.error('Không được để trống ngày đi hoặc ngày về');
+            toast.error('Start date or End date is empty');
             return;
         }
 
         const now = Date.now();
         if (new Date(getStartDate).getTime() <= now) {
-            toast.error('Ngày đi phải trước' + formatDateTime(now));
+            toast.error('Start date must before ' + formatDateTime(now));
             return;
         }
 
         //check start date is before end date 
         if (new Date(getStartDate).getTime() >= new Date(getEndDate).getTime()) {
-            toast.error('Ngày đi phải trước ngày về');
+            toast.error('Start date must be before End date');
             return;
         }
 
@@ -65,10 +70,10 @@ const ManageSchedule = () => {
         let res = await createScheduleYacht(yachtId.idYacht, getStartDate, getEndDate);
 
         if (res && res.data.data === true) {
-            toast.success("Tạo lịch trình mới thành công");
+            toast.success("Created new schedule successfully");
             fetchScheduleYacht();
         } else {
-            toast.error("Tạo lịch trình thất bại");
+            toast.error("Create new schedule failure");
         }
     }
 
@@ -78,16 +83,16 @@ const ManageSchedule = () => {
     }
 
     const handleDeleteScheduleYacht = async (schedule) => {
-        if (window.confirm(`Bạn có chắc muốn xóa lịch trình này`)) {
+        if (window.confirm(`Are you sure you want to delete this schedule?`)) {
             let res = await deleteScheduleYacht(yachtId.idYacht, schedule.idSchedule)
 
             if (res && res.data.data === "00") {
-                toast.success("Xóa lịch trình thành công");
+                toast.success("Deleted schedule successfully");
                 fetchScheduleYacht();
             } else if (res && res.data && res.data.data === "22") {
-                toast.error("Lịch trình đã tồn tại trong 1 đơn đặt chỗ");
+                toast.error("The schedule already exists in 1 booking order");
             } else if (res && res.data && res.data.data === "11") {
-                toast.error("Xóa lịch trình thất bại");
+                toast.error("Delete schedule failure");
             }
         }
     }
@@ -102,23 +107,31 @@ const ManageSchedule = () => {
         return `${hours}:${minutes} ${day}/${month}/${year}`;
     }
 
+    const handlePageClick = (data) => {
+        setCurrentPage(data.selected)
+    }
+
+    const startIndex = currentPage * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    const slicedSchedule = getSchedule.slice(startIndex, endIndex);
+
     return (
         <div>
             <div>
                 <NavLink to='/manage-company/view-yacht' className='p-3 d-flex nav-link' style={{ gap: 20 }}>
-                    <AiFillHome className='' /> <p className='mb-0'>Trở về quản lí công ty</p>
+                    <AiFillHome className='' /> <p className='mb-0'>Back To Manage Company</p>
                 </NavLink>
             </div>
 
             <div className="container">
                 <Accordion defaultActiveKey="0">
                     <Accordion.Item eventKey="0">
-                        <Accordion.Header>Tạo mới lịch trình</Accordion.Header>
+                        <Accordion.Header>Create new schedule</Accordion.Header>
                         <Accordion.Body>
                             <Form>
                                 <Row className="mb-3">
                                     <Form.Group as={Col}>
-                                        <Form.Label>Ngày đi</Form.Label>
+                                        <Form.Label>Start date</Form.Label>
                                         <FormControl
                                             type="datetime-local"
                                             value={getStartDate}
@@ -127,7 +140,7 @@ const ManageSchedule = () => {
                                     </Form.Group>
 
                                     <Form.Group as={Col}>
-                                        <Form.Label>Ngày về</Form.Label>
+                                        <Form.Label>End date</Form.Label>
                                         <FormControl
                                             type="datetime-local"
                                             value={getEndDate}
@@ -140,7 +153,7 @@ const ManageSchedule = () => {
                                         onClick={handleCreateYachtSchedule}
                                         variant="success"
                                     >
-                                        Tạo
+                                        Create
                                     </Button>
                                 </div>
                             </Form>
@@ -150,17 +163,17 @@ const ManageSchedule = () => {
                 <div className="table-responsive my-5">
                     <table className="table table-striped table-hover table-borderless table-primary align-middle">
                         <thead className="table-dark">
-                            <h4>Danh sách lịch trình</h4>
+                            <h4>Schedule List</h4>
                             <tr>
-                                <th>Ngày đi</th>
-                                <th>Ngày về</th>
+                                <th>Start date</th>
+                                <th>End date</th>
                                 <th className="text-center">Action</th>
                             </tr>
                         </thead>
                         <tbody className="table-light">
 
                             {
-                                getSchedule && getSchedule.length > 0 && getSchedule.map((schedule) =>
+                                slicedSchedule && slicedSchedule.length > 0 && slicedSchedule.map((schedule) =>
                                     <tr key={schedule.idSchedule}>
                                         <td>{formatDateTime(schedule.startDate)}</td>
                                         <td>{formatDateTime(schedule.endDate)}</td>
@@ -170,14 +183,14 @@ const ManageSchedule = () => {
                                                 className="mx-2"
                                                 onClick={() => handleUpdateScheduleYacht(schedule)}
                                             >
-                                                Sửa
+                                                Edit
                                             </Button>
                                             <Button
                                                 variant="danger"
                                                 className="mx-2"
                                                 onClick={() => handleDeleteScheduleYacht(schedule)}
                                             >
-                                                Xóa
+                                                Delete
                                             </Button>
                                         </td>
                                     </tr>
@@ -195,6 +208,29 @@ const ManageSchedule = () => {
                 yachtId={yachtId}
                 getScheduleYacht={fetchScheduleYacht}
             />
+            <div className='page'>
+                <ReactPaginate
+                    previousLabel="< Prev"
+                    nextLabel="Next >"
+                    breakLabel="..."
+                    breakClassName="page-item"
+                    breakLinkClassName="page-link"
+                    pageCount={pageCount}
+                    marginPagesDisplayed={2}
+                    pageRangeDisplayed={3}
+                    onPageChange={handlePageClick}
+                    containerClassName="pagination"
+                    pageClassName="page-item"
+                    pageLinkClassName="page-link"
+                    previousClassName="page-item"
+                    previousLinkClassName="page-link"
+                    nextClassName="page-item"
+                    nextLinkClassName="page-link"
+                    activeClassName="active"
+                    forcePage={currentPage}
+                    disableInitialCallback={true}
+                />
+            </div>
         </div>
     );
 };

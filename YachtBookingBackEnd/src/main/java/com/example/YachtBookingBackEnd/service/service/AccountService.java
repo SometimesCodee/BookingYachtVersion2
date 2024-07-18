@@ -216,6 +216,33 @@ public class AccountService implements IAccount {
         }
     }
 
+    @Override
+    public boolean disableAccountCompany(String idCompany) {
+        try {
+            Optional<Company> companyOptional = companyRepository.findById(idCompany);
+            if (companyOptional.isPresent()) {
+                Company company = companyOptional.get();
+                Account account = accountRepository.findById(company.getAccount().getIdAccount())
+                        .orElseThrow(() -> new RuntimeException("Can not found Account with id: " + idCompany));
+
+                if (account.getStatus() == 1) {
+                    account.setStatus(0);
+                    accountRepository.save(account);
+                    return true;
+                } else {
+                    log.error("Account with id " + account.getIdAccount() + " is not active");
+                    return false;
+                }
+            } else {
+                log.error("Can not found company with id: " + idCompany);
+                return false;
+            }
+        } catch (Exception e) {
+            log.error("Exception: " + e.getMessage());
+            return false;
+        }
+    }
+
     private boolean isValidEmail(String email) {
         String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
         Pattern pattern = Pattern.compile(emailRegex);

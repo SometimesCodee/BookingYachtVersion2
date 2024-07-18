@@ -33,7 +33,7 @@ const ModalGetDetailBooking = (props) => {
                         <p><strong>Tổng tiền:</strong> {formatAmount(bookingOrderDetail.amount)} VND</p>
                         <p><strong>Yêu cầu:</strong> {bookingOrderDetail.requirement}</p>
                         <p><strong>Trạng thái:</strong> {bookingOrderDetail.status}</p>
-                        <p><strong>Tên thuyền:</strong> {bookingOrderDetail.yachtName}</p>
+                        <p><strong>Tên du thuyền:</strong> {bookingOrderDetail.yachtName}</p>
                         <p><strong>Ngày đi:</strong> {formatDateTime(bookingOrderDetail.schedule.startDate)}</p>
                         <p><strong>Ngày về:</strong> {formatDateTime(bookingOrderDetail.schedule.endDate)}</p>
                         <p><strong>Thông tin khách hàng:</strong></p>

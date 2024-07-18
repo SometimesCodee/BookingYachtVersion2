@@ -37,4 +37,13 @@ public interface CompanyRepository extends JpaRepository<Company, String> {
     boolean checkEmailExist(@Param("email") String email);
     @Query("SELECT c.account from Company c where c.idCompany=:idCompany")
     Account getAccountByIdCompany(@Param("idCompany") String idCompany);
+
+    @Query("SELECT c " +
+            "FROM Company c " +
+            "JOIN Account a ON a.idAccount = c.account.idAccount " +
+            "JOIN Customer cu ON cu.idCustomer = a.customer.idCustomer " +
+            "JOIN BookingOrder b ON b.customer.idCustomer = cu.idCustomer " +
+            "WHERE b.idBooking = :idBooking")
+    Company findCompanyByIdBooking(@Param("idBooking") String idBooking);
+
 }

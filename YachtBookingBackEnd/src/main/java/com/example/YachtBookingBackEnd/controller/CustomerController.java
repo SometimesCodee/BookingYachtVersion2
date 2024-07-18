@@ -19,7 +19,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 
-@CrossOrigin("*")
+@CrossOrigin("https://yb.sh.io.vn")
 @RestController
 @RequestMapping("/api/customer")
 @RequiredArgsConstructor

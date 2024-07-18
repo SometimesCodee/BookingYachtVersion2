@@ -182,6 +182,10 @@ public class BookingOrderService implements IBookingOrder {
                      String customerEmail = bookingOrder.getCustomer().getEmail();
                      mailSender.sendCanelMailFromCustomer(customerEmail, idBooking, reason);
 
+                     // Send cancel email to customer
+                     Company company = companyRepository.findCompanyByIdBooking(bookingOrder.getIdBooking());
+                     mailSender.sendCanelMailFromCustomerToCom(company.getEmail(), idBooking, reason);
+
                      return true;
                  } catch (Exception e) {
                      log.error("Failed to cancel booking order {} for customer {}", idBooking, idCustomer, e);

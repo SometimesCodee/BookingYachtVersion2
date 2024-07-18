@@ -29,7 +29,7 @@ public class MailSenderService implements IMailSender {
     public void sendCancelMail(String to, String idBooking, String reason, String companyName) {
         String subject = "Yacht Booking Cancellation Notice";
         String body = "Dear Customer,\n\n" +
-                "We regret to inform you that your booking with ID " + idBooking + " has been cancelled.\n" +
+                "We regret to inform you that your booking with ID " + idBooking + " has been cancelled by Company.\n" +
                 "Reason: " + reason + "\n\n" +
                 "Thank you for you understanding.\n\n" +
                 "Best regards,\n" + companyName;
@@ -55,6 +55,16 @@ public class MailSenderService implements IMailSender {
                 "Booking orders will not be refunded for any reason.\n\n" +
                 "Thank you for booking with us.\n\n" +
                 "Best regards, Booking System";
+        sendNewMail(to, subject, body);
+    }
+
+    @Override
+    public void sendCanelMailFromCustomerToCom(String to, String idBooking, String reason) {
+        String subject = "Yacht Booking Cancellation Notice";
+        String body = "Dear Company,\n\n" +
+                "We regret to inform you that booking with ID " + idBooking + " has been cancelled by Customer.\n\n" +
+                "Reason: " + reason + "\n\n" +
+                "Booking System";
         sendNewMail(to, subject, body);
     }
 

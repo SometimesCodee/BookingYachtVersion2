@@ -55,12 +55,12 @@ const SectionHeader = ({ yacht }) => {
                             </div>
                             <label>{yacht.launch}</label>
                         </div>
-                        <div className='flex gap-24 align-start md'>
+                        {/* <div className='flex gap-24 align-start md'>
                             <div className='flex align-center gap-8'>
                                 <p><MdOutlineBedroomParent /> Cabin</p>
                             </div>
                             <label>20</label>
-                        </div>
+                        </div> */}
                         <div className='flex gap-24 align-start md'>
                             <div className='flex align-center gap-8'>
                                 <p><LuShip /> Thân vỏ</p>

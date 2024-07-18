@@ -113,7 +113,12 @@ public class AdminController {
         return new ResponseEntity<>(dataResponse, HttpStatus.OK);
     }
 
-
+    @PutMapping("/disableCustomer/{idCustomer}")
+    ResponseEntity<?> disableCustomer(@PathVariable("idCustomer") String idCustomer) {
+        DataResponse dataResponse = new DataResponse();
+        dataResponse.setData(iCustomer.disableCustomerById(idCustomer));
+        return new ResponseEntity<>(dataResponse, HttpStatus.OK);
+    }
 
 
 }

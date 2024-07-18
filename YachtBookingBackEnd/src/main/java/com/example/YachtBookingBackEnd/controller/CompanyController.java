@@ -35,11 +35,25 @@ public class CompanyController {
     IYachtSchedule iYachtSchedule;
     IYachtType iYachtType;
     ILocation iLocation;
-
+    IForgotPassword iForgotPassword;
+    @PostMapping("/forgotPassword/verifyEmail")
+    public ResponseEntity<?> verifyEmail(@RequestParam String  email) {
+        DataResponse dataResponse = new DataResponse<>();
+        dataResponse.setData(iForgotPassword.verifyEmail(email));
+        return new ResponseEntity<>(dataResponse, HttpStatus.OK);
+    }
     @GetMapping("/profiles/{idCompany}")
     public ResponseEntity<?> getDetailCompanyByID(@PathVariable String idCompany) {
         DataResponse dataResponse = new DataResponse<>();
         dataResponse.setData(iCompany.getCompanyDTOById(idCompany));
+        return new ResponseEntity<>(dataResponse, HttpStatus.OK);
+    }
+    @PutMapping("/profiles/changePassword/{idCompany}")
+    public ResponseEntity<?>changePassword(@PathVariable("idCompany") String idCompany, @RequestParam String newPassword,
+                                           @RequestParam String confirmPassword,
+                                           @RequestParam String oldPassword){
+        DataResponse dataResponse = new DataResponse<>();
+        dataResponse.setData(iCompany.changePasswordCompany(idCompany, oldPassword,newPassword,confirmPassword));
         return new ResponseEntity<>(dataResponse, HttpStatus.OK);
     }
 
@@ -406,5 +420,7 @@ public class CompanyController {
         dataResponse.setData(iLocation.getAllLocation());
         return new ResponseEntity<>(dataResponse, HttpStatus.OK);
     }
+
+
 
 }

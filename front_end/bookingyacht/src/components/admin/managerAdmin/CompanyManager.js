@@ -107,7 +107,7 @@ const CompanyManager = () => {
         filterCompanies(searchName, searchEmail, value);
         setCurrentPage(1);
     };
-    
+
 
     //Hàm tạo tài khoản cho company
     const handleCreateCompany = async event => {
@@ -116,16 +116,18 @@ const CompanyManager = () => {
         const username = form.elements.username.value;
         const password = form.elements.password.value;
         const confirmPassword = form.elements.confirmPassword.value;
-        if(username.length < 3){
-            toast.error('Account name must be more than 3 characters long!');
+        // Kiểm tra điều kiện cho tên tài khoản
+        if (username.length < 3 || !/^[a-zA-Z]/.test(username)) {
+            toast.error('Tên tài khoản phải bắt đầu bằng một chữ cái và có ít nhất 3 ký tự!');
             return;
         }
-        if(password < 8){
-            toast.error('Password must be over 8 characters!');
+        // Kiểm tra điều kiện cho mật khẩu
+        if (password.length < 8) {
+            toast.error('Mật khẩu phải có ít nhất 8 ký tự!');
             return;
         }
         if (password !== confirmPassword) {
-            setCreatetAccountMessage('Password and confirm password do not match.');
+            setCreatetAccountMessage('Mật khẩu và xác nhận mật khẩu không khớp.');
             return;
         }
         const FormData = require('form-data');
@@ -138,19 +140,16 @@ const CompanyManager = () => {
                 url: 'http://localhost:8080/api/admins/accounts',
                 headers: {
                     'Authorization': getAuthHeader(),
-                    // 'Content-Type': 'multipart/form-data'
                 },
                 data: data
             };
             const response = await axios(config);
             if (response.data.data) {
-                // setCreatetAccountMessage('Company created successfully.');
                 toast.success('Company created successfully.')
                 fetchCompanies();
                 setNewAccountId(response.data.idAccount)
                 setShowInfoDetailModal(true)
             } else {
-                // setCreatetAccountMessage('Failed to create company. Please try again.');
                 toast.error("Tạo tài khoản không thành công, tài khoản này có thể đã tồn tại.")
             }
         } catch (error) {
@@ -221,8 +220,8 @@ const CompanyManager = () => {
         setShowConfirmModal(true);
     };
 
-    const handleConfirmHideCompany = async () =>{
-        try{
+    const handleConfirmHideCompany = async () => {
+        try {
             const config = {
                 method: 'put',
                 url: `http://localhost:8080/api/admins/companies/${selectedCompany.idCompany}`,
@@ -233,7 +232,7 @@ const CompanyManager = () => {
             await axios(config);
             toast.success('Company hidden successfully.');
             dispatch(fetchCompanies())
-        }catch (error) {
+        } catch (error) {
             toast.error('Failed to hide company. Please try again.');
         } finally {
             setShowConfirmModal(false);
@@ -291,9 +290,9 @@ const CompanyManager = () => {
         <div className="container mt-5">
             <h1>Admin Manager</h1>
             <h2>Company Accounts</h2>
-           <div className="d-flex mb-3">
+            <div className="d-flex mb-3">
                 <div style={{ marginRight: '50px' }}>
-                <label>Tìm kiếm theo Id</label>
+                    <label>Tìm kiếm theo Id</label>
                     <input
                         type="text"
                         className="form-control"
@@ -305,7 +304,7 @@ const CompanyManager = () => {
             </div>
             <div className="d-flex mb-3">
                 <div style={{ marginRight: '50px' }}>
-                <label>Tìm kiếm theo tên</label>
+                    <label>Tìm kiếm theo tên</label>
                     <input
                         type="text"
                         className="form-control"
@@ -315,7 +314,7 @@ const CompanyManager = () => {
                     />
                 </div>
                 <div>
-                <label>Tìm kiếm theo email</label>
+                    <label>Tìm kiếm theo email</label>
                     <input
                         type="text"
                         className="form-control"
@@ -328,13 +327,13 @@ const CompanyManager = () => {
             <div className='mb-3'>
                 <div className='row'>
                     <div className='col d-flex justify-content-between'>
-                        <DropdownButton id="dropdown-basic-button" title="Sort Options" variant='dark'>
-                            <Dropdown.Item onClick={() => handleSortChange('idCompany', 'asc')}>ID Ascending</Dropdown.Item>
-                            <Dropdown.Item onClick={() => handleSortChange('idCompany', 'desc')}>ID Descending</Dropdown.Item>
-                            <Dropdown.Item onClick={() => handleSortChange('name', 'asc')}>Name Ascending</Dropdown.Item>
-                            <Dropdown.Item onClick={() => handleSortChange('name', 'desc')}>Name Descending</Dropdown.Item>
+                        <DropdownButton id="dropdown-basic-button" title="Sắp xếp" variant='dark'>
+                            <Dropdown.Item onClick={() => handleSortChange('idCompany', 'asc')}>ID tăng dần</Dropdown.Item>
+                            <Dropdown.Item onClick={() => handleSortChange('idCompany', 'desc')}>ID giảm dần</Dropdown.Item>
+                            <Dropdown.Item onClick={() => handleSortChange('name', 'asc')}>Tên tăng dần</Dropdown.Item>
+                            <Dropdown.Item onClick={() => handleSortChange('name', 'desc')}>Tên giảm dần</Dropdown.Item>
                         </DropdownButton>
-                        <Button variant="success" onClick={() => setShowCompanyModal(true)} className="ml-2">Create Company Account</Button>
+                        <Button variant="success" onClick={() => setShowCompanyModal(true)} className="ml-2">Tạo Tài Khoản</Button>
                     </div>
                 </div>
             </div>
@@ -343,11 +342,11 @@ const CompanyManager = () => {
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Name</th>
-                        <th>Address</th>
+                        <th>Họ Và Tên</th>
+                        <th>Địa Chỉ</th>
                         <th>Email</th>
-                        <th>Exist</th>
-                        <th>Action</th>
+                        <th>Trạng Thái</th>
+                        <th>Hành Động</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -369,10 +368,10 @@ const CompanyManager = () => {
                                 )}
                             </td>
                             <td className='button_mana'>
-                                <Button variant="info" onClick={() => handleShowDetailModal(company)}>View Detail</Button>
+                                <Button variant="info" onClick={() => handleShowDetailModal(company)}>Chi Tiết</Button>
                                 <Button variant={company.exist ? 'danger' : 'success'}
-                                onClick={() => handleHideCompany(company)}>
-                                  {company.exist ? 'Hide' : 'Unhide'}
+                                    onClick={() => handleHideCompany(company)}>
+                                    {company.exist ? 'Chặn' : 'Bỏ Chặn'}
                                 </Button>
                             </td>
                         </tr>
@@ -499,7 +498,7 @@ const CompanyManager = () => {
                     <Modal.Title>Confirm Hide Company</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                {selectedCompany?.exist
+                    {selectedCompany?.exist
                         ? 'Are you sure you want to hide this company?'
                         : 'Are you sure you want to unhide this company?'}
                 </Modal.Body>

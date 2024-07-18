@@ -2,9 +2,11 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Card, Col, Image, Row } from 'react-bootstrap';
 import { FaLocationDot } from "react-icons/fa6";
+import { IoMdBoat, IoMdMail } from "react-icons/io";
+import { LuMapPin } from "react-icons/lu";
 import { RiShipLine } from "react-icons/ri";
 import { useNavigate, useParams } from 'react-router-dom';
-import banner from '../../assets/bannercompany.png';
+import { getHighestAndLowestPriceByYacht } from '../../services/ApiServices';
 import '../yacht/FindYacht.scss';
 import './InfoCompany.scss';
 const ProfilePage = () => {
@@ -16,6 +18,7 @@ const ProfilePage = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [yachtList, setYachtList] = useState([]);
     const [company, setCompany] = useState(null);
+    const [priceData, setPriceData] = useState({});
 
     useEffect(() => {
         axios.get(`http://localhost:8080/api/customer/yacht/findByCompany/${idCompany}`)
@@ -35,6 +38,26 @@ const ProfilePage = () => {
                 console.log(error)
             })
     }, [idCompany])
+
+    useEffect(() => {
+        // Fetch prices for each yacht in paggingYacht
+        const fetchPrices = async () => {
+            const priceData = {};
+            for (const yacht of paggingYacht) {
+                try {
+                    const response = await getHighestAndLowestPriceByYacht(yacht.idYacht);
+                    priceData[yacht.idYacht] = response.data.data;
+                } catch (error) {
+                    console.error('Error fetching price:', error);
+                }
+            }
+            setPriceData(priceData);
+        };
+
+        if (paggingYacht.length > 0) {
+            fetchPrices();
+        }
+    }, [paggingYacht]);
 
     useEffect(() => {
         if (yachtList.length) {
@@ -75,17 +98,16 @@ const ProfilePage = () => {
     }
 
     return (
-        <div>
-            <Image src={banner} className="cover-photo" />
+        <div className='mainpage'>
             <div className='container'>
                 <Row className="justify-content-center">
                     <Col xs={12} className="text-center cover-photo-container">
                         {company && (
                             <div className="profile-info container">
-                                <Image src={`${getImageApi}${company.logo}`} roundedCircle className="profile-photo" />
+                            <Image src={`${getImageApi}${company.logo}`} className="profile-photo" />
                                 <div className="profile-text">
-                                    <h2 style={{ fontWeight: 'bold', fontSize : '50px' }}>{company.name}</h2>
-                                    <p><i>Chào mừng bạn đến với du thuyền, điểm đến hàng đầu cho những trải nghiệm du thuyền
+                                    <h2 style={{ fontWeight: 'bold', fontSize: '50px', color: '#0E4F4F', fontFamily: 'Roboto, sans-serif' }}><IoMdBoat />{company.name}</h2>
+                                    <p style={{ fontWeight: 'bold' }}><i>Chào mừng bạn đến với du thuyền, điểm đến hàng đầu cho những trải nghiệm du thuyền
                                         sang trọng và đẳng cấp! Chúng tôi tự hào mang đến cho khách hàng những chuyến hải trình
                                         đáng nhớ, kết hợp giữa sự thoải mái, tiện nghi và phong cách thượng lưu.</i></p>
                                 </div>
@@ -97,12 +119,12 @@ const ProfilePage = () => {
                     <Col md={4}>
                         <Card>
                             <Card.Body>
-                                <Card.Title>Giới thiệu</Card.Title>
+                                <Card.Title style={{fontWeight : 'bold'}}>Giới thiệu</Card.Title>
                                 {
                                     company && (
                                         <Card.Text>
-                                            <p>Địa điểm: <strong>{company.address}</strong></p>
-                                            <p>Email: <strong>{company.email}</strong></p>
+                                            <p><LuMapPin /> Địa điểm: <strong>{company.address}</strong></p>
+                                            <p><IoMdMail /> Email: <strong>{company.email}</strong></p>
                                         </Card.Text>
                                     )
                                 }
@@ -116,9 +138,10 @@ const ProfilePage = () => {
                                 {
                                     paggingYacht.map((yacht) => {
                                         return (
-                                            <div className="card row" key={yacht.idYacht} onClick={() => { hanldeSelectedYacht(yacht.idYacht) }} style={{ cursor: 'pointer', marginTop: '20px'}}>
+                                            <div className="card row d-flex" key={yacht.idYacht} onClick={() => { hanldeSelectedYacht(yacht.idYacht) }} style={{ cursor: 'pointer', marginTop: '20px' }}>
+                                                <Row>
                                                 <div className="col-md-5">
-                                                    <img style={{ height: '250px', width: '100%' }} className="card-img-top object-fit-cover" src={`${avatarYachtApi}${yacht.image}`} alt="Card image cap" />
+                                                    <img style={{ height: '250px', width: '100%', borderRadius : '35px', padding : '15px 0' }} className="card-img-top object-fit-cover" src={`${avatarYachtApi}${yacht.image}`} alt="Card cap" />
                                                 </div>
                                                 <div className="card-body col-md-7">
                                                     <div className='card-content'>
@@ -127,16 +150,17 @@ const ProfilePage = () => {
                                                         <p style={{ margin: '0px' }}>Hạ thủy: {yacht.launch} - Vỏ Tàu {yacht.hullBody}</p>
                                                         <div style={{ fontWeight: 'bold' }}> <RiShipLine /> {yacht.itinerary} </div>
                                                         <div className='price d-flex' style={{ justifyContent: 'space-between', alignItems: 'center' }}>
-                                                            <p style={{ color: '#475467', fontWeight: '700' }}>Price: 3.3350.000đ</p>
+                                                            <p style={{ color: '#475467', fontWeight: '700' }}>Price: {priceData[yacht.idYacht] ? `${priceData[yacht.idYacht].lowestPrice.toLocaleString()} - ${priceData[yacht.idYacht].highestPrice.toLocaleString()}đ` : 'Loading...'}</p>
                                                             <button style={{ borderRadius: 25 }} className='btn btn-warning'>Đặt ngay</button>
                                                         </div>
                                                     </div>
-                                                </div>
+                                                </div>    
+                                                </Row>
                                             </div>
                                         )
                                     })
                                 }
-                                <div className='d-flex justify-content-center'>
+                                <div className='d-flex justify-content-center' style={{padding : '15px 0'}}>
                                     {renderPages()}
                                 </div>
                             </div>

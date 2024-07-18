@@ -1,5 +1,5 @@
 import '@fortawesome/fontawesome-free/css/all.min.css';
-import React, { useState } from 'react';
+import React from 'react';
 import { Route, Routes } from "react-router-dom";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -30,16 +30,17 @@ import FindYacht from './components/yacht/FindYacht';
 import YachtQuestion from './components/yacht/YachtQuestion';
 import YachtRule from './components/yacht/YachtRule';
 
+import { useSelector } from 'react-redux';
 import ManageRoomType from './components/company/ManageRoomType';
 import ManageSchedule from './components/company/ManageSchedule';
 import ManageServiceYacht from './components/company/ManageServiceYacht';
 import Page404 from './components/page404/Page404';
 import ProtectedRoute from './components/routers/ProtectedRoute';
-
+import VerifyOTP from './components/auths/VerifyOTP';
+import ChangePassword1 from './components/auths/ChangePassword1';
 
 const Layout = () => {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-
+    const { role } = useSelector((state) => state.loginAdmin);
     return (
         <>
             <Routes>
@@ -61,6 +62,10 @@ const Layout = () => {
                 <Route path='/forgotpassowd' element={<ForgotPassword />}></Route>
                 <Route path='/information/:idCustomer' element={<Information />} />
                 {/* <Route path='/information-company' element={<InformationCompany />} /> */}
+                <Route path='/verifyOTP/:email' element={<VerifyOTP />} />
+                <Route path='/changePasswordByEmail/:email' element={<ChangePassword1 />} />
+
+
 
 
                 <Route path='/manage-company' element={
@@ -77,19 +82,19 @@ const Layout = () => {
 
                 </Route>
 
+
                 <Route path='manage-yacht/:idYacht' element={<ManageYacht />} />
                 <Route path='manage-room/:idYacht' element={<ManageRoom />} />
                 <Route path='manage-services-yacht/:idYacht' element={<ManageServiceYacht />} />
                 <Route path='manage-schedule/:idYacht' element={<ManageSchedule />} />
 
-                <Route path='/admin' element={<LoginAdmin setIsLoggedIn={setIsLoggedIn} />} />
-                {
-                    isLoggedIn && (
-                        <Route path='/dashboard' element={<AdminLayout />}>
-                            <Route index element={<AdminHome />} />
-                            <Route path="customer" element={<CustomerManager />} />
-                            <Route path="company" element={<CompanyManager />} />
-                        </Route>
+                <Route path='/admin' element={<LoginAdmin />} />
+                {role === 'ROLE_ADMIN' && (
+                    <Route path='/dashboard' element={<AdminLayout />}>
+                        <Route index element={<AdminHome />} />
+                        <Route path="customer" element={<CustomerManager />} />
+                        <Route path="company" element={<CompanyManager />} />
+                    </Route>
                     )
                 }
                 <Route path='/deltailInfo/:idCompany' element={<DetailEnterprise />} />

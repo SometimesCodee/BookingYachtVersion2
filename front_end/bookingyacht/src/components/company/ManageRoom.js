@@ -18,9 +18,13 @@ import _ from 'lodash';
 
 const ManageRoom = () => {
     const [isShowModalRoomImage, setIsShowModalRoomImage] = useState(false);
+
     const [isShowModalRoomService, setIsShowModalRoomService] = useState(false);
+
     const [isShowModalUpdateRoom, setIsShowModalUpdateRoom] = useState(false);
+
     const [isShowModalCreateRoom, setIsShowModalCreateRoom] = useState(false);
+
     const [isShowModalRoomType, setIsShowModalRoomType] = useState(false);
 
     const [currentPage, setCurrentPage] = useState(0);
@@ -50,7 +54,6 @@ const ManageRoom = () => {
     useEffect(() => {
         getAllRoom();
         fetchRoomType()
-
     }, [])
 
     useEffect(() => {
@@ -90,7 +93,6 @@ const ManageRoom = () => {
 
     const fetchRoomType = async () => {
         let res = await getAllRoomTypeCompany(idYacht);
-
         if (res && res.data && res.data.data) {
             setListRoomType(res.data.data);
         } else {

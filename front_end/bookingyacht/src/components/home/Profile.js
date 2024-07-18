@@ -1,20 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import { Button } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
-import { FaHome } from "react-icons/fa";
-import ModalUpdateProfileUser from './ModalUpdateProfileUser';
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
+import { FaHome } from "react-icons/fa";
 import { useSelector } from 'react-redux';
-import { getProfileCustomer } from '../../services/ApiServices';
+import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { getProfileCustomer } from '../../services/ApiServices';
 import Bill from './Bill';
 import BookingHistory from './BookingHistory';
 import BookingOrderHistory from './BookingOrderHistory';
+import ModalUpdateProfileUser from './ModalUpdateProfileUser';
+import ModalChangePassCustomer from './ModalChangePassCustomer';
 
 const Profile = () => {
     const [isShowModal, setIsShowModal] = useState(false);
     const idCustomer = useSelector(state => state.account.account.idCustomer);
+    const [showModalChangePass, setShowModalChangePass] = useState(false)
+
+
 
     useEffect(() => {
         getProfile();
@@ -24,6 +28,8 @@ const Profile = () => {
 
     const handleClose = () => {
         setIsShowModal(false);
+        setShowModalChangePass(false)
+
     }
 
     const getProfile = async () => {
@@ -34,6 +40,7 @@ const Profile = () => {
             toast.error('Please Fill Information')
         )
     }
+
 
     const handleUpdateProfile = () => {
         setIsShowModal(true);
@@ -101,6 +108,8 @@ const Profile = () => {
                                             <div className="col-md-10">
                                                 <p>{profile.address}</p>
                                             </div>
+                                        </div><div className="row">
+                                            <Link onClick={() => setShowModalChangePass(true)}>Change Password</Link>
                                         </div>
                                     </div>
 
@@ -111,13 +120,13 @@ const Profile = () => {
                 </Tab>
                 <Tab eventKey="Booking History" title="Booking History" >
                     <BookingOrderHistory />
-                </Tab>
+                </Tab >
                 <Tab eventKey="Bill" title="Bill">
                     <Bill
                         idCustomer={idCustomer}
                     />
                 </Tab>
-            </Tabs>
+            </Tabs >
 
 
             <ModalUpdateProfileUser
@@ -126,7 +135,11 @@ const Profile = () => {
                 profile={profile}
                 getProfile={getProfile}
             />
-        </div>
+            <ModalChangePassCustomer
+                show={showModalChangePass}
+                handleClose={handleClose}
+            />
+        </div >
 
     );
 };

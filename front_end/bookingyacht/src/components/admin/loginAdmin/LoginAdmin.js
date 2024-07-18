@@ -6,21 +6,20 @@ import { Link, useNavigate } from 'react-router-dom';
 import logo from '../../../assets/logo_swp.png';
 import { login } from '../../../redux/action/LoginAdminAction';
 import './Auth.scss';
-const LoginAdmin = ({ setIsLoggedIn }) => {
+const LoginAdmin = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
     
-    const { loading, error, isLoggedIn } = useSelector((state) => state.loginAdmin);
+    const { loading, error, role } = useSelector((state) => state.loginAdmin);
 
     useEffect(() => {
-        setIsLoggedIn(isLoggedIn);
-        if (isLoggedIn) {
+        if (role === 'ROLE_ADMIN') {
             navigate('/dashboard');
         }
-    }, [isLoggedIn, navigate, setIsLoggedIn]);
+    }, [role, navigate]);
 
     const handleLogin = (e) => {
         e.preventDefault();

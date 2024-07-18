@@ -1,13 +1,25 @@
-import i_content from '../../assets/image_1.webp';
+import { useEffect, useState } from 'react';
 import Carousel from 'react-bootstrap/Carousel';
-const Feedback = (props) => {
+import i_content from '../../assets/image_1.webp';
+import { getAllFeedback } from '../../services/ApiServices';
+const Feedback = () => {
+    const [feedbacks, setFeedbacks] = useState([]);
+
+    useEffect(() => {
+        getAllFeedback().then(response => {
+            setFeedbacks(response.data.data);
+        }).catch(error => {
+            console.error('Error fetching feedbacks:', error);
+        });
+    }, []);
+
     return (
         <>
             <div className='feedback-header row container p-5'>
                 <div className='yacht-title col-md mx-4'>
                     <h4 style={{ fontWeight: 'bold' }}>Đánh Giá Từ <br />Người Trải Nghiệm</h4>
                     <div>
-                        <img src={i_content} />
+                        <img src={i_content} alt="content" />
                     </div>
                 </div>
                 <p style={{ width: "500px" }} className='col-md mx-4'>
@@ -17,30 +29,19 @@ const Feedback = (props) => {
 
             <div className='feedback-body'>
                 <Carousel>
-                    <Carousel.Item interval={3000}>
-                        <Carousel.Caption>
-                            <h3>First slide label</h3>
-                            <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-                        </Carousel.Caption>
-                    </Carousel.Item>
-                    <Carousel.Item interval={3000}>
-                        <Carousel.Caption>
-                            <h3>Second slide label</h3>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                        </Carousel.Caption>
-                    </Carousel.Item>
-                    <Carousel.Item>
-                        <Carousel.Caption>
-                            <h3>Third slide label</h3>
-                            <p>
-                                Praesent commodo cursus magna, vel scelerisque nisl consectetur.
-                            </p>
-                        </Carousel.Caption>
-                    </Carousel.Item>
+                    {feedbacks.map(feedback => (
+                        <Carousel.Item key={feedback.idFeedback} interval={3000}>
+                            <Carousel.Caption>
+                                <h3>Du Thuyền: {feedback.idYacht}</h3>
+                                <p>{feedback.description}</p>
+                                <p>Khách Hàng: {feedback.customer.fullName}</p>
+                            </Carousel.Caption>
+                        </Carousel.Item>
+                    ))}
                 </Carousel>
             </div>
         </>
+    );
+};
 
-    )
-}
 export default Feedback;

@@ -26,9 +26,17 @@ public interface ICustomer {
 
     List<CompanyDTO> getAllCompanies();
 
+    boolean disableCustomerById(String idCustomer);
+
+
+
     List<String> findIdBookingByCustomerId(String customerId);
 
     boolean isFeedbackAllowed(String idBooking);
 
     boolean existsFeedbackByIdBooking(String idBooking);
+
+    List<FeedbackDTO> getAllFeedback();
+
+    String  changePasswordCustomer(String idCustomer, String oldPassword, String newPassword, String confirmPassword);
 }

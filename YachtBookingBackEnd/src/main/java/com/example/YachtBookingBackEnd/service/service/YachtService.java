@@ -243,14 +243,14 @@ public class YachtService implements IYacht {
 
                 yachtDTO.setYachtType(yachtTypeDTO);
 
-//                CompanyDTO companyDTO = new CompanyDTO();
-//                companyDTO.setIdCompany(yacht.get().getCompany().getIdCompany());
-//                companyDTO.setName(yacht.get().getCompany().getName());
-//                companyDTO.setAddress(yacht.get().getCompany().getAddress());
-//                companyDTO.setLogo(yacht.get().getCompany().getLogo());
-//                companyDTO.setEmail(yacht.get().getCompany().getEmail());
-//
-//                yachtDTO.setCompany(companyDTO);
+                CompanyDTO companyDTO = new CompanyDTO();
+                companyDTO.setIdCompany(yacht.get().getCompany().getIdCompany());
+                companyDTO.setName(yacht.get().getCompany().getName());
+                companyDTO.setAddress(yacht.get().getCompany().getAddress());
+                companyDTO.setLogo(yacht.get().getCompany().getLogo());
+                companyDTO.setEmail(yacht.get().getCompany().getEmail());
+
+                yachtDTO.setCompany(companyDTO);
 
                 LocationDTO locationDTO = new LocationDTO();
                 locationDTO.setName(yacht.get().getLocation().getName());

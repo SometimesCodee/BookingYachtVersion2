@@ -62,6 +62,16 @@ public class CustomerController {
         return new ResponseEntity<>(dataResponse, HttpStatus.OK);
     }
 
+    @PutMapping("/profiles/changePassword/{idCustomer}")
+    public ResponseEntity<?>changePassword(@PathVariable("idCustomer") String idCustomer,
+                                           @RequestParam String newPassword,
+                                           @RequestParam String confirmPassword,
+                                           @RequestParam String oldPassword){
+        DataResponse dataResponse = new DataResponse<>();
+        dataResponse.setData(iCustomer.changePasswordCustomer(idCustomer, oldPassword,newPassword,confirmPassword));
+        return new ResponseEntity<>(dataResponse, HttpStatus.OK);
+    }
+
     @PostMapping("/profile/{idAccount}")
     ResponseEntity<?> addCustomerProfile(@PathVariable String idAccount,
                                          @RequestParam String fullName,
@@ -326,8 +336,8 @@ public class CustomerController {
         return new ResponseEntity<>(dataResponse, HttpStatus.OK);
     }
 
-    @PostMapping("/forgotPassword/verifyOTP/{otp}/{email}")
-    public ResponseEntity<?> verifyOTP(@PathVariable("otp") Integer otp, @PathVariable String email){
+    @PostMapping("/forgotPassword/verifyOTP/{email}")
+    public ResponseEntity<?> verifyOTP(@RequestParam int otp, @PathVariable String email){
         DataResponse  dataResponse = new DataResponse<>();
         dataResponse.setData(iForgotPassword.veryfiOTP(otp, email));
         return new ResponseEntity<>(dataResponse, HttpStatus.OK);
@@ -347,6 +357,7 @@ public class CustomerController {
         return new ResponseEntity<>(dataResponse,HttpStatus.OK);
     }
 
+
     @GetMapping("/getAllCustomer")
     ResponseEntity<?> customerList(){
         DataResponse dataResponse = new DataResponse();
@@ -361,11 +372,17 @@ public class CustomerController {
         return new ResponseEntity<>(dataResponse, HttpStatus.OK);
     }
 
-
     @GetMapping("/yacht/getPriceRoom/{yachtId}")
     public ResponseEntity<?>getPriceRoom(@PathVariable("yachtId")String  yachtId){
         DataResponse dataResponse = new DataResponse<>();
         dataResponse.setData(iYacht.getPriceRoom(yachtId));
+        return new ResponseEntity<>(dataResponse, HttpStatus.OK);
+    }
+
+    @GetMapping("/getAllFeedback")
+    public ResponseEntity<?> getAllFeedback(){
+        DataResponse dataResponse = new DataResponse();
+        dataResponse.setData(iCustomer.getAllFeedback());
         return new ResponseEntity<>(dataResponse, HttpStatus.OK);
     }
 

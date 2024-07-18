@@ -104,7 +104,7 @@ const RoomSelection = ({ yacht, selectedSchedule }) => {
         setShowBookNow(true);
     };
     const cssButtonClicked = {
-        backgroundColor: 'orange',
+        backgroundColor: '#6AE4E7',
         color: 'balck'
     }
     const hanldeRentWhole = () => {
@@ -137,7 +137,6 @@ const RoomSelection = ({ yacht, selectedSchedule }) => {
         const filtered = originalRooms.filter(room => room.roomType.type === roomType);
         setFilteredRooms(filtered);
     }
-
 
     return (
         <Container>

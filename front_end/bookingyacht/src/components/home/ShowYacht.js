@@ -2,7 +2,7 @@ import Card from 'react-bootstrap/Card';
 import { NavLink, useNavigate } from "react-router-dom";
 import Button from 'react-bootstrap/Button';
 import { useEffect, useState } from 'react';
-import { getAllYacht, getUser } from '../../services/ApiServices';
+import { getAllYacht, getHighestAndLowestPriceByYacht, getUser } from '../../services/ApiServices';
 import { GrFormNextLink } from "react-icons/gr";
 import i_content from '../../assets/image_1.webp'
 import axios from 'axios';
@@ -16,10 +16,31 @@ import { getAllRoomByYachtApi } from '../../redux/action/RoomAction';
 const ShowYacht = () => {
     const dispatch = useDispatch();
     const { yachtList } = useSelector((state) => state.YachtListReducer);
+    const [priceData, setPriceData] = useState({});
 
     useEffect(() => {
         dispatch(getYachtListApi())
     }, [dispatch])
+
+    useEffect(() => {
+        // Fetch prices for each yacht in paggingYacht
+        const fetchPrices = async () => {
+            const priceData = {};
+            for (const yacht of yachtList) {
+                try {
+                    const response = await getHighestAndLowestPriceByYacht(yacht.idYacht);
+                    priceData[yacht.idYacht] = response.data.data;
+                } catch (error) {
+                    console.error('Error fetching price:', error);
+                }
+            }
+            setPriceData(priceData);
+        };
+
+        if (yachtList.length > 0) {
+            fetchPrices();
+        }
+    }, [yachtList]);
 
     const avatarYachtApi = 'http://localhost:8080/api/customer/file/'
 
@@ -48,7 +69,7 @@ const ShowYacht = () => {
                                         <Card.Title style={{ fontWeight: 600, fontSize: 18, color: '#475467', marginBottom: 0 }}>{`${item.name}`}</Card.Title>
                                         <div style={{ padding: '5px' }} className='location'><FaLocationDot />{item.location.name}</div>
                                         <div className='row d-flex align-items-center mt-2'>
-                                            <p className='col-7' style={{ color: '#475467', fontWeight: '700', marginBottom: 0 }}>Price:</p>
+                                            <p className='col-7' style={{ color: '#475467', fontWeight: '700', marginBottom: 0 }}>From: {priceData[item.idYacht] ? `${priceData[item.idYacht].lowestPrice.toLocaleString()} đ` : 'Loading...'}</p>
                                             <button className='col-5 btn btn-warning' style={{ color: '#475467', borderRadius: 25, width: 100, fontSize: '14px' }}>Đặt ngay</button>
                                         </div>
                                     </Card.Body>

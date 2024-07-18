@@ -26,4 +26,6 @@ public interface IAccount {
 
     boolean insertInfoCompanyByIdAccount(String address, String email, MultipartFile logo, String name, String idAccount);
 
+
+
 }

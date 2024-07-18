@@ -20,12 +20,16 @@ const ModalCreateRoom = (props) => {
     const [roomType, setRoomType] = useState('');
 
     useEffect(() => {
-        fetchRoomType();
-    }, [])
+        if (show) {
+            fetchRoomType();
+        }
+    }, [show])
+
     useEffect(() => {
         if (show && _.isEmpty(listRoomType)) {
             toast.warning('Please create room type before creating room')
         }
+
     }, [show, listRoomType])
 
     const handleClose = () => {
@@ -33,12 +37,13 @@ const ModalCreateRoom = (props) => {
         setRoomName('');
         setArea('');
         setDescription('');
-        setRoomType('1');
+        setRoomType('');
         setPreviewImage('');
         setImage('');
     }
 
-
+    console.log('type', roomType)
+    console.log('list', listRoomType)
     const handelUploadImage = (event) => {
         if (event.target.files[0] && event.target && event.target.files) {
             setPreviewImage(URL.createObjectURL(event.target.files[0]));
@@ -89,7 +94,7 @@ const ModalCreateRoom = (props) => {
                             <Form.Group as={Col} >
                                 <Form.Label>Area</Form.Label>
                                 <Form.Control
-                                    type="text"
+                                    type="number"
                                     placeholder="Enter area in m²"
                                     value={area}
                                     onChange={event => setArea(event.target.value)}
@@ -97,7 +102,7 @@ const ModalCreateRoom = (props) => {
                             </Form.Group>
                             <Form.Group as={Col} >
                                 <Form.Label>Room Type</Form.Label>
-                                <Form.Select onChange={event => setRoomType(event.target.value)} >
+                                <Form.Select value={roomType} onChange={event => setRoomType(event.target.value)} >
                                     {
 
                                         listRoomType && listRoomType.map((type) =>

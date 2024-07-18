@@ -17,6 +17,7 @@ public class BookingOrderDTO {
     private LocalDateTime bookingTime;
     private long amount;
     private String requirement;
+    private  String reason;
     private String status;
     private String txnRef;
     private ScheduleDTO schedule;

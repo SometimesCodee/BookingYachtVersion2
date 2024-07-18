@@ -1,80 +1,49 @@
-import axios from 'axios';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import React, { useEffect, useState } from 'react';
+// AdminStats.js
+import React, { useEffect } from 'react';
 import { Card, Col, Container, Row } from 'react-bootstrap';
+import { FaUsersRectangle } from "react-icons/fa6";
+import { ImUsers } from "react-icons/im";
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchCompanies, fetchCustomers } from '../../../redux/action/AdminAction';
 import './Homepage.scss';
 
-const AdminStats = () =>{
-    const [customerCount, setCustomerCount] = useState(0);
-    const [companyCount, setCompanyCount] = useState(0);
-    
-  useEffect(() => {
-    fetchCompanies();
-    fetchCustomers();
-  }, []);
+const AdminStats = () => {
+    const dispatch = useDispatch();
+    const customers = useSelector(state => state.admin.customers);
+    const companies = useSelector(state => state.admin.companies);
 
-  const fetchCompanies = async () => {
-    try {
-        const token = localStorage.getItem('token');
-        const response = await axios.get('http://localhost:8080/api/admins/getAllCompany', {
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        });
-        setCompanyCount(response.data.data.length);
-    } catch (error) {
-        if (error.response.status === 403) {
-            console.log('Access forbidden. Please check your permissions.');
-        } else {
-            console.log('Error fetching companies: ' + error.message);
-        }
-    }
-};
+    useEffect(() => {
+        dispatch(fetchCompanies());
+        dispatch(fetchCustomers());
+    }, [dispatch]);
 
-const fetchCustomers = async () => {
-  try {
-      const token = localStorage.getItem('token');
-      const response = await axios.get('http://localhost:8080/api/admins/getAllCustomer', {
-          headers: {
-              'Authorization': `Bearer ${token}`
-          }
-      });
-      setCustomerCount(response.data.data.length); 
-  } catch (error) {
-      if (error.response.status === 403) {
-          console.log('Access forbidden. Please check your permissions.');
-      } else {
-          console.log('Error fetching customers: ' + error.message);
-      }
-  }
-};
-  return (
-    <Container className="my-4 backgroundpage">
-    <h1>OverView</h1>
-      <Row>
-        <Col md={6}>
-          <Card className="text-center">
-            <Card.Body>
-              <Card.Title>Quantity Customers</Card.Title>
-              <Card.Text>
-                <h3>{customerCount}</h3>
-              </Card.Text>
-            </Card.Body>
-          </Card>
-        </Col>
-        <Col md={6}>
-          <Card className="text-center">
-            <Card.Body>
-              <Card.Title>Quantity Companies</Card.Title>
-              <Card.Text>
-                <h3>{companyCount}</h3>
-              </Card.Text>
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
-    </Container>
-  );
+    return (
+        <Container className="my-4 backgroundpage">
+            <h1>OverView</h1>
+            <Row>
+                <Col md={6}>
+                    <Card className="text-center">
+                        <Card.Body>
+                            <Card.Title><ImUsers /> Người Dùng</Card.Title>
+                            <Card.Text>
+                                <h3>{customers.length}</h3>
+                            </Card.Text>
+                        </Card.Body>
+                    </Card>
+                </Col>
+                <Col md={6}>
+                    <Card className="text-center">
+                        <Card.Body>
+                            <Card.Title><FaUsersRectangle /> Công Ty</Card.Title>
+                            <Card.Text>
+                                <h3>{companies.length}</h3>
+                            </Card.Text>
+                        </Card.Body>
+                    </Card>
+                </Col>
+            </Row>
+        </Container>
+    );
 }
-export default AdminStats;
 
+export default AdminStats;

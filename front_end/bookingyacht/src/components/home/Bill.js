@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Card, Col, Collapse, Container, Form, ListGroup, Modal, Row } from 'react-bootstrap';
+import { GiNotebook } from "react-icons/gi";
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { addFeedback, existsFeedback, viewBillByIdCustomer } from '../../services/ApiServices';
-
 const Bill = ({ idCustomer }) => {
   const [bills, setBills] = useState([]);
   const [showDetails, setShowDetails] = useState({});
@@ -11,6 +12,8 @@ const Bill = ({ idCustomer }) => {
   const [starRating, setStarRating] = useState(0);
   const [description, setDescription] = useState('');
   const [reviewedBills, setReviewedBills] = useState({});
+  const [idYacht, setIdYacht] = useState(0);
+  const navigate = useNavigate();
 
   const toggleDetails = (idBooking) => {
     setShowDetails((prevState) => ({
@@ -62,15 +65,15 @@ const Bill = ({ idCustomer }) => {
         setBills(sortedBills);
 
         // Check feedback status for each bill
-        const feedbackStatusPromises = sortedBills.map(async (bill) => {
+        const feedbackStatus = sortedBills.map(async (bill) => {
           const feedbackResponse = await existsFeedback(bill.bookingOrderDTO.idBooking);
           return {
             idBooking: bill.bookingOrderDTO.idBooking,
-            hasFeedback: feedbackResponse.data.exists,
+            hasFeedback: feedbackResponse.data.data,
           };
         });
 
-        const feedbackStatuses = await Promise.all(feedbackStatusPromises);
+        const feedbackStatuses = await Promise.all(feedbackStatus);
         const feedbackStatusesMap = feedbackStatuses.reduce((acc, { idBooking, hasFeedback }) => {
           acc[idBooking] = hasFeedback;
           return acc;
@@ -84,6 +87,10 @@ const Bill = ({ idCustomer }) => {
     fetchBills();
   }, [idCustomer]);
 
+  const handleViewFeeback = (yachtId) => {
+    navigate(`/mainpage/${yachtId}`)
+  }
+
   return (
     <Container className="my-4">
       <Row>
@@ -91,7 +98,7 @@ const Bill = ({ idCustomer }) => {
           <Col key={index} sm={12} md={6} className="mb-4">
             <Card>
               <Card.Header className="text-center">
-                <h2>Thông tin hóa đơn</h2>
+                <h2><GiNotebook color='#42F5E9' /> Hóa Đơn</h2>
               </Card.Header>
               <Card.Body>
                 <Row>
@@ -119,14 +126,40 @@ const Bill = ({ idCustomer }) => {
                     <Card.Text>
                       <strong>Email:</strong> {bill.bookingOrderDTO.customerDTO.email}
                     </Card.Text>
+                    {reviewedBills[bill.bookingOrderDTO.idBooking] ? (
+                      <Button
+                        variant="warning"
+                        className="mt-3"
+                        onClick={() => handleViewFeeback(bill.bookingOrderDTO.rooms[0].yachtId)}
+                      >
+                        Xem đánh giá
+                      </Button>
+                    ) : (
+                      <Button
+                        variant="warning"
+                        className="mt-3"
+                        onClick={() => {
+                          setCurrentBillId(bill.bookingOrderDTO.idBooking);
+                          setShowModal(true);
+                        }}
+                      >
+                        Đánh giá sản phẩm
+                      </Button>
+                    )}
                   </Col>
                 </Row>
-
-                <Button variant="link" onClick={() => toggleDetails(bill.bookingOrderDTO.idBooking)} style={{ color: 'black' }}>
+                <Button variant="link" onClick={() => toggleDetails(bill.bookingOrderDTO.idBooking)} style={{ color: '#42F5E9' }}>
                   {showDetails[bill.bookingOrderDTO.idBooking] ? 'Ẩn chi tiết' : 'Xem chi tiết'}
                 </Button>
                 <Collapse in={showDetails[bill.bookingOrderDTO.idBooking]}>
                   <div>
+                    <hr />
+                    <h5>Thông tin lịch trình</h5>
+                    <Card.Text>
+                      <strong>Ngày đi</strong> {new Date(bill.bookingOrderDTO.schedule.startDate).toLocaleString()}
+                      <br/>
+                      <strong>Ngày về:</strong>{new Date(bill.bookingOrderDTO.schedule.endDate).toLocaleString()}
+                    </Card.Text>
                     <hr />
                     <h5>Thông tin phòng</h5>
                     {bill.bookingOrderDTO.rooms.map((room, roomIndex) => (
@@ -170,22 +203,6 @@ const Bill = ({ idCustomer }) => {
                     </Card.Text>
                   </div>
                 </Collapse>
-                {reviewedBills[bill.bookingOrderDTO.idBooking] ? (
-                  <Button variant="dark" className="mt-3">
-                    Xem đánh giá
-                  </Button>
-                ) : (
-                  <Button
-                    variant="dark"
-                    className="mt-3"
-                    onClick={() => {
-                      setCurrentBillId(bill.bookingOrderDTO.idBooking);
-                      setShowModal(true);
-                    }}
-                  >
-                    Đánh giá sản phẩm
-                  </Button>
-                )}
               </Card.Body>
             </Card>
           </Col>

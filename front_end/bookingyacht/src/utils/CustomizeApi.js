@@ -45,9 +45,8 @@ instance.interceptors.response.use(function (response) {
     //return Promise.reject(error);
     NProgress.done();
     if (error.response.status === 401) {
-        toast.error('Unauthorized: Please log in again');
-        // Optionally redirect to login page
-        // window.location.href = "/login";
+        //     toast.error('Unauthorized: Please log in again');
+
         return;
     }
     if (error.response.status === 403) {

@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import { getYachtListApi } from '../../redux/action/YachtListAction';
 import NotFound from '../page404/NotFound';
 import axios from 'axios';
-import { getFile } from '../../services/ApiServices';
+import { getFile, getHighestAndLowestPriceByYacht } from '../../services/ApiServices';
 import { useSearchTrigger } from '../home/TriggerFormSearch';
 const YachtList = () => {
     const [pagging, setPagging] = useState([]); // page 1, 2, 3, ...
@@ -18,6 +18,8 @@ const YachtList = () => {
     const dispatch = useDispatch();
     const { yachtList } = useSelector((state) => state.YachtListReducer);
     const { triggerSearch } = useSearchTrigger();
+    const [priceData, setPriceData] = useState({});
+    console.log('pricedata', priceData);
     console.log(yachtList);
 
     useEffect(() => {
@@ -44,6 +46,26 @@ const YachtList = () => {
     const handelChangePage = (pageNumber) => {
         setCurrentPage(pageNumber)
     }
+
+    useEffect(() => {
+        // Fetch prices for each yacht in paggingYacht
+        const fetchPrices = async () => {
+            const priceData = {};
+            for (const yacht of paggingYacht) {
+                try {
+                    const response = await getHighestAndLowestPriceByYacht(yacht.idYacht);
+                    priceData[yacht.idYacht] = response.data.data;
+                } catch (error) {
+                    console.error('Error fetching price:', error);
+                }
+            }
+            setPriceData(priceData);
+        };
+
+        if (paggingYacht.length > 0) {
+            fetchPrices();
+        }
+    }, [paggingYacht]);
 
     useEffect(() => {
         setCurrentPage(1);
@@ -87,7 +109,7 @@ const YachtList = () => {
                                             <p style={{ margin: '0px' }}>Hạ thủy: {yacht.launch} - Vỏ Tàu {yacht.hullBody}</p>
                                             <div style={{ fontWeight: 'bold' }}> <RiShipLine /> {yacht.itinerary} </div>
                                             <div className='price d-flex' style={{ justifyContent: 'space-between', alignItems: 'center' }}>
-                                                <p style={{ color: '#475467', fontWeight: '700' }}>Price: 3.500.000đ</p>
+                                                <p style={{ color: '#475467', fontWeight: '700' }}>Price: {priceData[yacht.idYacht] ? `${priceData[yacht.idYacht].lowestPrice.toLocaleString()} - ${priceData[yacht.idYacht].highestPrice.toLocaleString()}đ` : 'Loading...'}</p>
                                                 <button style={{ borderRadius: 25 }} className='btn btn-warning'>Đặt ngay</button>
                                             </div>
                                         </div>

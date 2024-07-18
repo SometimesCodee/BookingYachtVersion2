@@ -5,8 +5,8 @@ import { FaArrowRightLong } from "react-icons/fa6";
 const Map = () => {
     return (
         <div>
-            <h4>Quy định chung và lưu ý</h4>
-            <p>Bạn có thể xem Quy định chung và lưu ý: Tại đây<FaArrowRightLong /></p>
+            {/* <h4>Quy định chung và lưu ý</h4>
+            <p>Bạn có thể xem Quy định chung và lưu ý: Tại đây<FaArrowRightLong /></p> */}
             <h4>Bản đồ lịch trình</h4>
             <Alert variant="info" className="d-flex align-items-center mt-3">
                 <i className="bi bi-info-circle-fill me-2"></i>

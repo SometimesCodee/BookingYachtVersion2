@@ -15,7 +15,21 @@ public interface ForgotPasswordRepository extends JpaRepository<ForgotPassword, 
             "JOIN f.account a " +
             "JOIN a.customer c " +
             "WHERE f.otp = :otp AND c.email = :email")
-    ForgotPassword findByOtpAndEmail(@Param("otp") Integer otp, @Param("email") String email);
+    ForgotPassword findByOtpAndEmailCustomer(@Param("otp") Integer otp, @Param("email") String email);
+    @Query("SELECT f FROM ForgotPassword f " +
+            "join f.account a " +
+            "JOIN a.customer c " +
+            "where c.email=:email")
+    ForgotPassword findByEmailCustomer(@Param("email") String email);
 
-
+    @Query("SELECT f FROM ForgotPassword f " +
+            "JOIN f.account a " +
+            "JOIN a.company c " +
+            "WHERE f.otp = :otp AND c.email = :email")
+    ForgotPassword findByOtpAndEmailCompany(@Param("otp") Integer otp, @Param("email") String email);
+    @Query("SELECT f FROM ForgotPassword f " +
+            "join f.account a " +
+            "JOIN a.company c " +
+            "where c.email=:email")
+    ForgotPassword findByEmailCompany(@Param("email") String email);
 }

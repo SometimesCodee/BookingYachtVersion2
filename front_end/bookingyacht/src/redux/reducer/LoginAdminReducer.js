@@ -10,8 +10,8 @@ import {
 const initialState = {
     loading: false,
     token: localStorage.getItem('token') || null,
+    role : localStorage.getItem('role') || null,
     error: null,
-    isLoggedIn: !!localStorage.getItem('token'),
 }
 
 const LoginAdminReducer = (state = initialState, action) => {
@@ -27,7 +27,7 @@ const LoginAdminReducer = (state = initialState, action) => {
                 ...state,
                 loading: false,
                 token: action.payload.token,
-                isLoggedIn: true,
+                role : action.payload.role
             };
         case LOGIN_FAILURE:
             return {
@@ -36,12 +36,13 @@ const LoginAdminReducer = (state = initialState, action) => {
                 error: action.payload,
             };
         case LOGOUT:
-            localStorage.removeItem('token'); // Xóa token khi logout
+            localStorage.removeItem('token'); 
+            localStorage.removeItem('role');
             return {
                 ...state,
                 loading: false,
                 token: null,
-                isLoggedIn: false,
+                role : null,
                 error: null,
             };
         default:

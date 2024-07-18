@@ -26,6 +26,9 @@ public class Account {
     @Column(name = "role", length = 10)
     private String role;
 
+    @Column(name = "status")
+    private int status;
+
     @OneToOne(mappedBy = "account")
     private Company company;
 

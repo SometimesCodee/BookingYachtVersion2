@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import './Company.scss';
-import { Button, Form, FormControl, FormGroup, FormSelect } from 'react-bootstrap';
+import { Button, Form, FormControl, FormGroup } from 'react-bootstrap';
 import ReactPaginate from 'react-paginate';
-import './Company.scss'
 import { useSelector } from 'react-redux';
-import { canelBooking, confirmBooking, getBookingByAmount, getBookingOrder } from '../../services/ApiServices';
 import { toast } from 'react-toastify';
+import { canelBooking, confirmBooking, getBookingByAmount, getBookingOrder } from '../../services/ApiServices';
+import './Company.scss';
 
-import ModalViewDetailBooking from './ModalViewDetailBooking';
 import { Link } from 'react-router-dom';
+import ModalViewDetailBooking from './ModalViewDetailBooking';
 
 const ViewBooking = () => {
     const idCompany = useSelector(state => state.account.account.idCompany);

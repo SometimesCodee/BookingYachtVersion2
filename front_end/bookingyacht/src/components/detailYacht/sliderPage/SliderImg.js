@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Carousel, Image } from 'react-bootstrap';
 import './SliderImg.scss'
-import { getImagesYacht } from '../../../services/ApiServices';
+import { getHighestAndLowestPriceByYacht, getImagesYacht } from '../../../services/ApiServices';
 import { LuShip } from "react-icons/lu";
 import { useDispatch, useSelector } from 'react-redux';
 import { getYachtImagesApi } from '../../../redux/action/YachtImagesAction';
@@ -9,15 +9,24 @@ import { getYachtImagesApi } from '../../../redux/action/YachtImagesAction';
 const SimpleSlider = ({ yacht }) => {
   const { images } = useSelector(state => state.YachtImagesReducer);
   const dispatch = useDispatch();
-
+  const [priceData, setPriceData] = useState({});
   console.log(images)
 
   useEffect(() => {
     if (yacht && yacht.idYacht) {
       dispatch(getYachtImagesApi(yacht.idYacht));
+      fetchPrices();
     }
   }, [yacht, dispatch]);
 
+  const fetchPrices = async () => {
+    try {
+      const response = await getHighestAndLowestPriceByYacht(yacht.idYacht);
+      setPriceData({ [yacht.idYacht]: response.data.data });
+    } catch (error) {
+      console.error('Error fetching price:', error);
+    }
+  };
 
   const getImageApi = `http://localhost:8080/api/customer/file/`
 
@@ -47,7 +56,7 @@ const SimpleSlider = ({ yacht }) => {
     <div className="custom-slider">
       <div className='title_page mb-4' style={{ justifyContent: 'space-between', alignItems: 'center' }}>
         <h1 style={{ fontWeight: 'bold', color: '#0E4F4F' }}><span><LuShip color='gold' size={80}></LuShip></span> {yacht.name}</h1>
-        <h3 style={{ color: '#0E4F4F', fontWeight: 'normal' }}>3,500,000 đ/phòng</h3>
+        <h3 style={{ color: '#0E4F4F', fontWeight: 'normal' }}>Price: {priceData[yacht.idYacht] ? `${priceData[yacht.idYacht].lowestPrice.toLocaleString()} - ${priceData[yacht.idYacht].highestPrice.toLocaleString()} đ` : 'Loading...'}</h3>
       </div>
 
       <div className='slider_page'>

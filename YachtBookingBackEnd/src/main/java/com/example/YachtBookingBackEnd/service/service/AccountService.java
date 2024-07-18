@@ -113,6 +113,7 @@ public class AccountService implements IAccount {
                 accountDTO.setUsername(account.getUsername());
                 accountDTO.setPassword(account.getPassword());
                 accountDTO.setRole(account.getRole());
+                accountDTO.setStatus(account.getStatus());
                 String role = account.getRole();
                 if (role.equals("CUSTOMER")) {
                     accountDTOList.add(accountDTO);

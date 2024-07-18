@@ -33,6 +33,24 @@ export const login = (username, password) => {
     return axios.post('/login/signin', data)
 }
 
+export const verifyEmail = (email) => {
+    const data = new FormData()
+    data.append('email', email)
+    return axios.post('/api/customer/forgotPassword/verifyEmail', data)
+}
+
+export const verifyOTP = (email, otp) => {
+    const data = new FormData()
+    data.append('otp', otp)
+    return axios.post(`/api/customer/forgotPassword/verifyOTP/${email}`, data)
+}
+
+export const changePasswordByEmail = (email, password) => {
+    const data = new FormData()
+    data.append('password', password)
+    return axios.post(`/api/customer/forgotPassword/changePasswordByEmail/${email}`, data)
+}
+
 export const registerCustomer = (username, password) => {
     const data = new FormData();
     data.append('username', username);
@@ -168,8 +186,8 @@ export const getAllRoomByYacht = (idYacht) => {
     return axios.get(`/api/companies/getRoomByYacht/${idYacht}`);
 }
 
-export const getAllRoomTypeCompany = () => {
-    return axios.get(`/api/companies/roomType/getAllRoomType`);
+export const getAllRoomTypeCompany = (yachtId) => {
+    return axios.get(`/api/companies/roomType/getAllRoomType/${yachtId}`);
 }
 
 export const createImageRoom = (idRoom, image) => {
@@ -360,6 +378,12 @@ export const getAllLocationCustomer = () => {
 export const getScheduleById = (idSchedule) => {
     return axios.get(`/api/customer/getScheduleById/${idSchedule}`);
 }
+export const getAllFeedback = () => {
+    return axios.get('/api/customer/getAllFeedback');
+}
+export const getAllCompany = () => {
+    return axios.get('/api/customer/getAllCompany');
+}
 
 export const getAllCustomerInfor = () => {
     return axios.get(`/api/customer/getAllCustomer`);
@@ -380,5 +404,22 @@ export const getDetailBookingByCustomer = (idCustomer, idBooking) => {
 }
 
 export const getHighestAndLowestPriceByYacht = (idYacht) => {
-    return axios.get(`/api/customer/yacht/getPriceRoom/{yachtId}/${idYacht}`)
+    return axios.get(`/api/customer/yacht/getPriceRoom/${idYacht}`)
 }
+
+export const changePasswordCompany = (idCompany, oldPassword, newPassword, confirmPassword) => {
+    const data = new FormData()
+    data.append('oldPassword', oldPassword)
+    data.append('newPassword', newPassword)
+    data.append('confirmPassword', confirmPassword)
+    return axios.put(`/api/companies/profiles/changePassword/${idCompany}`, data)
+}
+export const changePasswordCustomer = (idCustomer, oldPassword, newPassword, confirmPassword) => {
+    const data = new FormData()
+    data.append('oldPassword', oldPassword)
+    data.append('newPassword', newPassword)
+    data.append('confirmPassword', confirmPassword)
+    return axios.put(`/api/customer/profiles/changePassword/${idCustomer}`, data)
+}
+
+

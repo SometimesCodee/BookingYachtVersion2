@@ -5,9 +5,9 @@ export const loginRequest = () =>({
     type : LOGIN_REQUEST,
 });
 
-export const loginSuccess = (token) =>({
+export const loginSuccess = (token, role) =>({
     type : LOGIN_SUCCESS,
-    payload : token,
+    payload : {token, role},
 });
 
 export const loginFailure = (error) =>({
@@ -30,7 +30,8 @@ export const login = (username, password) => async (dispatch) =>{
             const decodedToken = jwtDecode(token);
             if(decodedToken.role && decodedToken.role === 'ROLE_ADMIN'){
                 localStorage.setItem('token', token);
-                dispatch(loginSuccess(token));
+                localStorage.setItem('role', 'ROLE_ADMIN');
+                dispatch(loginSuccess(token, 'ROLE_ADMIN'));
             }else{
                 // toast.error("Bạn không đủ quyền hạn để truy cập.");
                 dispatch(loginFailure("Bạn không đủ quyền hạn để truy cập."));

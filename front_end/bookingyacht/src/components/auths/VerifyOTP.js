@@ -1,30 +1,32 @@
 import React, { useState } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
-import { verifyEmail } from "../../services/ApiServices";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import { verifyOTP } from "../../services/ApiServices";
 
-const ForgotPassword = () => {
-  const [email, setEmail] = useState("");
+
+export default function VerifyOTP() {
+  const[otp, setOTP]=useState("")
   const navigate = useNavigate();
-
+  const {email} = useParams();
   const handleVerify = async (event) => {
     event.preventDefault(); 
 
-    if (!email) {
+    if (!otp) {
       toast.error("Không được để trống!");
     } else {
-      let res = await verifyEmail(email);
+      let res = await verifyOTP(email,otp);
+
       if (res && res.data && res.data.data === true) {
-        toast.success("Kiểm tra email của bạn!");
-        navigate(`/verifyOTP/${email}`);
-      } else {
-        toast.error("Email không tồn tại");
+        navigate(`/changePasswordByEmail/${email}`)
+      }else{
+        toast.error("OTP không tồn tại");
       }
     }
   };
 
+
   return (
-    <div className="py-3 py-md-5 my-5">
+    <div className=" py-3 py-md-5 my-5">
       <div className="container">
         <div className="row justify-content-md-center">
           <div className="col-12 col-md-11 col-lg-8 col-xl-7 col-xxl-6">
@@ -34,7 +36,8 @@ const ForgotPassword = () => {
                   <div className="mb-5">
                     <h2 className="h3">Quên mật khẩu</h2>
                     <h3 className="fs-6 fw-normal text-secondary m-0">
-                      Cung cấp địa chỉ email được liên kết với tài khoản của bạn để khôi phục mật khẩu.
+                      Nhập OTP được gửi trong email của bạn để khôi phục mật
+                      khẩu.
                     </h3>
                   </div>
                 </div>
@@ -43,29 +46,22 @@ const ForgotPassword = () => {
                 <div className="row gy-3 gy-md-4 overflow-hidden">
                   <div className="col-12">
                     <label className="form-label">
-                      Email <span className="text-danger">*</span>
+                      OTP <span className="text-danger">*</span>
                     </label>
                     <input
-                      onChange={(e) => setEmail(e.target.value)}
-                      type="email"
+                      onChange={(otp)=> setOTP(otp.target.value)}
+                      type="text"
                       className="form-control"
-                      name="email"
-                      id="email"
-                      placeholder="name@example.com"
+                      name="otp"
+                      id="otp"
+                      placeholder="XXXXXX"
                     />
                   </div>
                   <div className="col-12">
                     <div className="d-grid">
-                      <button
-                        type="submit"
-                        className="btn btn-lg btn-primary">
-                        Xác thực Email
+                      <button className="btn btn-lg btn-primary">
+                        Xác thực OTP
                       </button>
-                    </div>
-                    <div className="text-center">
-                      <NavLink to="/signin" className="my-4">
-                        Quay lại
-                      </NavLink>
                     </div>
                   </div>
                 </div>
@@ -74,9 +70,6 @@ const ForgotPassword = () => {
           </div>
         </div>
       </div>
-      
     </div>
   );
-};
-
-export default ForgotPassword;
+}

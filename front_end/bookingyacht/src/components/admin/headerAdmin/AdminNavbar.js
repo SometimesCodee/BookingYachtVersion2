@@ -18,7 +18,7 @@ const AdminNavbar = () => {
       <Navbar bg="dark" variant="dark" className="flex-column sidebar open">
         <Navbar.Brand className="text-center">
           <img
-            src="https://i0.wp.com/thatnhucuocsong.com.vn/wp-content/uploads/2023/02/Hinh-anh-avatar-Facebook.jpg?ssl=1"
+            src="https://www.shutterstock.com/shutterstock/photos/1730974153/display_1500/stock-vector-man-with-the-inscription-admin-icon-outline-man-with-the-inscription-admin-vector-icon-for-web-1730974153.jpg"
             alt="Profile"
             className="profile-pic"
           />

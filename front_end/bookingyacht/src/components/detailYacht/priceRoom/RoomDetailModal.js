@@ -25,7 +25,7 @@ const RoomDetailModal = ({ selectedRoom, show, handleClose }) => {
         setCurrentIndex(selectedIndex);
     };
 
-    const getImageApi = `http://localhost:8080/api/customer/file/`;
+    // const getImageApi = `http://localhost:8080/api/customer/file/`;
     const utilities = selectedRoom.roomType?.utilities ? selectedRoom.roomType.utilities.split('.').filter(sentence => sentence.trim()) : [];
 
     const renderUtilities = () => {
@@ -42,7 +42,7 @@ const RoomDetailModal = ({ selectedRoom, show, handleClose }) => {
                         <Carousel activeIndex={currentIndex} onSelect={handleSelect} slide={false} indicators={false} interval={null}>
                             {roomImages.map((image, index) => (
                                 <Carousel.Item key={image.idRoomImage} className='object-fit-cover' style={{ height: '400px' }}>
-                                    <Image src={`${getImageApi}${image.imageRoom}`} alt={`Slide ${index}`} fluid className='img1' />
+                                    <Image src={image.imageRoom} alt={`Slide ${index}`} fluid className='img1' />
                                 </Carousel.Item>
                             ))}
 

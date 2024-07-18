@@ -28,7 +28,6 @@ const SimpleSlider = ({ yacht }) => {
     }
   };
 
-  const getImageApi = `http://localhost:8080/api/customer/file/`
 
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -63,7 +62,7 @@ const SimpleSlider = ({ yacht }) => {
         <Carousel activeIndex={currentIndex} onSelect={handleSelect} slide={false} indicators={false} interval={null}>
           {images.map((image, index) => (
             <Carousel.Item key={image.idYachtImage}>
-              <Image src={`${getImageApi}${image.imageYacht}`} alt={index} fluid className='img1' />
+              <Image src={image.imageYacht} alt={index} fluid className='img1' />
             </Carousel.Item>
           ))}
         </Carousel>
@@ -87,8 +86,8 @@ const SimpleSlider = ({ yacht }) => {
           >
             <Image
               className='img2'
-              src={`${getImageApi}${image.imageYacht}`}
-              alt={`${getImageApi}${image.imageYacht}`}
+              src={image.imageYacht}
+              alt={image.imageYacht}
               thumbnail
             />
           </div>

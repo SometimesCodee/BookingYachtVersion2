@@ -105,7 +105,7 @@ const ManageYacht = () => {
                                         className="table-primary"
                                     >
                                         <td>
-                                            <img src={`http://localhost:8080/api/customer/file/${image.imageYacht}`} width={200} alt='' />
+                                            <img src={image.imageYacht} width={200} alt='' />
                                         </td>
                                         <td width={300}>
                                             <Row>

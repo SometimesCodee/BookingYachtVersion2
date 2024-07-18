@@ -8,19 +8,19 @@ const CompanyList = () => {
     const [companies, setCompanies] = useState([]);
     const navigate = useNavigate();
     // const [loading, setLoading] = useState(true);
-    const getImageApi = `http://localhost:8080/api/customer/file/`
+
     useEffect(() => {
-       getAllCompany()
+        getAllCompany()
             .then(res => {
                 setCompanies(res.data.data.filter(c => c.exist === 1));
             })
             .catch(error => {
                 console.log(error)
-                
+
             });
     }, []);
 
-    const handleCompanyClick = (companyId) =>{
+    const handleCompanyClick = (companyId) => {
         navigate(`/deltailInfo/${companyId}`)
     }
 
@@ -41,18 +41,18 @@ const CompanyList = () => {
                 <Row key={index} className="mb-4">
                     {chunk.map(company => (
                         <Col md={6} key={company.idCompany}>
-                            <Card style={{ padding: '20px', border: 'none' }} onClick={() =>handleCompanyClick(company.idCompany)}>
-                                <Row style={{alignItems : 'center'}}>
+                            <Card style={{ padding: '20px', border: 'none' }} onClick={() => handleCompanyClick(company.idCompany)}>
+                                <Row style={{ alignItems: 'center' }}>
                                     <Col md={3}>
                                         <img
-                                            src={`${getImageApi}${company.logo}`} alt={company.logo}
+                                            src={company.logo} alt={company.logo}
                                             style={{ width: '100%', borderRadius: '8px' }}
                                         />
                                     </Col>
                                     <Col md={9}>
-                                        <h5 style={{fontWeight : 'bold'}}>{company.name}</h5>
+                                        <h5 style={{ fontWeight: 'bold' }}>{company.name}</h5>
                                         <p>{company.address}</p>
-                                        <p style={{fontStyle : 'italic'}}>{company.email}</p>
+                                        <p style={{ fontStyle: 'italic' }}>{company.email}</p>
                                     </Col>
                                 </Row>
                             </Card>

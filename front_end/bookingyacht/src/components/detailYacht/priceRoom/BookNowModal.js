@@ -18,7 +18,7 @@ const BookNowModal = ({
     handleClose,
     selectedSchedule
 }) => {
-    const getAvatarApi = `http://localhost:8080/api/customer/file/`;
+    // const getAvatarApi = `http://localhost:8080/api/customer/file/`;
     const isLogged = useSelector(state => state.account.isAuthenticated);
     console.log('isLogged', isLogged)
     const [customer, setCustomer] = useState(null);
@@ -122,7 +122,7 @@ const BookNowModal = ({
                 {selectedRooms.map(room => (
                     <Row key={room.idRoom} className="my-3 p-3 border rounded border-warning align-items-center">
                         <Col md={2}>
-                            <img src={`${getAvatarApi}${room.avatar}`} alt={room.name} className="img-fluid rounded" />
+                            <img src={room.avatar} alt={room.name} className="img-fluid rounded" />
                         </Col>
                         <Col md={5}>
                             <h5 className='fw-bold'>{room.name}</h5>

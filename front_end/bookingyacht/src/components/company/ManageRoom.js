@@ -125,7 +125,7 @@ const ManageRoom = () => {
                 displayedRoom && displayedRoom.length > 0 && displayedRoom
                     .map((room) =>
                         <div key={room.idRoom} className='d-flex my-5 room p-3 row ' style={{ gap: 50 }}>
-                            <img className='col-md-2' width={170} src={`http://localhost:8080/api/customer/file/${room.avatar}`} />
+                            <img className='col-md-2' width={170} src={room.avatar} alt='' />
                             <div className=' col-md-3' >
                                 <div className='room-name'>{room.name}</div>
                                 <div>{room.area} <TbMeterSquare size={25} className='pb-1' /></div>

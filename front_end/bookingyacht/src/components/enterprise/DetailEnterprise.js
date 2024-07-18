@@ -9,7 +9,7 @@ import '../yacht/FindYacht.scss';
 import './InfoCompany.scss';
 import { getHighestAndLowestPriceByYacht } from '../../services/ApiServices';
 const ProfilePage = () => {
-    const getImageApi = `http://localhost:8080/api/customer/file/`
+
     const { idCompany } = useParams();
     const navigate = useNavigate();
     const [pagging, setPagging] = useState([]);
@@ -73,7 +73,6 @@ const ProfilePage = () => {
         }
     }, [yachtList, currentPage]);
 
-    const avatarYachtApi = 'http://localhost:8080/api/customer/file/'
 
     const handelChangePage = (pageNumber) => {
         setCurrentPage(pageNumber)
@@ -104,7 +103,7 @@ const ProfilePage = () => {
                     <Col xs={12} className="text-center cover-photo-container">
                         {company && (
                             <div className="profile-info container">
-                                <Image src={`${getImageApi}${company.logo}`} roundedCircle className="profile-photo" />
+                                <Image src={company.logo} roundedCircle className="profile-photo" />
                                 <div className="profile-text">
                                     <h2 style={{ fontWeight: 'bold', fontSize: '50px' }}>{company.name}</h2>
                                     <p><i>Chào mừng bạn đến với du thuyền, điểm đến hàng đầu cho những trải nghiệm du thuyền
@@ -140,7 +139,7 @@ const ProfilePage = () => {
                                         return (
                                             <div className="card row d-flex" key={yacht.idYacht} onClick={() => { hanldeSelectedYacht(yacht.idYacht) }} style={{ cursor: 'pointer', marginTop: '20px' }}>
                                                 <div className="col-md-5">
-                                                    <img style={{ height: '200px', width: '80%' }} className="card-img-top object-fit-cover" src={`${avatarYachtApi}${yacht.image}`} alt="Card cap" />
+                                                    <img style={{ height: '200px', width: '80%' }} className="card-img-top object-fit-cover" src={yacht.image} alt="Card cap" />
                                                 </div>
                                                 <div className="card-body col-md-7">
                                                     <div className='card-content'>

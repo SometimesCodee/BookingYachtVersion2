@@ -42,8 +42,6 @@ const ShowYacht = () => {
         }
     }, [yachtList]);
 
-    const avatarYachtApi = 'http://localhost:8080/api/customer/file/'
-
     return (
         <>
             <div className='yacht-header row'>
@@ -64,7 +62,7 @@ const ShowYacht = () => {
                         <div className='col-12 col-sm-6 col-md-3 col-lg-3 mb-4'>
                             <NavLink key={item.idYacht} to={`/mainpage/${item.idYacht}`} className='nav-link'>
                                 <Card style={{ width: '100%', height: '350px' }}>
-                                    <img height={200} variant="top" src={`${avatarYachtApi}${item.image}`} alt='' />
+                                    <img height={200} variant="top" src={item.image} alt='' />
                                     <Card.Body>
                                         <Card.Title style={{ fontWeight: 600, fontSize: 18, color: '#475467', marginBottom: 0 }}>{`${item.name}`}</Card.Title>
                                         <div style={{ padding: '5px' }} className='location'><FaLocationDot />{item.location.name}</div>

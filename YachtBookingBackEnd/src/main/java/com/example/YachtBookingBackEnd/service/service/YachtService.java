@@ -3,7 +3,6 @@ package com.example.YachtBookingBackEnd.service.service;
 import com.example.YachtBookingBackEnd.dto.*;
 import com.example.YachtBookingBackEnd.entity.*;
 import com.example.YachtBookingBackEnd.repository.*;
-import com.example.YachtBookingBackEnd.service.implement.IFile;
 import com.example.YachtBookingBackEnd.service.implement.IYacht;
 import net.sf.jsqlparser.expression.DateTimeLiteralExpression;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +17,6 @@ public class YachtService implements IYacht {
     @Autowired
     YachtRepository yachtRepository;
     @Autowired
-    IFile iFile;
-    @Autowired
     CompanyRepository companyRepository;
 
     @Autowired
@@ -28,6 +25,8 @@ public class YachtService implements IYacht {
     LocationRepository locationRepository;
     @Autowired
     YachtTypeRepository yachtTypeRepository;
+    @Autowired
+    private CloudinaryService cloudinaryService;
 
     @Override
     public List<YachtDTO> getAllYacht() {
@@ -94,8 +93,15 @@ public class YachtService implements IYacht {
         try{
             Yacht yacht = new Yacht();
             yacht.setName(name);
-            iFile.save(image);
-            yacht.setImage(image.getOriginalFilename());
+
+            Map uploadResult = cloudinaryService.upload(image);
+            String imageUrl = (String) uploadResult.get("url");
+            if (imageUrl == null) {
+                System.out.println("Error uploading image to Cloudinary");
+                return false;
+            }
+            yacht.setImage(imageUrl);
+
             yacht.setLaunch(launch);
             yacht.setDescription(description);
             yacht.setRule(rule);
@@ -153,8 +159,13 @@ public class YachtService implements IYacht {
             Optional<Yacht> yacht = yachtRepository.findById(yachtId);
             if(yacht.isPresent()){
                     yacht.get().setName(name);
-                    iFile.save(image);
-                    yacht.get().setImage(image.getOriginalFilename());
+                    Map uploadResult = cloudinaryService.upload(image);
+                    String imageUrl = (String) uploadResult.get("url");
+                    if (imageUrl == null) {
+                        System.out.println("Error uploading image to Cloudinary");
+                        return false;
+                    }
+                    yacht.get().setImage(imageUrl);
                     yacht.get().setHullBody(hullBody);
                     yacht.get().setDescription(description);
                     yacht.get().setRule(rule);

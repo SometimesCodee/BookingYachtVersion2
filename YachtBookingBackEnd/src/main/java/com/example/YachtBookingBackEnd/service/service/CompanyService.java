@@ -8,17 +8,18 @@ import com.example.YachtBookingBackEnd.repository.AccountRepository;
 import com.example.YachtBookingBackEnd.repository.CompanyRepository;
 import com.example.YachtBookingBackEnd.repository.FeedbackRepository;
 import com.example.YachtBookingBackEnd.service.implement.ICompany;
-import com.example.YachtBookingBackEnd.service.implement.IFile;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -31,8 +32,9 @@ import java.util.stream.Collectors;
 public class CompanyService implements ICompany {
     CompanyRepository companyRepository;
     AccountRepository accountRepository;
-    IFile iFile;
     PasswordEncoder passwordEncoder;
+    @Autowired
+    private CloudinaryService cloudinaryService;
 
     @Override
     public List<CompanyDTO> searchCompanyByName(String name) {
@@ -153,7 +155,6 @@ public class CompanyService implements ICompany {
     @Override
     public boolean updateInfoCompany(String idCompany, String name, String address, MultipartFile logo) {
         Company company = getCompanyById(idCompany);
-
         try{
             if (name != null) {
                 company.setName(name);
@@ -162,8 +163,13 @@ public class CompanyService implements ICompany {
                 company.setAddress(address);
             }
             if (logo != null && !logo.isEmpty()) {
-                iFile.save(logo);
-                company.setLogo(logo.getOriginalFilename());
+                Map uploadResult = cloudinaryService.upload(logo);
+                String imageUrl = (String) uploadResult.get("url");
+                if (imageUrl == null) {
+                    System.out.println("Error uploading image to Cloudinary");
+                    return false;
+                }
+                company.setLogo(imageUrl);
             }
             companyRepository.save(company);
             return true;
@@ -201,7 +207,6 @@ public class CompanyService implements ICompany {
                     accountDTO.setIdAccount(company.getAccount().getIdAccount());
                     accountDTO.setUsername(company.getAccount().getUsername());
                     accountDTO.setPassword(company.getAccount().getPassword());
-
 
                     companyDTO.setIdCompany(company.getIdCompany());
                     companyDTO.setName(company.getName());
@@ -243,13 +248,10 @@ public class CompanyService implements ICompany {
                     customer.setPhoneNumber(feedback.getCustomer().getPhoneNumber());
                     customer.setAddress(feedback.getCustomer().getAddress());
 
-
                     feedbackDTO.setCustomer(customer);
                     feedbackDTO.setIdYacht(feedback.getYacht().getIdYacht());
 
-
                     feedbackDTOList.add(feedbackDTO);
-
                 }
             }
 

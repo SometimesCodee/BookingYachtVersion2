@@ -81,14 +81,11 @@ public class CustomerService implements ICustomer {
             for (Customer customer : customerList) {
                 CustomerDTO customerDTO = new CustomerDTO();
                 AccountDTO accountDTO = new AccountDTO();
-
                 if(customer.getAccount().getRole().equals("CUSTOMER")){
                     accountDTO.setRole(customer.getAccount().getRole());
                     accountDTO.setIdAccount(customer.getAccount().getIdAccount());
                     accountDTO.setUsername(customer.getAccount().getUsername());
                     accountDTO.setPassword(customer.getAccount().getPassword());
-
-
 
                     customerDTO.setIdCustomer(customer.getIdCustomer());
                     customerDTO.setFullName(customer.getFullName());
@@ -98,14 +95,11 @@ public class CustomerService implements ICustomer {
                     customerDTO.setAddress(customer.getAddress());
                     customerDTOList.add(customerDTO);
                 }
-
-
             }
         } catch (Exception e) {
             System.out.println("Exception: " + e.getMessage());
         }
         System.out.println(customerDTOList);
-
         return customerDTOList;
     }
 
@@ -134,13 +128,10 @@ public class CustomerService implements ICustomer {
     @Override
     public CustomerDTO findCustomerByUsername(String username) {
         Account account = accountRepository.findAccountByUsername(username);
-
         Customer customer = customerRepository.findCustomerByAccount(account);
-
         if (account.getRole().equals("CUSTOMER")) {
             AccountDTO accountDTO = new AccountDTO();
             CustomerDTO customerDTO = new CustomerDTO();
-
             customerDTO.setIdCustomer(customer.getIdCustomer());
             customerDTO.setFullName(customer.getFullName());
             customerDTO.setEmail(customer.getEmail());
@@ -154,7 +145,6 @@ public class CustomerService implements ICustomer {
             return customerDTO;
         }
         return null;
-
     }
 
     @Override
@@ -166,17 +156,12 @@ public class CustomerService implements ICustomer {
             Customer customerEntity = customer.get();
             System.out.println(customerEntity);
             try {
-
                 customerEntity.setFullName(fullName);
-
                 customerEntity.setEmail(email);
-
                 customerEntity.setPhoneNumber(phone);
                 customerEntity.setAddress(address);
-
                 customerRepository.save(customerEntity);
                 return true;
-
             } catch (Exception e) {
                 return false;
             }
@@ -237,9 +222,7 @@ public class CustomerService implements ICustomer {
                     customer.setIdCustomer(feedback.getCustomer().getIdCustomer());
                     customer.setFullName(feedback.getCustomer().getFullName());
                     feedbackDTO.setCustomer(customer);
-
                     feedbackDTO.setIdYacht(feedback.getYacht().getIdYacht());
-
                     feedbackDTOList.add(feedbackDTO);
                 }
             }
@@ -248,7 +231,6 @@ public class CustomerService implements ICustomer {
         }
         return feedbackDTOList;
     }
-
     @Override
     public List<CompanyDTO> getAllCompanies() {
         List<CompanyDTO> companyDTOList = new ArrayList<>();
@@ -266,7 +248,6 @@ public class CustomerService implements ICustomer {
                     companyDTOList.add(companyDTO);
                 }
             }
-
         }catch (Exception e){
             System.out.println("Exception: " + e.getMessage());
         }
@@ -274,7 +255,6 @@ public class CustomerService implements ICustomer {
     }
 
     @Override
-
     public boolean changePasswordCustomer(String idCustomer, String password) {
         try {
             Account account = customerRepository.getAccountByIdCustomer(idCustomer);
@@ -287,7 +267,6 @@ public class CustomerService implements ICustomer {
         return false;
     }
 
-
     public List<String> findIdBookingByCustomerId(String customerId) {
         List<String> listIdBooking = customerRepository.findIdBookingByCustomerId(customerId);
         if(listIdBooking == null){
@@ -295,18 +274,15 @@ public class CustomerService implements ICustomer {
         }
         return listIdBooking;
     }
-
     @Override
     public boolean isFeedbackAllowed(String idBooking) {
         Feedback feedback = feedbackRepository.findFeedbackByIdBooking(idBooking);
         return feedback == null; // Trả về true nếu không có feedback nào cho idBooking
     }
-
     @Override
     public boolean existsFeedbackByIdBooking(String idBooking) {
         return feedbackRepository.existsByIdBooking(idBooking);
     }
-
     @Override
     public List<FeedbackDTO> getAllFeedback() {
         List<FeedbackDTO> feedbackDTOList = new ArrayList<>();
@@ -334,8 +310,6 @@ public class CustomerService implements ICustomer {
         }
         return feedbackDTOList;
     }
-
-
     private boolean isValidEmail(String email) {
         String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
         Pattern pattern = Pattern.compile(emailRegex);
@@ -345,7 +319,6 @@ public class CustomerService implements ICustomer {
         Matcher matcher = pattern.matcher(email);
         return matcher.matches();
     }
-
     public static boolean isValidPhoneNumber(String phoneNumber) {
         String phoneNumberRegex = "^0[0-9]{9}$";
         Pattern pattern = Pattern.compile(phoneNumberRegex);

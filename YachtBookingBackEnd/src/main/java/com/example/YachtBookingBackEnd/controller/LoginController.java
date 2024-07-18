@@ -56,7 +56,6 @@ public class LoginController {
                     System.out.println(idCustomer);
                     dataResponse.setIdCustomer(idCustomer);
                 }
-
                 dataResponse.setData(token);
                 dataResponse.setSuccess(true);
                 return new ResponseEntity<>(dataResponse, HttpStatus.OK);

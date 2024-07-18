@@ -2,6 +2,7 @@ package com.example.YachtBookingBackEnd.controller;
 
 import com.example.YachtBookingBackEnd.payload.response.DataResponse;
 import com.example.YachtBookingBackEnd.service.implement.*;
+import com.example.YachtBookingBackEnd.service.service.CloudinaryService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -11,7 +12,9 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -26,7 +29,6 @@ public class CustomerController {
     ICustomer iCustomer;
     IPayment iPayment;
     IYacht iYacht;
-    IFile iFile;
     IYachtImage iYachtImage;
     IService iService;
     ISchedule iSchedule;
@@ -40,6 +42,7 @@ public class CustomerController {
     ICompany iCompany;
     IYachtService iYachtService;
     ILocation iLocation;
+    CloudinaryService cloudinaryService;
 
     @PostMapping("/accounts")
     ResponseEntity<?> register(@RequestParam String username,
@@ -135,11 +138,6 @@ public class CustomerController {
         DataResponse dataResponse = new DataResponse();
         dataResponse.setData(iYacht.getAllYacht());
         return new ResponseEntity<>(dataResponse, HttpStatus.OK);
-    }
-    @GetMapping("/file/{filename:.+}")
-    public ResponseEntity<?> getFile(@PathVariable String filename) {
-        Resource resource = iFile.load(filename);
-        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"").body(resource);
     }
 
     @GetMapping("/yacht/findByCompany/{companyId}")
@@ -383,5 +381,6 @@ public class CustomerController {
         dataResponse.setData(iCustomer.getAllFeedback());
         return new ResponseEntity<>(dataResponse, HttpStatus.OK);
     }
+
 
 }

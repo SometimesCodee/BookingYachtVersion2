@@ -18,7 +18,7 @@ spring:
     host: smtp.gmail.com
     port: 587
     username: mailsender.bookingyacht@gmail.com
-    password: dmab ocgy nypw hgbe
+#    password: dmab ocgy nypw hgbe
     properties:
       mail:
         smtp:

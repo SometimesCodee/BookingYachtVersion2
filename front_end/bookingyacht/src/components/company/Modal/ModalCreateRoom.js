@@ -17,7 +17,7 @@ const ModalCreateRoom = (props) => {
     const [roomName, setRoomName] = useState('');
     const [area, setArea] = useState(0);
     const [description, setDescription] = useState('');
-    const [roomType, setRoomType] = useState('');
+    const [roomType, setRoomType] = useState(listRoomType[0].idRoomType);
 
     useEffect(() => {
         if (show) {

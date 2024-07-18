@@ -53,4 +53,4 @@ payment:
 cloudinary:
   cloud_name: dxnr9gqy9
   api_key: 425361741734388
-  api_secret: 134ZY5c7HUt3x9x2U0j9iiCKVWk
+#  api_secret: 134ZY5c7HUt3x9x2U0j9iiCKVWk

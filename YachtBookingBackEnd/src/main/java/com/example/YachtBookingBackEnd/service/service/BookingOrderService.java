@@ -208,7 +208,7 @@ public class BookingOrderService implements IBookingOrder {
 
         for (BookingOrder bookingOrder : pendingOrders) {
             LocalDateTime bookingTime = bookingOrder.getBookingTime();
-            boolean isOverdue = now.isAfter(bookingTime.plusHours(24));
+            boolean isOverdue = now.isAfter(bookingTime.plusMinutes(5));
             boolean isTransactionSuccess = bookingOrder.getTransaction() != null
                     && TRANSACTION_SUCCESS.equals(bookingOrder.getTransaction().getStatus());
             boolean isTransactionFailed = bookingOrder.getTransaction() != null
@@ -231,7 +231,12 @@ public class BookingOrderService implements IBookingOrder {
 
                 //Send success email to Company
                 Company company = companyRepository.findCompanyByIdBooking(bookingOrder.getIdBooking());
-                mailSender.sendMailSuccess(company.getEmail(), bookingOrder.getIdBooking(), formattedStartDate, formattedEndDate);
+                if (company == null) {
+                    log.error("Company not found for booking ID: " + bookingOrder.getIdBooking());
+                    return;
+                }
+                String mailCompany = company.getEmail();
+                mailSender.sendMailSuccess(mailCompany, bookingOrder.getIdBooking(), formattedStartDate, formattedEndDate);
             } else if (isTransactionFailed && isOverdue) {
                 bookingOrder.setStatus(STATUS_CANCELLED);
                 String reason = "Transaction failed after 24 hours";

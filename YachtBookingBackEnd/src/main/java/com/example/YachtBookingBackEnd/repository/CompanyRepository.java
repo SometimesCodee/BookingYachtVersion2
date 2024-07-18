@@ -39,10 +39,11 @@ public interface CompanyRepository extends JpaRepository<Company, String> {
     Account getAccountByIdCompany(@Param("idCompany") String idCompany);
 
     @Query("SELECT c " +
-            "FROM Company  c " +
+            "FROM Company c " +
             "JOIN Account a ON a.idAccount = c.account.idAccount " +
             "JOIN Customer cu ON cu.idCustomer = a.customer.idCustomer " +
             "JOIN BookingOrder b ON b.customer.idCustomer = cu.idCustomer " +
             "WHERE b.idBooking = :idBooking")
     Company findCompanyByIdBooking(@Param("idBooking") String idBooking);
+
 }

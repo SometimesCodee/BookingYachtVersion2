@@ -46,6 +46,7 @@ public class AccountService implements IAccount {
             account.setUsername(username);
             account.setPassword(passwordEncoder.encode(password));
             account.setRole(ROLE_COMPANY);
+            account.setStatus(1);
 
             // Lưu account vào db
             accountRepository.save(account);
@@ -85,6 +86,7 @@ public class AccountService implements IAccount {
             account.setUsername(username);
             account.setPassword(passwordEncoder.encode(password));
             account.setRole(ROLE_CUSTOMER);
+            account.setStatus(1);
 
             // Lưu account vào db
             accountRepository.save(account);
@@ -210,6 +212,33 @@ public class AccountService implements IAccount {
             return true;
         }catch (Exception e){
             log.error("Exception get company by id account: " + e.getMessage());
+            return false;
+        }
+    }
+
+    @Override
+    public boolean disableAccountCompany(String idCompany) {
+        try {
+            Optional<Company> companyOptional = companyRepository.findById(idCompany);
+            if (companyOptional.isPresent()) {
+                Company company = companyOptional.get();
+                Account account = accountRepository.findById(company.getAccount().getIdAccount())
+                        .orElseThrow(() -> new RuntimeException("Can not found Account with id: " + idCompany));
+
+                if (account.getStatus() == 1) {
+                    account.setStatus(0);
+                    accountRepository.save(account);
+                    return true;
+                } else {
+                    log.error("Account with id " + account.getIdAccount() + " is not active");
+                    return false;
+                }
+            } else {
+                log.error("Can not found company with id: " + idCompany);
+                return false;
+            }
+        } catch (Exception e) {
+            log.error("Exception: " + e.getMessage());
             return false;
         }
     }

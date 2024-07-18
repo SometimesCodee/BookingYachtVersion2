@@ -63,10 +63,12 @@ public class LoginController {
             }
         } catch (AuthenticationException e) {
             dataResponse.setData("Invalid credentials");
+            System.out.println("Invalid credentials");
             dataResponse.setSuccess(false);
             return new ResponseEntity<>(dataResponse, HttpStatus.UNAUTHORIZED);
         }
         dataResponse.setData("Authentication failed");
+        System.out.println("Authentication failed");
         dataResponse.setSuccess(false);
         return new ResponseEntity<>(dataResponse, HttpStatus.UNAUTHORIZED);
     }

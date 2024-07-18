@@ -1,16 +1,12 @@
-import Card from 'react-bootstrap/Card';
-import { NavLink, useNavigate } from "react-router-dom";
-import Button from 'react-bootstrap/Button';
 import { useEffect, useState } from 'react';
-import { getAllYacht, getHighestAndLowestPriceByYacht, getUser } from '../../services/ApiServices';
-import { GrFormNextLink } from "react-icons/gr";
-import i_content from '../../assets/image_1.webp'
-import axios from 'axios';
-import { Container } from 'react-bootstrap/Container';
+import Card from 'react-bootstrap/Card';
 import { FaLocationDot } from "react-icons/fa6";
+import { GrFormNextLink } from "react-icons/gr";
 import { useDispatch, useSelector } from 'react-redux';
+import { NavLink } from "react-router-dom";
+import i_content from '../../assets/image_1.webp';
 import { getYachtListApi } from '../../redux/action/YachtListAction';
-import { getAllRoomByYachtApi } from '../../redux/action/RoomAction';
+import { getHighestAndLowestPriceByYacht } from '../../services/ApiServices';
 
 
 const ShowYacht = () => {
@@ -42,7 +38,7 @@ const ShowYacht = () => {
         }
     }, [yachtList]);
 
-    const avatarYachtApi = 'http://localhost:8080/api/customer/file/'
+    const avatarYachtApi = 'https://yachtbookingbackend.azurewebsites.net/api/customer/file/'
 
     return (
         <>

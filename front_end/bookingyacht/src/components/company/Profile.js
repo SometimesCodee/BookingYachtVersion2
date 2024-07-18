@@ -1,17 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import { Button, ButtonGroup } from 'react-bootstrap';
-import ModalUpdateProfile from './Modal/ModalUpdateProfile';
 import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { getProfileCompany } from '../../services/ApiServices';
+import ModalChangePassCompany from './Modal/ModalChangePassCompany';
+import ModalUpdateProfile from './Modal/ModalUpdateProfile';
 const ProfileCompany = () => {
 
     const idCompany = useSelector(state => state.account.account.idCompany);
 
     const [isShowModal, setIsShowModal] = useState(false);
     const [profile, setProfile] = useState({});
+    const [showModalChangePass, setShowModalChangePass] = useState(false)
 
     const handleClose = () => {
         setIsShowModal(false);
+        setShowModalChangePass(false)
     }
 
     useEffect(() => {
@@ -25,6 +29,7 @@ const ProfileCompany = () => {
         }
     }
 
+
     return (
 
         <div>
@@ -35,7 +40,7 @@ const ProfileCompany = () => {
                             <div className="card mb-3" style={{ borderRadius: '.5rem' }}>
                                 <div className="row g-0">
                                     <div className="col-md-4 gradient-custom text-center" style={{ borderTopLeftRadius: '.3rem', borderBottomLeftRadius: '.3rem' }}>
-                                        <img src={`http://localhost:8080/api/customer/file/${profile.logo}`} alt='logo' className="img-fluid my-5" style={{ width: 80 }} />
+                                        <img src={`https://yachtbookingbackend.azurewebsites.net/api/customer/file/${profile.logo}`} alt='logo' className="img-fluid my-5" style={{ width: 80 }} />
 
                                     </div>
                                     <div className="col-md-8">
@@ -66,6 +71,7 @@ const ProfileCompany = () => {
                                             <ButtonGroup>
                                                 <Button onClick={() => setIsShowModal(true)} className='btn btn-primary'>Edit</Button>
                                             </ButtonGroup>
+                                            <Link onClick={() => setShowModalChangePass(true)} className='mx-3'>Change Password</Link>
                                         </div>
                                     </div>
                                 </div>
@@ -79,6 +85,10 @@ const ProfileCompany = () => {
                 handleClose={handleClose}
                 profile={profile}
                 getProfile={getProfile}
+            />
+            <ModalChangePassCompany
+                show={showModalChangePass}
+                handleClose={handleClose}
             />
 
         </div>

@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Carousel, Image } from 'react-bootstrap';
-import './SliderImg.scss'
-import { getHighestAndLowestPriceByYacht, getImagesYacht } from '../../../services/ApiServices';
 import { LuShip } from "react-icons/lu";
 import { useDispatch, useSelector } from 'react-redux';
 import { getYachtImagesApi } from '../../../redux/action/YachtImagesAction';
+import { getHighestAndLowestPriceByYacht } from '../../../services/ApiServices';
+import './SliderImg.scss';
 
 const SimpleSlider = ({ yacht }) => {
   const { images } = useSelector(state => state.YachtImagesReducer);
@@ -28,7 +28,7 @@ const SimpleSlider = ({ yacht }) => {
     }
   };
 
-  const getImageApi = `http://localhost:8080/api/customer/file/`
+  const getImageApi = `https://yachtbookingbackend.azurewebsites.net/api/customer/file/`
 
   const [currentIndex, setCurrentIndex] = useState(0);
 

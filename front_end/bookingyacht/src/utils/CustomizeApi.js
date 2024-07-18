@@ -1,12 +1,11 @@
 import axios from "axios";
 import NProgress from 'nprogress';
-import { store } from '../redux/Store'
 import { toast } from "react-toastify";
-import Error403 from "../components/page404/Error403";
+import { store } from '../redux/Store';
 
 
 const instance = axios.create({
-    baseURL: 'http://localhost:8080',
+    baseURL: 'https://yachtbookingbackend.azurewebsites.net',
 });
 
 NProgress.configure({
@@ -45,9 +44,8 @@ instance.interceptors.response.use(function (response) {
     //return Promise.reject(error);
     NProgress.done();
     if (error.response.status === 401) {
-        toast.error('Unauthorized: Please log in again');
-        // Optionally redirect to login page
-        // window.location.href = "/login";
+        //     toast.error('Unauthorized: Please log in again');
+
         return;
     }
     if (error.response.status === 403) {

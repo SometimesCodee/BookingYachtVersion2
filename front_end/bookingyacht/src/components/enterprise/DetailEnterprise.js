@@ -10,7 +10,7 @@ import { getHighestAndLowestPriceByYacht } from '../../services/ApiServices';
 import '../yacht/FindYacht.scss';
 import './InfoCompany.scss';
 const ProfilePage = () => {
-    const getImageApi = `http://localhost:8080/api/customer/file/`
+    const getImageApi = `https://yachtbookingbackend.azurewebsites.net/api/customer/file/`
     const { idCompany } = useParams();
     const navigate = useNavigate();
     const [pagging, setPagging] = useState([]);
@@ -21,7 +21,7 @@ const ProfilePage = () => {
     const [priceData, setPriceData] = useState({});
 
     useEffect(() => {
-        axios.get(`http://localhost:8080/api/customer/yacht/findByCompany/${idCompany}`)
+        axios.get(`https://yachtbookingbackend.azurewebsites.net/api/customer/yacht/findByCompany/${idCompany}`)
             .then(res => {
                 setPaggingYacht(res.data.data)
                 setYachtList(res.data.data)
@@ -29,7 +29,7 @@ const ProfilePage = () => {
             .catch(error => {
                 console.log(error)
             });
-        axios.get(`http://localhost:8080/api/customer/profilesCompany/${idCompany}`)
+        axios.get(`https://yachtbookingbackend.azurewebsites.net/api/customer/profilesCompany/${idCompany}`)
             .then(res => {
                 setCompany(res.data.data)
                 console.log(res.data.data)
@@ -74,7 +74,7 @@ const ProfilePage = () => {
         }
     }, [yachtList, currentPage]);
 
-    const avatarYachtApi = 'http://localhost:8080/api/customer/file/'
+    const avatarYachtApi = 'https://yachtbookingbackend.azurewebsites.net/api/customer/file/'
 
     const handelChangePage = (pageNumber) => {
         setCurrentPage(pageNumber)

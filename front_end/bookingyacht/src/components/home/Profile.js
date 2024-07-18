@@ -11,10 +11,14 @@ import Bill from './Bill';
 import BookingHistory from './BookingHistory';
 import BookingOrderHistory from './BookingOrderHistory';
 import ModalUpdateProfileUser from './ModalUpdateProfileUser';
+import ModalChangePassCustomer from './ModalChangePassCustomer';
 
 const Profile = () => {
     const [isShowModal, setIsShowModal] = useState(false);
     const idCustomer = useSelector(state => state.account.account.idCustomer);
+    const [showModalChangePass, setShowModalChangePass] = useState(false)
+
+
 
     useEffect(() => {
         getProfile();
@@ -24,6 +28,8 @@ const Profile = () => {
 
     const handleClose = () => {
         setIsShowModal(false);
+        setShowModalChangePass(false)
+
     }
 
     const getProfile = async () => {
@@ -102,6 +108,8 @@ const Profile = () => {
                                             <div className="col-md-10">
                                                 <p>{profile.address}</p>
                                             </div>
+                                        </div><div className="row">
+                                            <Link onClick={() => setShowModalChangePass(true)}>Change Password</Link>
                                         </div>
                                     </div>
 
@@ -126,6 +134,10 @@ const Profile = () => {
                 handleClose={handleClose}
                 profile={profile}
                 getProfile={getProfile}
+            />
+            <ModalChangePassCustomer
+                show={showModalChangePass}
+                handleClose={handleClose}
             />
         </div >
 

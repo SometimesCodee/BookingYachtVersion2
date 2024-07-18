@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Col, Form, Modal, Row } from 'react-bootstrap';
-import { useSelector, useDispatch } from 'react-redux';
-import { removeRoomAction } from '../../../redux/action/OrderAction';
-import { useNavigate } from 'react-router-dom';
 import { GoCheckCircle } from "react-icons/go";
-import { createPayment, getCustomerById, getPayment } from '../../../services/ApiServices';
-import { ScheduleReducer } from './../../../redux/reducer/ScheduleReducer';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { removeRoomAction } from '../../../redux/action/OrderAction';
 import { getScheduleByIdApi } from '../../../redux/action/ScheduleAction';
+import { createPayment, getCustomerById } from '../../../services/ApiServices';
 
 const BookNowModal = ({
     selectedRooms,
@@ -18,7 +17,7 @@ const BookNowModal = ({
     handleClose,
     selectedSchedule
 }) => {
-    const getAvatarApi = `http://localhost:8080/api/customer/file/`;
+    const getAvatarApi = `https://yachtbookingbackend.azurewebsites.net/api/customer/file/`;
     const isLogged = useSelector(state => state.account.isAuthenticated);
     console.log('isLogged', isLogged)
     const [customer, setCustomer] = useState(null);

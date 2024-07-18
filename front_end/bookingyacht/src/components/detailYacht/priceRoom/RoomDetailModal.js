@@ -1,10 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { Col, ListGroup, Modal, Row } from 'react-bootstrap';
-import { FaCheck } from 'react-icons/fa';
-import { Carousel, Image } from 'react-bootstrap';
-import { useSelector, useDispatch } from 'react-redux';
-import { getAllRoomImagesApi } from '../../../redux/action/RoomImageAction';
+import React, { useEffect, useState } from 'react';
+import { Carousel, Col, Image, ListGroup, Modal, Row } from 'react-bootstrap';
 import { FcOk } from "react-icons/fc";
+import { useDispatch, useSelector } from 'react-redux';
+import { getAllRoomImagesApi } from '../../../redux/action/RoomImageAction';
 
 
 const RoomDetailModal = ({ selectedRoom, show, handleClose }) => {
@@ -25,7 +23,7 @@ const RoomDetailModal = ({ selectedRoom, show, handleClose }) => {
         setCurrentIndex(selectedIndex);
     };
 
-    const getImageApi = `http://localhost:8080/api/customer/file/`;
+    const getImageApi = `https://yachtbookingbackend.azurewebsites.net/api/customer/file/`;
     const utilities = selectedRoom.roomType?.utilities ? selectedRoom.roomType.utilities.split('.').filter(sentence => sentence.trim()) : [];
 
     const renderUtilities = () => {

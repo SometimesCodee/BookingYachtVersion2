@@ -14,6 +14,7 @@ public class BookingOrderMapper {
         dto.setAmount(bookingOrder.getAmount());
         dto.setRequirement(bookingOrder.getRequirement());
         dto.setStatus(bookingOrder.getStatus());
+        dto.setReason(bookingOrder.getReason());
 
         //Map Schedule
         ScheduleDTO scheduleDTO = new ScheduleDTO();

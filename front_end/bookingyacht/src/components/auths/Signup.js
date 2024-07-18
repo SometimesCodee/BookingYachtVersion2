@@ -34,6 +34,13 @@ const Signup = () => {
             toast.error('User Name Exits')
         }
     }
+
+    const handleKeyDown = (e) => {
+        if (e && e.key === 'Enter') {
+            handleRegister()
+        }
+    }
+
     return (
         <div >
             <section className="vh-100" style={{ backgroundColor: '#eee' }}>
@@ -54,6 +61,7 @@ const Signup = () => {
                                                             placeholder='UserName'
                                                             className="form-control"
                                                             value={userName}
+                                                            onKeyDown={e => handleKeyDown(e)}
                                                             onChange={(event) => setUserName(event.target.value)}
                                                         />
                                                     </div>
@@ -65,6 +73,7 @@ const Signup = () => {
                                                             placeholder='Password'
                                                             className="form-control"
                                                             value={password}
+                                                            onKeyDown={e => handleKeyDown(e)}
                                                             onChange={(event) => setPassword(event.target.value)}
                                                         />
                                                     </div>
@@ -76,6 +85,7 @@ const Signup = () => {
                                                             placeholder='Confirm Password'
                                                             className="form-control"
                                                             value={confrimPassword}
+                                                            onKeyDown={e => handleKeyDown(e)}
                                                             onChange={(event) => setConfirmpassword(event.target.value)}
                                                         />
                                                     </div>

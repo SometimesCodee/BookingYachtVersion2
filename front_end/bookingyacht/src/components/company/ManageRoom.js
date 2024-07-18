@@ -1,26 +1,29 @@
 import React, { useEffect, useState } from 'react';
-import { Button, ButtonGroup, FormControl } from 'react-bootstrap';
+import { Button, FormControl } from 'react-bootstrap';
 import { AiFillHome } from "react-icons/ai";
+import { FaCirclePlus } from "react-icons/fa6";
+import { TbMeterSquare } from "react-icons/tb";
+import ReactPaginate from 'react-paginate';
 import { NavLink, useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { getAllRoomByYacht, getAllRoomTypeCompany } from '../../services/ApiServices';
+import './ManageYacht.scss';
+import ModalCreateRoom from './Modal/ModalCreateRoom';
 import ModalManageRoomImage from './Modal/ModalManageRoomImage';
 import ModalManageRoomService from './Modal/ModalManageRoomService';
-import ModalUpdateRoom from './Modal/ModalUpdateRoom';
-import { getAllRoomByYacht, getAllRoomTypeCompany } from '../../services/ApiServices';
-import { toast } from 'react-toastify';
-import { TbMeterSquare } from "react-icons/tb";
-import './ManageYacht.scss'
-import { FaCirclePlus } from "react-icons/fa6";
-import ModalCreateRoom from './Modal/ModalCreateRoom';
-import ReactPaginate from 'react-paginate';
 import ModalRoomType from './Modal/ModalRoomType';
-import _ from 'lodash';
+import ModalUpdateRoom from './Modal/ModalUpdateRoom';
 
 
 const ManageRoom = () => {
     const [isShowModalRoomImage, setIsShowModalRoomImage] = useState(false);
+
     const [isShowModalRoomService, setIsShowModalRoomService] = useState(false);
+
     const [isShowModalUpdateRoom, setIsShowModalUpdateRoom] = useState(false);
+
     const [isShowModalCreateRoom, setIsShowModalCreateRoom] = useState(false);
+
     const [isShowModalRoomType, setIsShowModalRoomType] = useState(false);
 
     const [currentPage, setCurrentPage] = useState(0);
@@ -50,7 +53,6 @@ const ManageRoom = () => {
     useEffect(() => {
         getAllRoom();
         fetchRoomType()
-
     }, [])
 
     useEffect(() => {
@@ -90,7 +92,6 @@ const ManageRoom = () => {
 
     const fetchRoomType = async () => {
         let res = await getAllRoomTypeCompany(idYacht);
-
         if (res && res.data && res.data.data) {
             setListRoomType(res.data.data);
         } else {
@@ -125,7 +126,7 @@ const ManageRoom = () => {
                 displayedRoom && displayedRoom.length > 0 && displayedRoom
                     .map((room) =>
                         <div key={room.idRoom} className='d-flex my-5 room p-3 row ' style={{ gap: 50 }}>
-                            <img className='col-md-2' width={170} src={`http://localhost:8080/api/customer/file/${room.avatar}`} />
+                            <img className='col-md-2' width={170} src={`https://yachtbookingbackend.azurewebsites.net/api/customer/file/${room.avatar}`} />
                             <div className=' col-md-3' >
                                 <div className='room-name'>{room.name}</div>
                                 <div>{room.area} <TbMeterSquare size={25} className='pb-1' /></div>

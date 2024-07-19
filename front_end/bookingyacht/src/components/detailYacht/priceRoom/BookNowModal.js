@@ -17,7 +17,7 @@ const BookNowModal = ({
     handleClose,
     selectedSchedule
 }) => {
-    const getAvatarApi = `https://booking18-fzc0ghgvcve8f7fs.eastasia-01.azurewebsites.net/api/customer/file/`;
+ 
     const isLogged = useSelector(state => state.account.isAuthenticated);
     console.log('isLogged', isLogged)
     const [customer, setCustomer] = useState(null);

@@ -31,12 +31,14 @@ public class YachtService implements IYacht {
     @Override
     public List<YachtDTO> getAllYacht() {
         List<YachtDTO> listYachtDTO = new ArrayList<>();
+        System.out.println("ok");
         try{
-            List<Yacht> yachtList = yachtRepository.findAll();
+            List<Yacht> yachtList = yachtRepository.findAllYachts();
             System.out.println(yachtList);
             for (Yacht yacht : yachtList) {
                 YachtDTO yachtDTO = new YachtDTO();
                 if(yacht.getExist() == 1) {
+
                     yachtDTO.setIdYacht(yacht.getIdYacht());
                     yachtDTO.setName(yacht.getName());
                     yachtDTO.setImage(yacht.getImage());

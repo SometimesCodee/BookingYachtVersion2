@@ -10,8 +10,8 @@ on:
   workflow_dispatch:
 
 jobs:
- build:
-    runs-on: ubuntu-latest
+  build:
+    runs-on: windows-latest
 
     steps:
       - uses: actions/checkout@v4
@@ -23,15 +23,13 @@ jobs:
           distribution: 'microsoft'
 
       - name: Build with Maven
-        run: |
-          cd YachtBookingBackEnd  # Chuyển vào thư mục YachtBookingBackEnd
-          mvn clean install
+        run: mvn clean install
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
           name: java-app
-          path: 'YachtBookingBackEnd/target/*.jar'  # Đường dẫn tới file JAR
+          path: '${{ github.workspace }}/target/*.jar'
 
   deploy:
     runs-on: windows-latest
@@ -39,18 +37,18 @@ jobs:
     environment:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-
+    
     steps:
       - name: Download artifact from build job
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: java-app
-
+      
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
-        uses: azure/webapps-deploy@v2
+        uses: azure/webapps-deploy@v3
         with:
           app-name: 'booking18'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_2FC1D50BF21F430D83EE40D141EC4E23 }}
           package: '*.jar'
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_3D0EDC8BAE984CC6B97E6CD1FAEB5D31 }}

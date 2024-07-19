@@ -13,7 +13,7 @@ public class SecurityConfig {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
-        config.addAllowedOrigin("https://yb.sh.io.vn/");  // Remove trailing slash
+        config.addAllowedOriginPattern("https://yb.sh.io.vn");  // Supports more flexible matching
         config.addAllowedHeader("*");
         config.addAllowedMethod("*");
         source.registerCorsConfiguration("/**", config);

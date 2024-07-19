@@ -8,19 +8,19 @@ const CompanyList = () => {
     const [companies, setCompanies] = useState([]);
     const navigate = useNavigate();
     // const [loading, setLoading] = useState(true);
-    const getImageApi = `https://yachtbookingbackend.azurewebsites.net/api/customer/file/`
+
     useEffect(() => {
-       getAllCompany()
+        getAllCompany()
             .then(res => {
                 setCompanies(res.data.data.filter(c => c.exist === 1));
             })
             .catch(error => {
                 console.log(error)
-                
+
             });
     }, []);
 
-    const handleCompanyClick = (companyId) =>{
+    const handleCompanyClick = (companyId) => {
         navigate(`/deltailInfo/${companyId}`)
     }
 
@@ -45,7 +45,7 @@ const CompanyList = () => {
                                 <Row style={{alignItems : 'center'}}>
                                     <Col md={3}>
                                         <img
-                                            src={`${getImageApi}${company.logo}`} alt={company.logo}
+                                            src={company.logo} alt={company.logo}
                                             style={{ width: '100%', borderRadius: '8px' }}
                                         />
                                     </Col>

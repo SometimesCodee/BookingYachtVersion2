@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { Button, FormControl, FormGroup } from 'react-bootstrap';
-import Form from 'react-bootstrap/Form';
-import { FaCirclePlus, FaLocationDot } from "react-icons/fa6";
+import { useNavigate, useParams } from 'react-router-dom';
 import { RiShipLine } from "react-icons/ri";
+import { FaLocationDot } from "react-icons/fa6";
+import './ViewYacht.scss'
 import ReactPaginate from 'react-paginate';
-import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
-import { deleteYacht, getAllLocation, getYachtByIdCompany, getYachtType } from '../../services/ApiServices';
-import './Company.scss';
+import './Company.scss'
+import { FaCirclePlus } from "react-icons/fa6";
 import ModalCreateYacht from './Modal/ModalCreateYacht';
-import './ViewYacht.scss';
+import { deleteYacht, getAllLocation, getYachtById, getYachtByIdCompany, getYachtType } from '../../services/ApiServices';
+import _ from 'lodash';
+import Form from 'react-bootstrap/Form';
+import { toast } from 'react-toastify';
+import { useSelector } from 'react-redux';
 const ViewYacht = (props) => {
     const navigate = useNavigate();
     const [isShowModal, setIsShowModal] = useState(false);
@@ -147,7 +149,7 @@ const ViewYacht = (props) => {
 
                                     <div className="media">
 
-                                        <img className="mr-4" src={`https://yachtbookingbackend.azurewebsites.net/api/customer/file/${yacht.image}`} alt="Generic placeholder image" />
+                                        <img className="mr-4" src={yacht.image} alt="Generic placeholder" />
 
                                         <div className="media-body">
                                             <div className='card-content'>

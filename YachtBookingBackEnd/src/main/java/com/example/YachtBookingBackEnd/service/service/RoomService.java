@@ -9,7 +9,6 @@ import com.example.YachtBookingBackEnd.entity.RoomImage;
 import com.example.YachtBookingBackEnd.entity.RoomType;
 import com.example.YachtBookingBackEnd.entity.Yacht;
 import com.example.YachtBookingBackEnd.repository.*;
-import com.example.YachtBookingBackEnd.service.implement.IFile;
 import com.example.YachtBookingBackEnd.service.implement.IRoom;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,10 +16,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class RoomService implements IRoom {
-
     @Autowired
     private RoomRepository roomRepository;
     @Autowired
@@ -30,14 +29,13 @@ public class RoomService implements IRoom {
     @Autowired
     private RoomTypeRepository roomTypeRepository;
     @Autowired
-    private IFile iFile;
-    @Autowired
     private BookingRoomRepository bookingRoomRepository;
+    @Autowired
+    private CloudinaryService cloudinaryService;
 
     @Override
     public List<RoomDTO> getAllRoom() {
         List<RoomDTO> roomDTOList = new ArrayList<>();
-
         try {
             List<Room> roomList = roomRepository.findAll();
             for (Room room : roomList
@@ -51,14 +49,11 @@ public class RoomService implements IRoom {
                 roomDTO.setRoomType(roomTypeDTO);
                 roomDTOList.add(roomDTO);
             }
-
         } catch (Exception e) {
             System.out.println("Error by: "+e);
         }
         return roomDTOList;
     }
-
-
 
     @Override
     public RoomDTO getRoomByID(String roomId) {
@@ -66,9 +61,7 @@ public class RoomService implements IRoom {
         RoomDTO roomDTO = new RoomDTO();
         Room room = roomRepository.findById(roomId)
                 .orElseThrow(() -> new RuntimeException("Not found"));
-
         try {
-
             roomDTO.setIdRoom(roomId);
             roomDTO.setName(room.getName());
             roomDTO.setDescription(room.getDescription());
@@ -113,8 +106,13 @@ public class RoomService implements IRoom {
             room.setName(roomName);
             room.setArea(area);
             room.setDescription(description);
-            iFile.save(avatar);
-            room.setAvatar(avatar.getOriginalFilename());
+            Map uploadResult = cloudinaryService.upload(avatar);
+            String imageUrl = (String) uploadResult.get("url");
+            if (imageUrl == null) {
+                System.out.println("Error uploading image to Cloudinary");
+                return false;
+            }
+            room.setAvatar(imageUrl);
 
             RoomType  roomType = roomTypeRepository.findById(idRoomType)
                     .orElseThrow(()-> new RuntimeException("Not found!!!!"));
@@ -137,14 +135,18 @@ public class RoomService implements IRoom {
         try {
             Room room = roomRepository.findById(roomId)
                     .orElseThrow(()-> new RuntimeException("Not found room!!"));
-
             if(description!= null){
                 room.setDescription(description);
             }else {
                 room.setDescription(room.getDescription());
             }
-            iFile.save(avatar);
-            room.setAvatar(avatar.getOriginalFilename());
+            Map uploadResult = cloudinaryService.upload(avatar);
+            String imageUrl = (String) uploadResult.get("url");
+            if (imageUrl == null) {
+                System.out.println("Error uploading image to Cloudinary");
+                return false;
+            }
+            room.setAvatar(imageUrl);
             roomRepository.save(room);
             return  true;
         }catch (Exception e){
@@ -202,7 +204,6 @@ public class RoomService implements IRoom {
                         roomDTO.setArea(room.getArea());
                         roomDTO.setDescription(room.getDescription());
                         roomDTO.setAvatar(room.getAvatar());
-
                         return roomDTO;
                     })
                     .toList();
@@ -218,7 +219,6 @@ public class RoomService implements IRoom {
         if (unBookedRooms != null) {
             for (Room room : unBookedRooms) {
                 RoomDTO roomDTO = new RoomDTO();
-
                 roomDTO.setIdRoom(room.getIdRoom());
                 roomDTO.setName(room.getName());
                 roomDTO.setArea(room.getArea());

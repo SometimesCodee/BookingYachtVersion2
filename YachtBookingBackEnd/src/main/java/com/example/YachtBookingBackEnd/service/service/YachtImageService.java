@@ -5,7 +5,6 @@ import com.example.YachtBookingBackEnd.entity.Yacht;
 import com.example.YachtBookingBackEnd.entity.YachtImage;
 import com.example.YachtBookingBackEnd.repository.YachtImageRepository;
 import com.example.YachtBookingBackEnd.repository.YachtRepository;
-import com.example.YachtBookingBackEnd.service.implement.IFile;
 import com.example.YachtBookingBackEnd.service.implement.IYachtImage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -22,7 +22,8 @@ public class YachtImageService implements IYachtImage {
     @Autowired
     YachtRepository yachtRepository;
     @Autowired
-    IFile iFile;
+    private CloudinaryService cloudinaryService;
+
 
     @Override
     public List<YachtImageDTO> getImageByYacht(String yachtId) {
@@ -53,8 +54,13 @@ public class YachtImageService implements IYachtImage {
             Optional<Yacht> yachtOptional = yachtRepository.findById(yachtId);
             if(yachtOptional.isPresent()){
                 YachtImage yachtImage = new YachtImage();
-                iFile.save(image);
-                yachtImage.setImageYacht(image.getOriginalFilename());
+                Map uploadResult = cloudinaryService.upload(image);
+                String imageUrl = (String) uploadResult.get("url");
+                if (imageUrl == null) {
+                    System.out.println("Error uploading image to Cloudinary");
+                    return false;
+                }
+                yachtImage.setImageYacht(imageUrl);
                 yachtImage.setYacht(yachtOptional.get());
                 yachtImageRepository.save(yachtImage);
                 return true;
@@ -71,8 +77,13 @@ public class YachtImageService implements IYachtImage {
             YachtImage yachtImage = yachtImageRepository.findById(imageId)
                     .orElseThrow(() -> new RuntimeException("Company not found! Try again"));
                     System.out.println("tim thay");
-                    iFile.save(image);
-                    yachtImage.setImageYacht(image.getOriginalFilename());
+                    Map uploadResult = cloudinaryService.upload(image);
+                    String imageUrl = (String) uploadResult.get("url");
+                    if (imageUrl == null) {
+                        System.out.println("Error uploading image to Cloudinary");
+                        return false;
+                    }
+                    yachtImage.setImageYacht(imageUrl);
                     yachtImageRepository.save(yachtImage);
                     return true;
         }catch (Exception e){

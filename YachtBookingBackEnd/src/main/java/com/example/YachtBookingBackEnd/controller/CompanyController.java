@@ -15,7 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.time.LocalDateTime;
 import java.time.LocalDate;
 
-@CrossOrigin("*")
+@CrossOrigin("https://yb.sh.io.vn")
 @RestController
 @RequestMapping("/api/companies")
 @RequiredArgsConstructor
@@ -23,7 +23,6 @@ import java.time.LocalDate;
 public class CompanyController {
     IYacht iYacht;
     IBookingOrder iBookingOrder;
-    IFile iFile;
     IYachtImage iYachtImage;
     IService iService;
     IYachtService iYachtService;
@@ -66,11 +65,7 @@ public class CompanyController {
     }
 
     //Done
-    @GetMapping("/file/{filename:.+}")
-    public ResponseEntity<?> getFile(@PathVariable String filename) {
-        Resource resource = iFile.load(filename);
-        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"").body(resource);
-    }
+
     //Done
     @PostMapping("/yacht/insertYacht/{idCompany}")
     public ResponseEntity<?> insertYacht(@RequestParam String name,
@@ -335,7 +330,7 @@ public class CompanyController {
 
     @PutMapping("/roomType/updateRoomType/{roomTypeId}")
     public ResponseEntity<?> updateRoomType(@PathVariable ("roomTypeId")String roomTypeId
-            ,@RequestParam long price,
+                                        ,@RequestParam long price,
                                          @RequestParam String type,
                                          @RequestParam String utilities){
         DataResponse dataResponse = new DataResponse();

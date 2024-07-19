@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -31,6 +32,7 @@ public class AccountService implements IAccount {
 
     public static final String ROLE_COMPANY = "COMPANY";
     public static final String ROLE_CUSTOMER = "CUSTOMER";
+    private final CloudinaryService cloudinaryService;
 
     @Override
     public boolean createAccountCompany(String username, String password) {
@@ -102,15 +104,11 @@ public class AccountService implements IAccount {
     @Override
     public List<AccountDTO> getAccountCustomer() {
         List<AccountDTO> accountDTOList = new ArrayList<>();
-
         try {
             List<Account> accountList = accountRepository.findAll();
-
             for (Account account : accountList
             ) {
-
                 AccountDTO accountDTO = new AccountDTO();
-
                 accountDTO.setIdAccount(account.getIdAccount());
                 accountDTO.setUsername(account.getUsername());
                 accountDTO.setPassword(account.getPassword());
@@ -125,15 +123,12 @@ public class AccountService implements IAccount {
         } catch (Exception e) {
             System.out.println("Exception: " + e.getMessage());
         }
-
-
         return accountDTOList;
     }
 
     @Override
     public AccountDTO getAccountById(String  id)  {
         Optional<Account> account=  accountRepository.findById(id);
-
         AccountDTO accountDTO = new AccountDTO();
         if(account.isPresent()){
             accountDTO.setIdAccount(id);
@@ -187,12 +182,10 @@ public class AccountService implements IAccount {
 
     @Override
     public boolean insertInfoCompanyByIdAccount(String address, String email,MultipartFile logo, String name, String idAccount) {
-
         if(!isValidEmail(email)){
             log.error("Invalid email format");
             throw new IllegalArgumentException("Invalid email format");
         }
-
         try{
             Company company = new Company();
             company.setAddress(address);
@@ -204,7 +197,13 @@ public class AccountService implements IAccount {
             }
             company.setExist(1);
             company.setName(name);
-            company.setLogo(logo.getOriginalFilename());
+            Map uploadResult = cloudinaryService.upload(logo);
+            String imageUrl = (String) uploadResult.get("url");
+            if (imageUrl == null) {
+                System.out.println("Error uploading image to Cloudinary");
+                return false;
+            }
+            company.setLogo(imageUrl);
             Account account = new Account();
             account.setIdAccount(idAccount);
             company.setAccount(account);

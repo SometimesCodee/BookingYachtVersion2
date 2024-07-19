@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { FormCheck } from 'react-bootstrap';
+import { Button, FormCheck } from 'react-bootstrap';
 import { MdOutlineBedroomParent, MdOutlinePerson } from "react-icons/md";
 import ServiceSelection from './ServiceSelection';
 import './form-sel.scss';
@@ -14,12 +14,12 @@ const RoomItem = ({ room, handleDetail, handleRoomSelect, isSelected, services, 
         setIsChecked(newState);
         handleRoomSelect(room, newState); // Pass the room object and new state to the parent component
     };
-    const getAvatarApi = `https://yachtbookingbackend.azurewebsites.net/api/customer/file/`
+    // const getAvatarApi = `http://localhost:8080/api/customer/file/`
     return (
         <div key={room.idRoom} className="my-3 p-3 border form-sel">
             <div className="row align-items-center">
                 <div className="col-md-2 col-12">
-                    <img src={`${getAvatarApi}${room.avatar}`} alt={room.name} className="img-fluid rounded object-fit-cover" />
+                    <img src={room.avatar} alt={room.name} className="img-fluid rounded object-fit-cover" />
                 </div>
                 <div className="col-md-6 col-12">
                     <h5 style={{ fontWeight: 'bold' }} className='name-rom'>

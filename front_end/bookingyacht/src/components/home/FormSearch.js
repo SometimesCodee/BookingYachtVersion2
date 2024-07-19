@@ -65,15 +65,17 @@ const FormSearch = () => {
                             <Col md={7}>
                                 <FormGroup>
                                     <FormControl
-                                        placeholder='Search Yacht'
+
+                                        placeholder='Nhập từ khóa'
                                         type='text'
                                         name='name'
                                         onChange={handleChange}
+                                        style={{ paddingLeft: '40px' }}
                                     />
                                 </FormGroup>
                             </Col>
                             <Col md={3}>
-                                <select className='select p-2 pe-3' name='location' onChange={handleChange} style={{ color: '#595C5F' }} value={searchData.location}>
+                                <select className='select' name='location' onChange={handleChange} style={{ color: '#595C5F', paddingLeft: '20px', paddingRight: '10px' }} value={searchData.location}>
                                     <option value='all'>Tất cả các địa điểm</option>
                                     <option value='Hạ Long'>Vịnh Hạ Long</option>
                                     <option value='Lan Hạ'>Vịnh Lan Hạ</option>
@@ -82,7 +84,7 @@ const FormSearch = () => {
 
                             </Col>
                             <Col md={2}>
-                                <button style={{ paddingLeft: '30px', paddingRight: '30px' }} size='lg'>Search</button>
+                                <button style={{ paddingLeft: '30px', paddingRight: '30px' }} size='lg'>Tìm kiếm</button>
                             </Col>
                         </Row>
 

@@ -5,14 +5,15 @@ import { FaCirclePlus } from "react-icons/fa6";
 import { TbMeterSquare } from "react-icons/tb";
 import ReactPaginate from 'react-paginate';
 import { NavLink, useParams } from 'react-router-dom';
-import { toast } from 'react-toastify';
-import { getAllRoomByYacht, getAllRoomTypeCompany } from '../../services/ApiServices';
-import './ManageYacht.scss';
-import ModalCreateRoom from './Modal/ModalCreateRoom';
 import ModalManageRoomImage from './Modal/ModalManageRoomImage';
 import ModalManageRoomService from './Modal/ModalManageRoomService';
-import ModalRoomType from './Modal/ModalRoomType';
 import ModalUpdateRoom from './Modal/ModalUpdateRoom';
+import { getAllRoomByYacht, getAllRoomTypeCompany } from '../../services/ApiServices';
+import { toast } from 'react-toastify';
+import './ManageYacht.scss';
+import ModalCreateRoom from './Modal/ModalCreateRoom';
+import ModalRoomType from './Modal/ModalRoomType';
+
 
 
 const ManageRoom = () => {
@@ -53,6 +54,7 @@ const ManageRoom = () => {
     useEffect(() => {
         getAllRoom();
         fetchRoomType()
+
     }, [])
 
     useEffect(() => {
@@ -92,6 +94,7 @@ const ManageRoom = () => {
 
     const fetchRoomType = async () => {
         let res = await getAllRoomTypeCompany(idYacht);
+
         if (res && res.data && res.data.data) {
             setListRoomType(res.data.data);
         } else {
@@ -126,7 +129,7 @@ const ManageRoom = () => {
                 displayedRoom && displayedRoom.length > 0 && displayedRoom
                     .map((room) =>
                         <div key={room.idRoom} className='d-flex my-5 room p-3 row ' style={{ gap: 50 }}>
-                            <img className='col-md-2' width={170} src={`https://yachtbookingbackend.azurewebsites.net/api/customer/file/${room.avatar}`} />
+                            <img className='col-md-2' width={170} src={room.avatar} alt='' />
                             <div className=' col-md-3' >
                                 <div className='room-name'>{room.name}</div>
                                 <div>{room.area} <TbMeterSquare size={25} className='pb-1' /></div>

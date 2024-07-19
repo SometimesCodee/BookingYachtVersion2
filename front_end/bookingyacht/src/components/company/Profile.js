@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Button, ButtonGroup } from 'react-bootstrap';
+import ModalUpdateProfile from './Modal/ModalUpdateProfile';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { getProfileCompany } from '../../services/ApiServices';
 import ModalChangePassCompany from './Modal/ModalChangePassCompany';
-import ModalUpdateProfile from './Modal/ModalUpdateProfile';
+
 const ProfileCompany = () => {
 
     const idCompany = useSelector(state => state.account.account.idCompany);
@@ -29,7 +30,6 @@ const ProfileCompany = () => {
         }
     }
 
-
     return (
 
         <div>
@@ -40,7 +40,7 @@ const ProfileCompany = () => {
                             <div className="card mb-3" style={{ borderRadius: '.5rem' }}>
                                 <div className="row g-0">
                                     <div className="col-md-4 gradient-custom text-center" style={{ borderTopLeftRadius: '.3rem', borderBottomLeftRadius: '.3rem' }}>
-                                        <img src={`https://yachtbookingbackend.azurewebsites.net/api/customer/file/${profile.logo}`} alt='logo' className="img-fluid my-5" style={{ width: 80 }} />
+                                        <img src={profile.logo} alt='logo' className="img-fluid my-5" style={{ width: 80 }} />
 
                                     </div>
                                     <div className="col-md-8">

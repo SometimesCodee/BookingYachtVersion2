@@ -33,7 +33,7 @@ const Enterprice = () => {
             <div className='img-enterprice container'>
                 {companies.map(company => (
                     <div key={company.id}>
-                        <img src={`${getImageApi}${company.logo}`} alt={company.logo} />
+                        <img src={company.logo} alt={company.logo} />
                     </div>
                 ))}
             </div>

@@ -1,11 +1,10 @@
 server:
   port: 8080
-
 spring:
   datasource:
-    url: "jdbc:mysql://localhost:3306/project_swp"
-    username: root
-    password: 123456
+    url: "jdbc:mysql://avnadmin:AVNS_ya-ZRVgLHLb0IUlDU4M@bookingyacht-dinhvuong2311-b1c2.j.aivencloud.com:12759/defaultdb?ssl-mode=REQUIRED"
+    username: avnadmin
+
   jpa:
     hibernate:
       ddl-auto: update
@@ -39,9 +38,6 @@ logging:
 jwt:
   privateKey: WoOXNLcTzDlQqjp2JzMNJ7+fi7UQ3O8FAselbtKQSgM=
 
-fileUpLoad:
-  rootPath: D:\UML SWP\uploads
-
 payment:
   vnPay:
     payUrl: https://sandbox.vnpayment.vn/paymentv2/vpcpay.html
@@ -52,3 +48,9 @@ payment:
     version: 2.1.0
     command: pay
     orderType: other
+
+
+cloudinary:
+  cloud_name: dxnr9gqy9
+  api_key: 425361741734388
+#  api_secret: 134ZY5c7HUt3x9x2U0j9iiCKVWk

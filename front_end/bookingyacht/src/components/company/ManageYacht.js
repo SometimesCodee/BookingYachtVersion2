@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Col, Row } from 'react-bootstrap';
+import './ManageYacht.scss'
 import { AiFillHome } from "react-icons/ai";
+import { NavLink, useParams } from 'react-router-dom';
+import { Button, Col, Row } from 'react-bootstrap';
 import { FaCirclePlus } from "react-icons/fa6";
 import ReactPaginate from 'react-paginate';
-import { NavLink, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { deleteYachtImage, getYachtImage } from '../../services/ApiServices';
 import ManageInforYacht from './ManageInforYacht';
@@ -105,7 +106,7 @@ const ManageYacht = () => {
                                         className="table-primary"
                                     >
                                         <td>
-                                            <img src={`https://yachtbookingbackend.azurewebsites.net/api/customer/file/${image.imageYacht}`} width={200} alt='' />
+                                            <img src={image.imageYacht} width={200} alt='' />
                                         </td>
                                         <td width={300}>
                                             <Row>

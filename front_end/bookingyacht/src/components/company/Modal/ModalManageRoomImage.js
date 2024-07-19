@@ -2,7 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { Button, ButtonGroup } from 'react-bootstrap';
 import Accordion from 'react-bootstrap/Accordion';
 import Modal from 'react-bootstrap/Modal';
+import { FormControl } from 'react-bootstrap'
 import Table from 'react-bootstrap/Table';
+import { FaCirclePlus } from "react-icons/fa6";
+import '../ManageYacht.scss'
 import { FaPen } from "react-icons/fa";
 import { FcPlus } from "react-icons/fc";
 import { MdDelete } from "react-icons/md";
@@ -130,7 +133,7 @@ const ModalManageRoomImage = (props) => {
                             {
                                 listImage && listImage.map((image) =>
                                     <tr key={image.idRoomImage}>
-                                        <td><img src={`https://yachtbookingbackend.azurewebsites.net/api/customer/file/${image.imageRoom}`} alt='image' width={200} /></td>
+                                        <td><img src={image.imageRoom} alt='image' width={200} /></td>
                                         <td>
 
                                             <ButtonGroup className='d-flex ' style={{ gap: 30, justifyContent: "center", marginTop: 54 }}>

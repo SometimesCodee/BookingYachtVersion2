@@ -16,7 +16,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@CrossOrigin("*")
+@CrossOrigin("https://yb.sh.io.vn")
 @RequestMapping("/login")
 public class LoginController {
 
@@ -56,7 +56,6 @@ public class LoginController {
                     System.out.println(idCustomer);
                     dataResponse.setIdCustomer(idCustomer);
                 }
-
                 dataResponse.setData(token);
                 dataResponse.setSuccess(true);
                 return new ResponseEntity<>(dataResponse, HttpStatus.OK);

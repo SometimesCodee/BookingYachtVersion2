@@ -49,7 +49,7 @@ public class CustomFilterSecurity {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
         http.csrf().disable()
-                .cors() // Enable CORS configuration
+                .cors()
                 .and()
                 .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests

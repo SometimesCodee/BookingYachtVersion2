@@ -17,7 +17,7 @@ const ModalCreateRoom = (props) => {
     const [roomName, setRoomName] = useState('');
     const [area, setArea] = useState(0);
     const [description, setDescription] = useState('');
-    const [roomType, setRoomType] = useState(listRoomType[0].idRoomType);
+    const [roomType, setRoomType] = useState("");
 
     useEffect(() => {
         if (show) {
@@ -103,12 +103,12 @@ const ModalCreateRoom = (props) => {
                             <Form.Group as={Col} >
                                 <Form.Label>Room Type</Form.Label>
                                 <Form.Select value={roomType} onChange={event => setRoomType(event.target.value)} >
-                                    {
+                                    {/* {
 
                                         listRoomType && listRoomType.map((type) =>
                                             <option key={type.idRoomType} value={type.idRoomType}>{type.utilities}</option>
                                         )
-                                    }
+                                    } */}
 
                                 </Form.Select>
                             </Form.Group>

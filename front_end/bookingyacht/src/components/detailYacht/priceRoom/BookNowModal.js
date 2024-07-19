@@ -121,7 +121,7 @@ const BookNowModal = ({
                 {selectedRooms.map(room => (
                     <Row key={room.idRoom} className="my-3 p-3 border rounded border-warning align-items-center">
                         <Col md={2}>
-                            <img src={`${getAvatarApi}${room.avatar}`} alt={room.name} className="img-fluid rounded" />
+                            // <img src={`${getAvatarApi}${room.avatar}`} alt={room.name} className="img-fluid rounded" />
                         </Col>
                         <Col md={5}>
                             <h5 className='fw-bold'>{room.name}</h5>

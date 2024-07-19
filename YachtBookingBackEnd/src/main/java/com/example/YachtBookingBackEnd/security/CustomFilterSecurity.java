@@ -49,6 +49,8 @@ public class CustomFilterSecurity {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
         http.csrf().disable()
+                .cors() // Enable CORS configuration
+                .and()
                 .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests
                                 .requestMatchers("/api/customer/**").permitAll()

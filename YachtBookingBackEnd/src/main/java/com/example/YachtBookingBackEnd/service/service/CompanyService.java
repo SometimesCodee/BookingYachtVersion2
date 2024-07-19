@@ -214,7 +214,7 @@ public class CompanyService implements ICompany {
         }catch (Exception e){
             System.out.println("Error by: "+e);
         }
-        return false;
+        return "false";
     }
 
 

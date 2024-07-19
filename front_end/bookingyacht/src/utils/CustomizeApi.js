@@ -5,7 +5,7 @@ import { store } from '../redux/Store';
 
 
 const instance = axios.create({
-    baseURL: 'https://booking18-fzc0ghgvcve8f7fs.eastasia-01.azurewebsites.nett',
+    baseURL: 'https://booking18-fzc0ghgvcve8f7fs.eastasia-01.azurewebsites.net',
 });
 
 NProgress.configure({

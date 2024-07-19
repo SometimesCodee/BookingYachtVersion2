@@ -40,7 +40,7 @@ const YachtList = () => {
         }
     }, [yachtList, currentPage]);
 
-    const avatarYachtApi = 'https://yachtbookingbackend.azurewebsites.net/api/customer/file/'
+    const avatarYachtApi = 'https://booking18-fzc0ghgvcve8f7fs.eastasia-01.azurewebsites.net/api/customer/file/'
 
     const handelChangePage = (pageNumber) => {
         setCurrentPage(pageNumber)

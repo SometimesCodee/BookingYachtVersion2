@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 import { fetchCompanies } from '../../../redux/action/AdminAction';
 import './Manager.scss';
 const CompanyManager = () => {
-    const getImageApi = `https://yachtbookingbackend.azurewebsites.net/api/customer/file/`
+    const getImageApi = `https://booking18-fzc0ghgvcve8f7fs.eastasia-01.azurewebsites.net/api/customer/file/`
     const dispatch = useDispatch();
     const companies = useSelector(state => state.admin.companies);
 
@@ -137,7 +137,7 @@ const CompanyManager = () => {
         try {
             const config = {
                 method: 'post',
-                url: 'https://yachtbookingbackend.azurewebsites.net/api/admins/accounts',
+                url: 'https://booking18-fzc0ghgvcve8f7fs.eastasia-01.azurewebsites.net/api/admins/accounts',
                 headers: {
                     'Authorization': getAuthHeader(),
                 },
@@ -175,7 +175,7 @@ const CompanyManager = () => {
         try {
             const config = {
                 method: 'post',
-                url: `https://yachtbookingbackend.azurewebsites.net/api/admins/accounts/${newAccountId}`,
+                url: `https://booking18-fzc0ghgvcve8f7fs.eastasia-01.azurewebsites.net/api/admins/accounts/${newAccountId}`,
                 headers: {
                     'Authorization': getAuthHeader(),
                     // 'Content-Type': 'multipart/form-data'
@@ -224,7 +224,7 @@ const CompanyManager = () => {
         try {
             const config = {
                 method: 'put',
-                url: `https://yachtbookingbackend.azurewebsites.net/api/admins/companies/${selectedCompany.idCompany}`,
+                url: `https://booking18-fzc0ghgvcve8f7fs.eastasia-01.azurewebsites.net/api/admins/companies/${selectedCompany.idCompany}`,
                 headers: {
                     'Authorization': getAuthHeader(),
                 },

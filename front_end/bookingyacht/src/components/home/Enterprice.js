@@ -4,7 +4,7 @@ import { getAllCompany } from '../../services/ApiServices';
 
 const Enterprice = () => {
     const [companies, setCompanies] = useState([]);
-    const getImageApi = `https://yachtbookingbackend.azurewebsites.net/api/customer/file/`;
+    const getImageApi = `https://booking18-fzc0ghgvcve8f7fs.eastasia-01.azurewebsites.net/api/customer/file/`;
 
     useEffect(() => {
         getAllCompany()

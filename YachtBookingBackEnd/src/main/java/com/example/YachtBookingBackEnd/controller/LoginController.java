@@ -16,7 +16,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@CrossOrigin("https://yb.sh.io.vn")
+@CrossOrigin("http://localhost:3000")
 @RequestMapping("/login")
 public class LoginController {
 

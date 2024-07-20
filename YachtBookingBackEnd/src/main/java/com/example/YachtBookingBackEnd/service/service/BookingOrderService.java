@@ -252,4 +252,14 @@ public class BookingOrderService implements IBookingOrder {
     }
 
 
+
+//    ================================== Romove VNPAY Version ========================================
+
+
+
+//    @Override
+//    public boolean creteBooking(List<String> selectedRoomIds, List<String> selectedServiceIds, String requirement, String idCustomer, String idSchedule) {
+//
+//    }
+
 }

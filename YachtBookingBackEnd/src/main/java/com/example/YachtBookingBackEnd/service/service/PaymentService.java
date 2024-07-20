@@ -344,7 +344,7 @@ public class PaymentService implements IPayment {
                 response.put("Message", "Invalid Checksum");
             }
 
-            response.put("redirectUrl", "http://localhost:3000");
+//            response.put("redirectUrl", "http://localhost:3000");
         } catch (Exception e) {
             log.error("Lỗi xử lý callback thanh toán: ", e);
             response.put("RspCode", "99");

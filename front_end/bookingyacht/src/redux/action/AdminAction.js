@@ -10,7 +10,7 @@ export const fetchCustomers = () => async dispatch => {
     try {
         const config = {
             method: 'get',
-            url: 'https://booking18-fzc0ghgvcve8f7fs.eastasia-01.azurewebsites.net/api/admins/getAllCustomer',
+            url: 'http://localhost:3000/api/admins/getAllCustomer',
             headers: {
                 'Authorization': getAuthHeader()
             }
@@ -33,7 +33,7 @@ export const fetchCompanies = () => async dispatch => {
     try {
         const config = {
             method: 'get',
-            url: 'https://booking18-fzc0ghgvcve8f7fs.eastasia-01.azurewebsites.net/api/admins/getAllCompany',
+            url: 'http://localhost:3000/api/admins/getAllCompany',
             headers: {
                 'Authorization': getAuthHeader()
             }

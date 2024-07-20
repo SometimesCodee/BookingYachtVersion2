@@ -38,6 +38,7 @@ import Page404 from './components/page404/Page404';
 import ProtectedRoute from './components/routers/ProtectedRoute';
 import VerifyOTP from './components/auths/VerifyOTP';
 import ChangePassword1 from './components/auths/ChangePassword1';
+import PaymentReturn from './components/home/PaymentReturn';
 
 const Layout = () => {
     const { role } = useSelector((state) => state.loginAdmin);
@@ -52,6 +53,7 @@ const Layout = () => {
                     <Route path='/mainpage/:yachtId' element={<MainPage />} />
                     <Route path='/yacht-rule' element={<YachtRule />} />
                     <Route path='/yacht-question' element={<YachtQuestion />} />
+                    <Route path='/payment-return' element={<PaymentReturn/>}/>
                 </Route>
 
                 <Route path='/signin' element={<Signin />} />
@@ -64,7 +66,6 @@ const Layout = () => {
                 {/* <Route path='/information-company' element={<InformationCompany />} /> */}
                 <Route path='/verifyOTP/:email' element={<VerifyOTP />} />
                 <Route path='/changePasswordByEmail/:email' element={<ChangePassword1 />} />
-
 
 
 

@@ -8,7 +8,6 @@ import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { getProfileCustomer } from '../../services/ApiServices';
 import Bill from './Bill';
-import BookingHistory from './BookingHistory';
 import BookingOrderHistory from './BookingOrderHistory';
 import ModalUpdateProfileUser from './ModalUpdateProfileUser';
 import ModalChangePassCustomer from './ModalChangePassCustomer';

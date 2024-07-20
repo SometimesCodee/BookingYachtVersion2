@@ -10,7 +10,7 @@ export const fetchCustomers = () => async dispatch => {
     try {
         const config = {
             method: 'get',
-            url: 'http://localhost:3000/api/admins/getAllCustomer',
+            url: 'http://localhost:8080/api/admins/getAllCustomer',
             headers: {
                 'Authorization': getAuthHeader()
             }
@@ -33,7 +33,7 @@ export const fetchCompanies = () => async dispatch => {
     try {
         const config = {
             method: 'get',
-            url: 'http://localhost:3000/api/admins/getAllCompany',
+            url: 'http://localhost:8080/api/admins/getAllCompany',
             headers: {
                 'Authorization': getAuthHeader()
             }

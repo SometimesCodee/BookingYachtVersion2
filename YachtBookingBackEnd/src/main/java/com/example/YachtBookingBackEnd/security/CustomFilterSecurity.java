@@ -52,6 +52,7 @@ public class CustomFilterSecurity {
                 .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests
                                 .requestMatchers("/api/customer/**").permitAll()
+                                .requestMatchers("/api/payment/payment-callback").permitAll()
                                 .requestMatchers(HttpMethod.GET, "/api/customer/**").permitAll()
                                 .requestMatchers("/login/**","/mail/**").permitAll() // Cho phép tất cả các yêu cầu đến /login/**
                                 .requestMatchers("/api/admins/**").hasRole("ADMIN") // Chỉ cho phép vai trò ADMIN truy cập /admin/**

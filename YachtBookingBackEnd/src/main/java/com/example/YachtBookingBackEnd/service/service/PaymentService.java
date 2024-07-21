@@ -142,7 +142,7 @@ public class PaymentService implements IPayment {
         String vnp_CreateDate = formatter.format(cld.getTime());
         vnp_Params.put("vnp_CreateDate", vnp_CreateDate);
 
-        cld.add(Calendar.MINUTE, 5); // set timeout for payment process
+        cld.add(Calendar.MINUTE, 15); // set timeout for payment process
         String vnp_ExpireDate = formatter.format(cld.getTime());
         vnp_Params.put("vnp_ExpireDate", vnp_ExpireDate);
 
@@ -244,13 +244,15 @@ public class PaymentService implements IPayment {
             for (Enumeration<String> paramsEnum = request.getParameterNames(); paramsEnum.hasMoreElements(); ) {
                 String fieldName = paramsEnum.nextElement();
                 String fieldValue = request.getParameter(fieldName);
+                log.info("Param: " + fieldName + " = " + fieldValue);  // Log each parameter
                 if ((fieldValue != null) && (!fieldValue.isEmpty())) {
-                    fields.put(URLEncoder.encode(fieldName, StandardCharsets.US_ASCII),
-                            URLEncoder.encode(fieldValue, StandardCharsets.US_ASCII));
+                    fields.put(URLEncoder.encode(fieldName, StandardCharsets.US_ASCII.toString()),
+                            URLEncoder.encode(fieldValue, StandardCharsets.US_ASCII.toString()));
                 }
             }
 
             String vnp_SecureHash = request.getParameter("vnp_SecureHash");
+            log.info("Received vnp_SecureHash: " + vnp_SecureHash);
             if (fields.containsKey("vnp_SecureHashType")) {
                 fields.remove("vnp_SecureHashType");
             }
@@ -260,10 +262,11 @@ public class PaymentService implements IPayment {
 
             // Check checksum
             String signValue = vnpayConfig.hashAllFields(fields);
-
             log.info("Received vnp_SecureHash: " + vnp_SecureHash);
             log.info("Calculated signValue: " + signValue);
+
             if (signValue.equals(vnp_SecureHash)) {
+                log.info("Calculated signValue is equals with vnp_SecureHash");
                 // Get data from request
                 String sender = request.getParameter("vnp_BankTranNo");
                 String vnpTxnRef = request.getParameter("vnp_TxnRef");
@@ -340,11 +343,11 @@ public class PaymentService implements IPayment {
                     response.put("Message", "Order not Found");
                 }
             } else {
+                log.error("Calculated signValue is not equals with vnp_SecureHash");
                 response.put("RspCode", "97");
                 response.put("Message", "Invalid Checksum");
             }
 
-//            response.put("redirectUrl", "http://localhost:3000");
         } catch (Exception e) {
             log.error("Lỗi xử lý callback thanh toán: ", e);
             response.put("RspCode", "99");

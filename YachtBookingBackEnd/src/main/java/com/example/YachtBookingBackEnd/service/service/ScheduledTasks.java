@@ -20,13 +20,13 @@ public class ScheduledTasks {
     IBookingOrder iBookingOrder;
     ITransaction iTransaction;
 
-    @Scheduled(fixedRate = 300000)
+    @Scheduled(fixedRate = 900000)
     public void checkTransactionTimeout() {
         iTransaction.autoCancelTransaction();
         log.info("AutoCancelTransaction executed");
     }
 
-    @Scheduled(fixedRate = 300000) //3600000 milliseconds (which is equivalent to 1 hour)
+    @Scheduled(fixedRate = 3600000) //3600000 milliseconds (which is equivalent to 1 hour)
     public void checkAndProcessBookings() {
         iBookingOrder.autoConfirmAndCancelBookings();
         log.info("AutoConfirmAndCancelBookings executed");

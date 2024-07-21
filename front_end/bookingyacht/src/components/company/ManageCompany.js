@@ -2,7 +2,7 @@ import Sidebar from "./Sidebar";
 import { FaBars } from 'react-icons/fa';
 import './Company.scss';
 import { useState } from "react";
-import { Outlet, Link } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import React from 'react';
 
 

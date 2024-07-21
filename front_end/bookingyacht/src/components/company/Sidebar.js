@@ -1,7 +1,5 @@
 import 'react-pro-sidebar/dist/css/styles.css';
 import { FaShip } from "react-icons/fa6";
-// import { AiFillSchedule } from "react-icons/ai";
-import { FaMoneyCheckAlt } from "react-icons/fa";
 import { TbLogout2 } from "react-icons/tb";
 import { TbBrandBooking } from "react-icons/tb";
 import {
@@ -14,19 +12,14 @@ import {
 } from 'react-pro-sidebar';
 import React from 'react';
 import sidebarBg from '../../assets/sidebar.jpg';
-import { Link, NavLink, useNavigate, useParams } from 'react-router-dom';
+import { Link, NavLink, useParams } from 'react-router-dom';
 import { ImProfile } from "react-icons/im";
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { doLogout } from '../../redux/action/UserAction';
-import { FaStar } from "react-icons/fa";
-// import logo from '../../assets/logo_swp.png'
 const Sidebar = (props) => {
-    const { image, collapsed, toggled, handleToggleSidebar } = props;
+    const { collapsed, toggled, handleToggleSidebar } = props;
 
     const { idCompany } = useParams();
-
-    const idAccount = useSelector(state => state.account.account.idAccount);
-    const navigate = useNavigate();
 
     const dispatch = useDispatch();
 
@@ -55,8 +48,6 @@ const Sidebar = (props) => {
                             whiteSpace: 'nowrap',
                         }}
                     >
-                        {/* <DiReact size={'3em'} color={'00bfff'} /> */}
-
                         <span>Company Yacht Cruise</span>
                     </div>
                 </SidebarHeader>
@@ -65,7 +56,6 @@ const Sidebar = (props) => {
                     <Menu iconShape="circle">
                         <MenuItem
                             icon={<TbBrandBooking />}
-                        // suffix={<span className="badge red">New</span>}
                         >
                             Customer Booking
                             <Link to='/manage-company' />
@@ -80,16 +70,6 @@ const Sidebar = (props) => {
                         </MenuItem>
                     </Menu>
 
-
-                    {/* <Menu iconShape="circle">
-                        <MenuItem
-                            icon={<FaMoneyCheckAlt />}
-                        >
-                            Bill
-                            <Link to='/manage-company/bill' />
-                        </MenuItem>
-
-                    </Menu> */}
                     <Menu iconShape="circle">
                         <MenuItem
                             icon={<ImProfile />}
@@ -101,8 +81,6 @@ const Sidebar = (props) => {
 
                     </Menu>
 
-
-
                 </SidebarContent>
 
                 <SidebarFooter style={{ textAlign: 'center' }}>
@@ -113,9 +91,7 @@ const Sidebar = (props) => {
                         }}
                     >
                         <NavLink onClick={handleLogout} className='nav-link ' to='/signin'><TbLogout2 />Logout</NavLink>
-                        {/* <span style={{ whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }}>
 
-                        </span> */}
                     </div>
                 </SidebarFooter>
             </ProSidebar>

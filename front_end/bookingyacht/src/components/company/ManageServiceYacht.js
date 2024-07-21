@@ -17,17 +17,13 @@ import ReactPaginate from 'react-paginate';
 import { FormControl } from 'react-bootstrap';
 
 
-
-
 const ManageServiceYacht = () => {
     const { idYacht } = useParams();
-    // const [services, setServices] = useState([]);
     const [showModalUpdateServiceYacht, setShowModalUpdateServiceYacht] = useState(false);
 
     const [yachtServices, setYachtServices] = useState([]);
     const [service, setService] = useState('');
     const [price, setPrice] = useState('');
-    const [idService, setIdService] = useState('');
     const [serviceUpdate, setServiceUpdate] = useState({});
     const [serchService, setSearchService] = useState('');
 
@@ -55,7 +51,7 @@ const ManageServiceYacht = () => {
     const handleCreateYachtSurvice = async () => {
         let res = await createServiceYacht(idYacht.trim(), service.trim(), price.trim());
         if (!service || !price) {
-            toast.error('Input Not Empty');
+            toast.error('Please fill in all fields');
         } else {
             if (res && res.data && res.data.data === true) {
                 toast.success('Create Service Yacht Successfully')
@@ -138,18 +134,6 @@ const ManageServiceYacht = () => {
                                             onChange={e => setService(e.target.value)}
                                         />
                                     </Form.Group>
-
-                                    {/* <Form.Group as={Col} controlId="formGridState">
-                                        <Form.Label>Service</Form.Label>
-                                        <Form.Select >
-                                            {
-                                                services && services.length > 0 && services.map((service, index) =>
-                                                    <option key={index} value={service.idService} >{service.service}</option>
-                                                )
-                                            }
-                                        </Form.Select>
-                                    </Form.Group> */}
-
 
                                 </Row>
                                 <Button onClick={handleCreateYachtSurvice} variant="success">

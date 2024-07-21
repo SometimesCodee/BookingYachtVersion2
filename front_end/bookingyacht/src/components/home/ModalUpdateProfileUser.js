@@ -74,7 +74,7 @@ const ModalUpdateProfileUser = (props) => {
         const { email, fullName, phoneNumber, address } = data;
 
         if (!email || !fullName || !phoneNumber || !address) {
-            toast.error('Input Not Empty');
+            toast.error('Please fill in all fields');
         } else {
             let res = await updateProfileCustomer(profile.idCustomer, email.trim(), fullName.trim(), phoneNumber.trim(), address.trim());
             if (res && res.data.data === true) {

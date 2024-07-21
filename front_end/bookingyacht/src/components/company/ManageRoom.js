@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Button, ButtonGroup, FormControl } from 'react-bootstrap';
+import { Button, FormControl } from 'react-bootstrap';
 import { AiFillHome } from "react-icons/ai";
 import { NavLink, useParams } from 'react-router-dom';
 import ModalManageRoomImage from './Modal/ModalManageRoomImage';
-import ModalManageRoomService from './Modal/ModalManageRoomService';
 import ModalUpdateRoom from './Modal/ModalUpdateRoom';
 import { getAllRoomByYacht, getAllRoomTypeCompany } from '../../services/ApiServices';
 import { toast } from 'react-toastify';
@@ -13,13 +12,10 @@ import { FaCirclePlus } from "react-icons/fa6";
 import ModalCreateRoom from './Modal/ModalCreateRoom';
 import ReactPaginate from 'react-paginate';
 import ModalRoomType from './Modal/ModalRoomType';
-import _ from 'lodash';
 
 
 const ManageRoom = () => {
     const [isShowModalRoomImage, setIsShowModalRoomImage] = useState(false);
-
-    const [isShowModalRoomService, setIsShowModalRoomService] = useState(false);
 
     const [isShowModalUpdateRoom, setIsShowModalUpdateRoom] = useState(false);
 
@@ -150,10 +146,6 @@ const ManageRoom = () => {
                 idRoom={idRoom}
             />
 
-            <ModalManageRoomService
-                show={isShowModalRoomService}
-                setIsShowModalRoomService={setIsShowModalRoomService}
-            />
 
             <ModalUpdateRoom
                 show={isShowModalUpdateRoom}

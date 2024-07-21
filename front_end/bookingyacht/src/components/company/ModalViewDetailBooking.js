@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import { Button } from 'react-bootstrap'
 import _ from 'lodash';
-import { PiEmptyBold } from "react-icons/pi";
 const ModalViewDetailBooking = (props) => {
     const { show, setIsShowModalViewBooking, bookingDetail } = props;
     const [booking, setBooking] = useState({});

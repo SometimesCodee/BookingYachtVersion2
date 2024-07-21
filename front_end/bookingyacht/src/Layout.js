@@ -14,7 +14,6 @@ import Information from './components/auths/Information';
 import Signin from './components/auths/Signin';
 import Signup from './components/auths/Signup';
 import Blog from './components/blog/Blog';
-import Bill from './components/company/Bill';
 import ManageCompany from './components/company/ManageCompany';
 import ManageRoom from './components/company/ManageRoom';
 import ManageYacht from './components/company/ManageYacht';
@@ -31,7 +30,6 @@ import YachtQuestion from './components/yacht/YachtQuestion';
 import YachtRule from './components/yacht/YachtRule';
 
 import { useSelector } from 'react-redux';
-import ManageRoomType from './components/company/ManageRoomType';
 import ManageSchedule from './components/company/ManageSchedule';
 import ManageServiceYacht from './components/company/ManageServiceYacht';
 import Page404 from './components/page404/Page404';
@@ -61,7 +59,6 @@ const Layout = () => {
                 <Route path='/profile' element={<Profile />} />
                 <Route path='/forgotpassowd' element={<ForgotPassword />}></Route>
                 <Route path='/information/:idCustomer' element={<Information />} />
-                {/* <Route path='/information-company' element={<InformationCompany />} /> */}
                 <Route path='/verifyOTP/:email' element={<VerifyOTP />} />
                 <Route path='/changePasswordByEmail/:email' element={<ChangePassword1 />} />
 
@@ -76,9 +73,7 @@ const Layout = () => {
                 } >
                     <Route index element={<ViewBooking />} />
                     <Route path='view-yacht' element={<ViewYacht />} />
-                    <Route path='bill' element={<Bill />} />
                     <Route path='profile' element={<ProfileCompany />} />
-                    <Route path='room-type' element={<ManageRoomType />} />
 
                 </Route>
 
@@ -95,7 +90,7 @@ const Layout = () => {
                         <Route path="customer" element={<CustomerManager />} />
                         <Route path="company" element={<CompanyManager />} />
                     </Route>
-                    )
+                )
                 }
                 <Route path='/deltailInfo/:idCompany' element={<DetailEnterprise />} />
 

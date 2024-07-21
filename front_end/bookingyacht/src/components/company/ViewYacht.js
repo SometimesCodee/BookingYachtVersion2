@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Button, FormControl, FormGroup } from 'react-bootstrap';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { RiShipLine } from "react-icons/ri";
 import { FaLocationDot } from "react-icons/fa6";
 import './ViewYacht.scss'
@@ -8,7 +8,7 @@ import ReactPaginate from 'react-paginate';
 import './Company.scss'
 import { FaCirclePlus } from "react-icons/fa6";
 import ModalCreateYacht from './Modal/ModalCreateYacht';
-import { deleteYacht, getAllLocation, getYachtById, getYachtByIdCompany, getYachtType } from '../../services/ApiServices';
+import { deleteYacht, getAllLocation, getYachtByIdCompany, getYachtType } from '../../services/ApiServices';
 import _ from 'lodash';
 import Form from 'react-bootstrap/Form';
 import { toast } from 'react-toastify';
@@ -19,7 +19,6 @@ const ViewYacht = (props) => {
     const idCompany = useSelector(state => state.account.account.idCompany);
     const [yachtType, setYachtType] = useState([]);
     const [yacht, setYacht] = useState([]);
-    // const [idCompany, setIdCompany] = useState('');
 
     const [searchYacht, setSearchYacht] = useState('');
     const [filteredYachts, setFilteredYachts] = useState([]);
@@ -27,10 +26,7 @@ const ViewYacht = (props) => {
 
     const [filterLocation, setFilterLocation] = useState('');
     const [filterYachtType, setFilterYachtType] = useState('')
-    //pagging
-    // const [isChange, setIsChange] = useState(true);
-    // const [paggingProuct, setPaggingProduct] = useState([]);
-    // const [pagging, setPagging] = useState([]);
+
     const [currentPage, setCurrentPage] = useState(0);
     const itemsPerPage = 3;
     useEffect(() => {
@@ -44,7 +40,7 @@ const ViewYacht = (props) => {
 
     const listYacht = async () => {
         let res = await getYachtByIdCompany(idCompany);
-        if (res && res.data.data) {
+        if (res && res.data && res.data.data) {
             setYacht(res.data.data);
             setFilteredYachts(res.data.data);
         } else {
@@ -70,7 +66,7 @@ const ViewYacht = (props) => {
 
     const getLocation = async () => {
         let res = await getAllLocation();
-        if (res && res.data.data.length > 0) {
+        if (res && res.data && res.data.data) {
             setLocation(res.data.data);
         } else {
             setLocation('Not Found')
@@ -99,7 +95,6 @@ const ViewYacht = (props) => {
     };
 
     const displayedYachts = filteredYachts.slice(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage);
-
 
 
     return (

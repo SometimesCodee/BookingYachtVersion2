@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
-import { Button, ButtonGroup, FormControl } from 'react-bootstrap'
+import { Button, ButtonGroup } from 'react-bootstrap'
 import Table from 'react-bootstrap/Table';
-import { FaCirclePlus } from "react-icons/fa6";
 import '../ManageYacht.scss'
 import { FaPen } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
-import { createImageRoom, deleteImageRoom, getImageByRoom, updateImageRoom } from '../../../services/ApiServices';
+import { createImageRoom, deleteImageRoom, getImageByRoom } from '../../../services/ApiServices';
 import { toast } from 'react-toastify';
 import { FcPlus } from "react-icons/fc";
 import Accordion from 'react-bootstrap/Accordion';

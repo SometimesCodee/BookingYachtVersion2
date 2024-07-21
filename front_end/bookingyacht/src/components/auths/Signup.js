@@ -18,7 +18,7 @@ const Signup = () => {
     const handleRegister = async () => {
         let res = await registerCustomer(userName.trim(), password.trim());
         if (userName === '' || password === '' || confrimPassword === '') {
-            toast.error('Input not empty')
+            toast.error('Please fill in all fields')
         } else if (userName.length < 3) {
             toast.error('User name must be more than 3 chars')
         } else if (password.length < 8) {

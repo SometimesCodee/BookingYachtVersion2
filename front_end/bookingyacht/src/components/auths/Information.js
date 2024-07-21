@@ -34,7 +34,7 @@ const Information = () => {
 
     const handleFillInformation = async () => {
         if (!email || !fullName || !phoneNumber || !address) {
-            toast.error('Input Not Empty!')
+            toast.error('Please fill in all fields')
         } else {
             // if (phonenumber(phoneNumber) === false) {
             //     toast.error('Phone Number Start 0 And 10 Number')

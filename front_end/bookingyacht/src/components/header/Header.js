@@ -10,6 +10,7 @@ import { doLogout } from '../../redux/action/UserAction';
 import { toast } from 'react-toastify';
 const Header = () => {
     const isAuthenticated = useSelector(state => state.account.isAuthenticated);
+    const role = useSelector(state => state.account.account.role)
     const dispatch = useDispatch();
     const handleLogout = () => {
         dispatch(doLogout());
@@ -18,7 +19,6 @@ const Header = () => {
     return (
         <Navbar expand="lg" className="bg-body-tertiary header">
             <Container>
-                {/* <Navbar.Brand href="#home"></Navbar.Brand> */}
                 <NavLink to='/' className='navbar-brand' style={{ width: '150px' }}><img className='logo' src={logo} alt='logo' /></NavLink>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
@@ -34,6 +34,7 @@ const Header = () => {
                         <NavDropdown title="Setting" id="basic-nav-dropdown">
                             {
                                 isAuthenticated === false
+
                                     ?
 
                                     <>
@@ -42,17 +43,25 @@ const Header = () => {
                                             <NavLink to='/signup' className='nav-link'>Đăng Ký</NavLink>
                                         </NavDropdown.Item>
                                     </>
-
                                     :
-
                                     <>
-                                        <NavDropdown.Item>
-                                            <NavLink to='/profile' className='nav-link'>Profile</NavLink>
-                                        </NavDropdown.Item>
-                                        <NavDropdown.Divider />
-                                        <NavDropdown.Item>
-                                            <NavLink onClick={handleLogout} className='nav-link'>Đăng Xuất</NavLink>
-                                        </NavDropdown.Item>
+                                        {
+                                            role === 'ROLE_COMPANY'
+                                                ?
+                                                <NavDropdown.Item>
+                                                    <NavLink to='/manage-company' className='nav-link'>Company Manager</NavLink>
+                                                </NavDropdown.Item>
+                                                :
+                                                <>
+                                                    <NavDropdown.Item>
+                                                        <NavLink to='/profile' className='nav-link'>Profile</NavLink>
+                                                    </NavDropdown.Item>
+                                                    <NavDropdown.Divider />
+                                                    <NavDropdown.Item>
+                                                        <NavLink onClick={handleLogout} className='nav-link'>Đăng Xuất</NavLink>
+                                                    </NavDropdown.Item>
+                                                </>
+                                        }
 
                                     </>
                             }

@@ -36,18 +36,28 @@ import Page404 from './components/page404/Page404';
 import ProtectedRoute from './components/routers/ProtectedRoute';
 import VerifyOTP from './components/auths/VerifyOTP';
 import ChangePassword1 from './components/auths/ChangePassword1';
+import ProtectedHomepage from './components/routers/ProtectedHomepage';
 
 const Layout = () => {
     const { role } = useSelector((state) => state.loginAdmin);
     return (
         <>
             <Routes>
-                <Route path="/" element={<App />}>
-                    <Route index element={<HomePage />} />
+                <Route path="/" element={
+                    <App />
+                }>
+                    <Route index element={
+                        <HomePage />} />
                     <Route path='/blog' element={<Blog />} />
-                    <Route path='/duthuyen' element={<FindYacht />} />
+                    <Route path='/duthuyen' element={
+                        <FindYacht />
+                    } />
                     <Route path='/doanhnhiep' element={<Enterprise />} />
-                    <Route path='/mainpage/:yachtId' element={<MainPage />} />
+                    <Route path='/mainpage/:yachtId' element={
+                        <ProtectedHomepage>
+                            <MainPage />
+                        </ProtectedHomepage>
+                    } />
                     <Route path='/yacht-rule' element={<YachtRule />} />
                     <Route path='/yacht-question' element={<YachtQuestion />} />
                 </Route>
@@ -56,7 +66,9 @@ const Layout = () => {
                 <Route path='/signup' element={<Signup />
                 }
                 />
-                <Route path='/profile' element={<Profile />} />
+                <Route path='/profile' element={
+                    <Profile />
+                } />
                 <Route path='/forgotpassowd' element={<ForgotPassword />}></Route>
                 <Route path='/information/:idCustomer' element={<Information />} />
                 <Route path='/verifyOTP/:email' element={<VerifyOTP />} />

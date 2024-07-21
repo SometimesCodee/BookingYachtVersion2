@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { paymentReturn } from '../../services/ApiServices';
 import { Button, Card, Col, Container, Row } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import qs from 'qs';
 
 const PaymentReturn = () => {
 
@@ -11,6 +13,11 @@ const PaymentReturn = () => {
 
     useEffect(() => {
         const urlParams = new URLSearchParams(window.location.search);
+
+        urlParams.forEach((value, key) => {
+            console.log(`${key}: ${value}`);
+        });
+
         const paymentData = {
             vnp_Amount: urlParams.get('vnp_Amount'),
             vnp_BankCode: urlParams.get('vnp_BankCode'),
@@ -32,7 +39,16 @@ const PaymentReturn = () => {
 
     const savePaymentDataToBackend = async (data) => {
         try {
-            const response = await paymentReturn(data);
+            // const response = await paymentReturn(data);
+            const response = await axios.post(
+                `http://localhost:8080/api/payment/payment-callback`,
+                qs.stringify(data),
+                {
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    }
+                }
+            );
             console.log('Payment data saved successfully:', response.data);
         } catch (error) {
             console.error('Error saving payment data:', error);
@@ -57,7 +73,7 @@ const PaymentReturn = () => {
             second
         );
 
-        return new Intl.DateTimeFormat('en-GB', {
+        return new Intl.DateTimeFormat('vi-VN', {
             day: '2-digit',
             month: 'short',
             year: 'numeric',
@@ -78,7 +94,7 @@ const PaymentReturn = () => {
         <Container className='mt-5 my-5'>
             <Row className='justify-content-md-center'>
                 <Col md={8}>
-                <Card className="text-center">
+                    <Card className="text-center">
                         <Card.Header>
                             <h1 className={payment?.vnp_ResponseCode === '00' ? 'text-success' : 'text-danger'}>
                                 {payment?.vnp_ResponseCode === '00' ? 'Payment Successful' : 'Payment Failed'}

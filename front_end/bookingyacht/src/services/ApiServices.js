@@ -423,6 +423,6 @@ export const changePasswordCustomer = (idCustomer, oldPassword, newPassword, con
 }
 
 
-export const paymentReturn = (paymentData) => {
-    return axios.post(`/api/payment/payment-callback`, paymentData)
+export const paymentReturn = (data) => {
+    return axios.post(`/api/payment/payment-callback`, data)
 }

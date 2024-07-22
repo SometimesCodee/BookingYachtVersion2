@@ -39,4 +39,6 @@ public interface ICustomer {
     List<FeedbackDTO> getAllFeedback();
 
     String  changePasswordCustomer(String idCustomer, String oldPassword, String newPassword, String confirmPassword);
+
+    String getIdCustomerByIdAccount(String idAccount);
 }

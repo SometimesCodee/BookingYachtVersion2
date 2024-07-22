@@ -386,4 +386,11 @@ public class CustomerController {
         return new ResponseEntity<>(dataResponse, HttpStatus.OK);
     }
 
+    @GetMapping("/idCustomer/{idAccount}")
+    public ResponseEntity<?> getIdCustomer(@PathVariable String idAccount){
+        DataResponse dataResponse = new DataResponse();
+        dataResponse.setData(iCustomer.getIdCustomerByIdAccount(idAccount));
+        return new ResponseEntity<>(dataResponse, HttpStatus.OK);
+    }
+
 }

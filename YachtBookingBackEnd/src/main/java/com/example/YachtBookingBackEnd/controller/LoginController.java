@@ -50,11 +50,13 @@ public class LoginController {
                 if("ROLE_COMPANY".equalsIgnoreCase(role)){
                     String idCompany = companyRepository.findIdCompanyByIdAccount(idAccount);
                     dataResponse.setIdCompany(idCompany);
+                    dataResponse.setIdAccount(idAccount);
                 }
                 else if("ROLE_CUSTOMER".equalsIgnoreCase(role)){
                     String idCustomer = customerRepository.findIdCustomerByIdAccount(idAccount);
                     System.out.println(idCustomer);
                     dataResponse.setIdCustomer(idCustomer);
+                    dataResponse.setIdAccount(idAccount);
                 }
 
                 dataResponse.setData(token);

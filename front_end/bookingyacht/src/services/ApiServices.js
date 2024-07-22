@@ -426,3 +426,7 @@ export const changePasswordCustomer = (idCustomer, oldPassword, newPassword, con
 export const paymentReturn = (data) => {
     return axios.post(`/api/payment/payment-callback`, data)
 }
+
+export const getIdCustomer = (idAccount) => {
+    return axios.get(`/api/customer/idCustomer/${idAccount}`);
+}

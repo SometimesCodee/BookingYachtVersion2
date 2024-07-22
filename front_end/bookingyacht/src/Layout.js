@@ -62,7 +62,7 @@ const Layout = () => {
                 />
                 <Route path='/profile' element={<Profile />} />
                 <Route path='/forgotpassowd' element={<ForgotPassword />}></Route>
-                <Route path='/information/:idCustomer' element={<Information />} />
+                <Route path='/information/:idAccount' element={<Information />} />
                 {/* <Route path='/information-company' element={<InformationCompany />} /> */}
                 <Route path='/verifyOTP/:email' element={<VerifyOTP />} />
                 <Route path='/changePasswordByEmail/:email' element={<ChangePassword1 />} />

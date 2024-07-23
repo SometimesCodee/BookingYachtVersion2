@@ -20,17 +20,6 @@ const Signin = () => {
     const dispatch = useDispatch();
 
 
-    // const isAuthenticated = useSelector(state => state.account.isAuthenticated);
-    // const account = useSelector(state => state.account.account)
-    // const validateEmail = (e) => {
-    //     return String(e)
-    //         .toLowerCase()
-    //         .match(
-    //             /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-    //         );
-    // };
-    // const dispatch = useDispatch();
-
     const navigate = useNavigate();
 
 

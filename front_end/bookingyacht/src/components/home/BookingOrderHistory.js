@@ -98,10 +98,10 @@ const BookingOrderHistory = () => {
 
     return (
         <div className="container">
-            <h1>Lịch Sử Đặt Chỗ</h1>
+            <h2 className='text-center mt-4 mb-5'>Lịch Sử Đặt Chỗ</h2>
             <div>
                 {slicedBooking && slicedBooking.length > 0 && slicedBooking.map(bookingOrder => (
-                    <div key={bookingOrder.idBooking} className="card mb-3" style={{ boxShadow: ' 0 4px 8px 0 rgba(0, 0, 255, 0.2)' }}>
+                    <div key={bookingOrder.idBooking} className="card mb-3 p-4" style={{ boxShadow: ' 1px 8px 8px 3px rgba(0.3, 0.5, 150, 0.4)', backgroundColor: 'whitesmoke' }}>
                         <div className='card-body'>
                             <div className="row align-items-center">
                                 <div className="col-11">
@@ -128,12 +128,12 @@ const BookingOrderHistory = () => {
                                 <div className="col-12">
                                     <p className="card-text">
                                         <strong>Trạng thái:</strong>
-                                        <span style={{
-                                            color: bookingOrder.status === 'Pending' ? 'gray' :
+                                        <strong style={{
+                                            color: bookingOrder.status === 'Pending' ? 'orange' :
                                                 (bookingOrder.status === 'Confirmed' ? 'green' :
                                                     (bookingOrder.status === 'Cancelled' ? 'red' : 'black'))
                                         }}> {bookingOrder.status}
-                                        </span>
+                                        </strong>
                                     </p>
                                 </div>
                             </div>

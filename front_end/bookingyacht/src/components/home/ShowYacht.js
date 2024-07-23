@@ -2,15 +2,12 @@ import Card from 'react-bootstrap/Card';
 import { NavLink, useNavigate } from "react-router-dom";
 import Button from 'react-bootstrap/Button';
 import { useEffect, useState } from 'react';
-import { getAllYacht, getHighestAndLowestPriceByYacht, getUser } from '../../services/ApiServices';
-import { GrFormNextLink } from "react-icons/gr";
-import i_content from '../../assets/image_1.webp'
-import axios from 'axios';
-import { Container } from 'react-bootstrap/Container';
 import { FaLocationDot } from "react-icons/fa6";
+import { GrFormNextLink } from "react-icons/gr";
 import { useDispatch, useSelector } from 'react-redux';
+import i_content from '../../assets/image_1.webp';
 import { getYachtListApi } from '../../redux/action/YachtListAction';
-import { getAllRoomByYachtApi } from '../../redux/action/RoomAction';
+import { getHighestAndLowestPriceByYacht } from '../../services/ApiServices';
 
 
 const ShowYacht = () => {
@@ -42,7 +39,6 @@ const ShowYacht = () => {
         }
     }, [yachtList]);
 
-    const avatarYachtApi = 'http://localhost:8080/api/customer/file/'
 
     return (
         <>
@@ -64,12 +60,12 @@ const ShowYacht = () => {
                         <div className='col-12 col-sm-6 col-md-3 col-lg-3 mb-4'>
                             <NavLink key={item.idYacht} to={`/mainpage/${item.idYacht}`} className='nav-link'>
                                 <Card style={{ width: '100%', height: '350px' }}>
-                                    <img height={200} variant="top" src={`${avatarYachtApi}${item.image}`} />
+                                    <img height={200} variant="top" src={item.image} alt='' />
                                     <Card.Body>
                                         <Card.Title style={{ fontWeight: 600, fontSize: 18, color: '#475467', marginBottom: 0 }}>{`${item.name}`}</Card.Title>
                                         <div style={{ padding: '5px' }} className='location'><FaLocationDot />{item.location.name}</div>
                                         <div className='row d-flex align-items-center mt-2'>
-                                            <p className='col-7' style={{ color: '#475467', fontWeight: '700', marginBottom: 0 }}>From: {priceData[item.idYacht] ? `${priceData[item.idYacht].lowestPrice.toLocaleString()} đ` : 'Loading...'}</p>
+                                            <p className='col-7' style={{ color: '#475467', fontWeight: '700', marginBottom: 0 }}>Giá từ: {priceData[item.idYacht] ? `${priceData[item.idYacht].lowestPrice.toLocaleString()} đ` : 'Loading...'}</p>
                                             <button className='col-5 btn btn-warning' style={{ color: '#475467', borderRadius: 25, width: 100, fontSize: '14px' }}>Đặt ngay</button>
                                         </div>
                                     </Card.Body>

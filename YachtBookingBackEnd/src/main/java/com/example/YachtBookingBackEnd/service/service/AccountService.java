@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -31,6 +32,7 @@ public class AccountService implements IAccount {
 
     public static final String ROLE_COMPANY = "COMPANY";
     public static final String ROLE_CUSTOMER = "CUSTOMER";
+    private final CloudinaryService cloudinaryService;
 
     @Override
     public boolean createAccountCompany(String username, String password) {
@@ -46,6 +48,7 @@ public class AccountService implements IAccount {
             account.setUsername(username);
             account.setPassword(passwordEncoder.encode(password));
             account.setRole(ROLE_COMPANY);
+            account.setStatus(1);
 
             // Lưu account vào db
             accountRepository.save(account);
@@ -85,6 +88,7 @@ public class AccountService implements IAccount {
             account.setUsername(username);
             account.setPassword(passwordEncoder.encode(password));
             account.setRole(ROLE_CUSTOMER);
+            account.setStatus(1);
 
             // Lưu account vào db
             accountRepository.save(account);
@@ -100,15 +104,11 @@ public class AccountService implements IAccount {
     @Override
     public List<AccountDTO> getAccountCustomer() {
         List<AccountDTO> accountDTOList = new ArrayList<>();
-
         try {
             List<Account> accountList = accountRepository.findAll();
-
             for (Account account : accountList
             ) {
-
                 AccountDTO accountDTO = new AccountDTO();
-
                 accountDTO.setIdAccount(account.getIdAccount());
                 accountDTO.setUsername(account.getUsername());
                 accountDTO.setPassword(account.getPassword());
@@ -123,15 +123,12 @@ public class AccountService implements IAccount {
         } catch (Exception e) {
             System.out.println("Exception: " + e.getMessage());
         }
-
-
         return accountDTOList;
     }
 
     @Override
     public AccountDTO getAccountById(String  id)  {
         Optional<Account> account=  accountRepository.findById(id);
-
         AccountDTO accountDTO = new AccountDTO();
         if(account.isPresent()){
             accountDTO.setIdAccount(id);
@@ -185,12 +182,10 @@ public class AccountService implements IAccount {
 
     @Override
     public boolean insertInfoCompanyByIdAccount(String address, String email,MultipartFile logo, String name, String idAccount) {
-
         if(!isValidEmail(email)){
             log.error("Invalid email format");
             throw new IllegalArgumentException("Invalid email format");
         }
-
         try{
             Company company = new Company();
             company.setAddress(address);
@@ -202,7 +197,13 @@ public class AccountService implements IAccount {
             }
             company.setExist(1);
             company.setName(name);
-            company.setLogo(logo.getOriginalFilename());
+            Map uploadResult = cloudinaryService.upload(logo);
+            String imageUrl = (String) uploadResult.get("url");
+            if (imageUrl == null) {
+                System.out.println("Error uploading image to Cloudinary");
+                return false;
+            }
+            company.setLogo(imageUrl);
             Account account = new Account();
             account.setIdAccount(idAccount);
             company.setAccount(account);
@@ -210,6 +211,33 @@ public class AccountService implements IAccount {
             return true;
         }catch (Exception e){
             log.error("Exception get company by id account: " + e.getMessage());
+            return false;
+        }
+    }
+
+    @Override
+    public boolean disableAccountCompany(String idCompany) {
+        try {
+            Optional<Company> companyOptional = companyRepository.findById(idCompany);
+            if (companyOptional.isPresent()) {
+                Company company = companyOptional.get();
+                Account account = accountRepository.findById(company.getAccount().getIdAccount())
+                        .orElseThrow(() -> new RuntimeException("Can not found Account with id: " + idCompany));
+
+                if (account.getStatus() == 1) {
+                    account.setStatus(0);
+                    accountRepository.save(account);
+                    return true;
+                } else {
+                    log.error("Account with id " + account.getIdAccount() + " is not active");
+                    return false;
+                }
+            } else {
+                log.error("Can not found company with id: " + idCompany);
+                return false;
+            }
+        } catch (Exception e) {
+            log.error("Exception: " + e.getMessage());
             return false;
         }
     }

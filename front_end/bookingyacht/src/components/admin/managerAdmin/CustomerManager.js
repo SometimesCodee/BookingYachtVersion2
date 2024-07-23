@@ -89,7 +89,7 @@ const CustomerManager = () => {
         try {
             const config = {
                 method: 'put',
-                url: `http://localhost:8080/api/admins/disableCustomer/${selectedCustomer.idCustomer}`,
+                url: `https://booking18-fzc0ghgvcve8f7fs.eastasia-01.azurewebsites.net/api/admins/disableCustomer/${selectedCustomer.idCustomer}`,
                 headers: {
                     'Authorization': getAuthHeader(),
                 },

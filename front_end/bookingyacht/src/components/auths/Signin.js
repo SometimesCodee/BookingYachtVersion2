@@ -1,7 +1,7 @@
 import logo from '../../assets/logo_swp.png';
 import './Auth.scss';
-import { useState } from 'react';
-import { login } from '../../services/ApiServices';
+import { useEffect, useState } from 'react';
+import { getIdCustomer, login } from '../../services/ApiServices';
 import { toast } from 'react-toastify';
 import { useNavigate, Link } from 'react-router-dom';
 import { NavLink } from 'react-router-dom'
@@ -17,10 +17,12 @@ const Signin = () => {
 
     const [showPassword, setShowPassword] = useState(false);
     const [loading, setLoading] = useState(false);
+
     const dispatch = useDispatch();
 
 
     const navigate = useNavigate();
+
 
 
     const handleLogin = async () => {
@@ -30,17 +32,27 @@ const Signin = () => {
         if (userName === '' || password === '') {
             toast.error('Please fill in all fields');
             setLoading(false);
-        } else if (res && res.data.data !== '') {
+        } else if (res && res.data && res.data.data) {
             const role = jwtDecode(res.data.data);
+            
+            let resAccount = await getIdCustomer(res.data.idAccount);
+            
             dispatch(doLogin(res.data.data, role.role, res.data.idCompany ? res.data.idCompany : "", res.data.idCustomer ? res.data.idCustomer : ""))
             if (role && role.role === 'ROLE_COMPANY') {
-                toast.success("Login Successful");
                 setLoading(false);
-                navigate(`/manage-company`);
+                
+                    toast.success("Login Successful");
+                    navigate(`/manage-company`);
+                
             } else if (role && role.role === 'ROLE_CUSTOMER') {
-                toast.success("Login Successful");
                 setLoading(false);
-                navigate('/duthuyen');
+                if(resAccount && resAccount.data && resAccount.data.data === '0'){
+                    toast.error("Please Fill Information Before Sign-in")
+                    navigate(`/information/${res.data.idAccount}`)
+                }else if(resAccount && resAccount.data && resAccount.data.data !== '0'){
+                    toast.success("Login Successful");
+                    // navigate(-2);
+                }
             }
         } else {
             toast.error('User Name Or Password Invalid')
@@ -48,6 +60,8 @@ const Signin = () => {
 
         }
     }
+
+
 
     const hanldeKeyDown = (e) => {
         if (e && e.key === 'Enter') {

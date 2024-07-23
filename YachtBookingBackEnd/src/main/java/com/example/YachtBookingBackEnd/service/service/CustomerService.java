@@ -391,4 +391,14 @@ public class CustomerService implements ICustomer {
         Matcher matcher = pattern.matcher(phoneNumber);
         return matcher.matches();
     }
+
+    @Override
+    public String getIdCustomerByIdAccount(String idAccount) {
+        String idCustomer = customerRepository.findIdCustomerByIdAccount(idAccount);
+        if(idCustomer == null){
+            return "0";
+        }
+        return idAccount;
+    }
+
 }

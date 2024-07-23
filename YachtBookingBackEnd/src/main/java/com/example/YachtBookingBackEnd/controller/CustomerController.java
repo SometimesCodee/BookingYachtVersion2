@@ -2,6 +2,7 @@ package com.example.YachtBookingBackEnd.controller;
 
 import com.example.YachtBookingBackEnd.payload.response.DataResponse;
 import com.example.YachtBookingBackEnd.service.implement.*;
+import com.example.YachtBookingBackEnd.service.service.CloudinaryService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -11,12 +12,14 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
 
-@CrossOrigin("*")
+@CrossOrigin("https://yb.sh.io.vn")
 @RestController
 @RequestMapping("/api/customer")
 @RequiredArgsConstructor
@@ -26,7 +29,6 @@ public class CustomerController {
     ICustomer iCustomer;
     IPayment iPayment;
     IYacht iYacht;
-    IFile iFile;
     IYachtImage iYachtImage;
     IService iService;
     ISchedule iSchedule;
@@ -40,6 +42,7 @@ public class CustomerController {
     ICompany iCompany;
     IYachtService iYachtService;
     ILocation iLocation;
+    CloudinaryService cloudinaryService;
 
     @PostMapping("/accounts")
     ResponseEntity<?> register(@RequestParam String username,
@@ -90,6 +93,7 @@ public class CustomerController {
         dataResponse.setData(iCustomer.getCustomer(customerId));
         return new ResponseEntity<>(dataResponse, HttpStatus.OK);
     }
+
     @PostMapping("/payment")
     public ResponseEntity<?> createVnPayPayment(@RequestParam List<String> selectedRoomIds,
                                                 @RequestParam List<String> selectedServiceIds,
@@ -125,6 +129,7 @@ public class CustomerController {
         dataResponse.setData(iCustomer.addFeedback(date,description,idBooking,starRating,idCustomer));
         return new ResponseEntity<>(dataResponse, HttpStatus.OK);
     }
+
     @GetMapping("/getFeedbackByYachtId/{yachtId}")
     public ResponseEntity<?> getFeedbackByYachtId(@PathVariable String yachtId) {
         DataResponse dataResponse = new DataResponse();
@@ -139,11 +144,6 @@ public class CustomerController {
         dataResponse.setData(iYacht.getAllYacht());
         return new ResponseEntity<>(dataResponse, HttpStatus.OK);
     }
-    @GetMapping("/file/{filename:.+}")
-    public ResponseEntity<?> getFile(@PathVariable String filename) {
-        Resource resource = iFile.load(filename);
-        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"").body(resource);
-    }
 
     @GetMapping("/yacht/findByCompany/{companyId}")
     public ResponseEntity<?> findByCompany(@PathVariable String companyId) {
@@ -151,6 +151,7 @@ public class CustomerController {
         dataResponse.setData(iYacht.findYachtByCompanyId(companyId));
         return new ResponseEntity<>(dataResponse, HttpStatus.OK);
     }
+
     @GetMapping("/yacht/image/{yachtId}")
     public ResponseEntity<?> getImageByYacht(@PathVariable String yachtId) {
         DataResponse dataResponse = new DataResponse();
@@ -164,6 +165,7 @@ public class CustomerController {
         dataResponse.setData(iService.getAllService());
         return new ResponseEntity<>(dataResponse, HttpStatus.OK);
     }
+
     @GetMapping("/getServiceByYacht/{yachtId}")
     public ResponseEntity<?> getServiceByYacht(@PathVariable String yachtId) {
         DataResponse dataResponse = new DataResponse();
@@ -177,36 +179,42 @@ public class CustomerController {
         dataResponse.setData(iYacht.findYachtById(yachtId));
         return new ResponseEntity<>(dataResponse, HttpStatus.OK);
     }
+
     @GetMapping("/getAllSchedule")
     public ResponseEntity<?> getAllSchedule() {
         DataResponse dataResponse = new DataResponse();
         dataResponse.setData(iSchedule.getAllSchedule());
         return new ResponseEntity<>(dataResponse, HttpStatus.OK);
     }
+
     @GetMapping("/getScheduleByYacht/{yachtId}")
     public ResponseEntity<?> getScheduleByYacht(@PathVariable String yachtId) {
         DataResponse dataResponse = new DataResponse();
         dataResponse.setData(iSchedule.getAllScheduleByYacht(yachtId));
         return new ResponseEntity<>(dataResponse, HttpStatus.OK);
     }
+
     @GetMapping ("/room/getAllRoom")
     public ResponseEntity<?> getAllRoom(){
         DataResponse dataResponse = new DataResponse();
         dataResponse.setData(iRoom.getAllRoom());
         return new ResponseEntity<>(dataResponse, HttpStatus.OK);
     }
+
     @GetMapping("/room/getRoom/{roomId}")
     public ResponseEntity<?> getRoomByID(@PathVariable String roomId){
         DataResponse dataResponse = new DataResponse();
         dataResponse.setData(iRoom.getRoomByID(roomId));
         return new ResponseEntity<>(dataResponse, HttpStatus.OK);
     }
+
     @GetMapping("/roomType/getAllRoomType/{yachtId}")
     public ResponseEntity<?>getAllRoomType(@PathVariable("yachtId") String  yachtId){
         DataResponse dataResponse = new DataResponse();
         dataResponse.setData(iRoomType.getAllRoomType(yachtId));
         return new ResponseEntity<>(dataResponse, HttpStatus.OK);
     }
+
     @GetMapping("/getAllRoomSchedule/{idYacht}/{idSchedule}")
     public ResponseEntity<?> getAllRoomSchedule(@PathVariable("idYacht") String idYacht,
                                                 @PathVariable("idSchedule") String idSchedule){
@@ -214,18 +222,21 @@ public class CustomerController {
         dataResponse.setData(iRoom.getRoomAndSchedule(idYacht,idSchedule));
         return new ResponseEntity<>(dataResponse, HttpStatus.OK);
     }
+
     @GetMapping("/getRoomByYacht/{yachtId}")
     public ResponseEntity<?> getRoomByYacht(@PathVariable String yachtId) {
         DataResponse dataResponse = new DataResponse();
         dataResponse.setData(iRoom.getRoomByYacht(yachtId));
         return new ResponseEntity<>(dataResponse, HttpStatus.OK);
     }
+
     @GetMapping("/getRoomById/{id}")
     public ResponseEntity<?> getRoomById(@PathVariable String id) {
         DataResponse dataResponse = new DataResponse();
         dataResponse.setData(iRoom.getRoomByID(id));
         return new ResponseEntity<>(dataResponse, HttpStatus.OK);
     }
+
     @GetMapping("/getRoomByRoomType/{idRoomType}")
     public ResponseEntity<?> getRoomByRoomType(@PathVariable String idRoomType) {
         DataResponse dataResponse = new DataResponse();
@@ -289,12 +300,14 @@ public class CustomerController {
         dataResponse.setData(iRoom.getUnbookedRoomsByYachtAndSchedule(yachtId,scheduleId));
         return new ResponseEntity<>(dataResponse, HttpStatus.OK);
     }
+
     @GetMapping("/getAddingServiceByYacht/{yachtId}")
     public ResponseEntity<?> getAddingServiceByYacht(@PathVariable String yachtId){
         DataResponse dataResponse = new DataResponse();
         dataResponse.setData(iService.getAddingService(yachtId));
         return new ResponseEntity<>(dataResponse, HttpStatus.OK);
     }
+
     @GetMapping("/roomImage/getAllImageByIdRoom/{roomId}")
     public ResponseEntity<?> getAllImageByIdRoom(@PathVariable String roomId){
         DataResponse dataResponse = new DataResponse<>();
@@ -308,18 +321,21 @@ public class CustomerController {
         dataResponse.setData(iCustomer.findIdBookingByCustomerId(idCustomer));
         return new ResponseEntity<>(dataResponse, HttpStatus.OK);
     }
+
     @GetMapping("/getAllYachtService")
     public ResponseEntity<?> getAllYachtService() {
         DataResponse dataResponse = new DataResponse();
         dataResponse.setData(iYachtService.getAllYachtService());
         return new ResponseEntity<>(dataResponse, HttpStatus.OK);
     }
+
     @GetMapping("/getAllLocation")
     public ResponseEntity<?> getAllLocation(){
         DataResponse dataResponse = new DataResponse();
         dataResponse.setData(iLocation.getAllLocation());
         return new ResponseEntity<>(dataResponse, HttpStatus.OK);
     }
+
     @GetMapping("/getScheduleById/{id}")
     public ResponseEntity<?> getScheduleById(@PathVariable String id){
         DataResponse dataResponse = new DataResponse();
@@ -384,5 +400,13 @@ public class CustomerController {
         dataResponse.setData(iCustomer.getAllFeedback());
         return new ResponseEntity<>(dataResponse, HttpStatus.OK);
     }
+
+    @GetMapping("/idCustomer/{idAccount}")
+    public ResponseEntity<?> getIdCustomer(@PathVariable String idAccount){
+        DataResponse dataResponse = new DataResponse();
+        dataResponse.setData(iCustomer.getIdCustomerByIdAccount(idAccount));
+        return new ResponseEntity<>(dataResponse, HttpStatus.OK);
+    }
+
 
 }

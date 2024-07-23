@@ -61,7 +61,7 @@ const MainPage = () => {
   const renderSchedule = () => {
     const filteredSchedule = filterSchedule(schedules);
     if (!filteredSchedule || filteredSchedule.length === 0) {
-      return <option value="">No schedules available</option>;
+      return <option value="">Không có lịch trình nào</option>;
     }
     return filteredSchedule.map((schedule) => (
       <option key={schedule.idSchedule} value={schedule.idSchedule}>
@@ -138,7 +138,7 @@ const MainPage = () => {
         <div id="schedule" className="content-section-sticky3 mb-3 ml-2 container" style={{ display: 'flex', alignItems: 'center' }}>
           <h5 style={{ marginRight: '10px' }}>Lịch trình hiện có</h5>
           <select onChange={hanleScheduleChange} value={selectedSchedule} className="form-select border border-info selectpicker btn-info" aria-label="Default select example" style={{ width: '300px' }}>
-            <option value={""} style={{ color: '#0E4F4F', fontWeight: 'bold' }}>Select a schedule</option>
+            <option value={""} style={{ color: '#0E4F4F', fontWeight: 'bold' }}>Chọn lịch trình</option>
             {renderSchedule()}
           </select>
         </div>
@@ -152,7 +152,7 @@ const MainPage = () => {
         </div>
 
         <div id="reviews" className="content-section-sticky6 mt-5 mb-5">
-          <Rating yachtId={yachtId}/>
+          <Rating yachtId={yachtId} />
         </div>
       </Col>
 

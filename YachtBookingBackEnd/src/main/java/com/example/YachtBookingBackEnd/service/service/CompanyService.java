@@ -8,7 +8,7 @@ import com.example.YachtBookingBackEnd.repository.AccountRepository;
 import com.example.YachtBookingBackEnd.repository.CompanyRepository;
 import com.example.YachtBookingBackEnd.repository.FeedbackRepository;
 import com.example.YachtBookingBackEnd.service.implement.ICompany;
-import com.example.YachtBookingBackEnd.service.implement.IFile;
+
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -16,12 +16,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -34,9 +36,11 @@ import java.util.stream.Collectors;
 public class CompanyService implements ICompany {
     CompanyRepository companyRepository;
     AccountRepository accountRepository;
-    IFile iFile;
+
     PasswordEncoder passwordEncoder;
     AuthenticationManager authenticationManager;
+    @Autowired
+    private CloudinaryService cloudinaryService;
 
     @Override
     public List<CompanyDTO> searchCompanyByName(String name) {
@@ -104,6 +108,17 @@ public class CompanyService implements ICompany {
     public boolean changeExistCompany(String idCompany) {
         Company company = companyRepository.findById(idCompany)
                 .orElseThrow(() -> new RuntimeException("Company not found! Try again"));
+        Account account = accountRepository.findAccountByCompany(company);
+        if (account != null) {
+            if (account.getStatus() == 1) {
+                account.setStatus(0);
+            } else if (account.getStatus() == 0){
+                account.setStatus(1);
+            }
+        } else  {
+            log.error("Can not find account by company");
+            return false;
+        }
         boolean isExist = company.getExist() == 1;
 
         if (isExist) {
@@ -166,8 +181,13 @@ public class CompanyService implements ICompany {
                 company.setAddress(address);
             }
             if (logo != null && !logo.isEmpty()) {
-                iFile.save(logo);
-                company.setLogo(logo.getOriginalFilename());
+                Map uploadResult = cloudinaryService.upload(logo);
+                String imageUrl = (String) uploadResult.get("url");
+                if (imageUrl == null) {
+                    System.out.println("Error uploading image to Cloudinary");
+                    return false;
+                }
+                company.setLogo(imageUrl);
             }
             companyRepository.save(company);
             return true;
@@ -203,10 +223,9 @@ public class CompanyService implements ICompany {
                 return "400";
             }
         }catch (Exception e){
-            System.out.println("Old password incorrect");
-
+            System.out.println("Error by: "+e);
         }
-        return "400";
+        return "false";
     }
 
 

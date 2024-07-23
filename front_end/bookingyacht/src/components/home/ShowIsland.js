@@ -43,7 +43,7 @@ const ShowIsland = () => {
                         <Card.Img variant="top" src={index === 0 ? HaLong1 : index === 1 ? HaLong2 : HaLong3} style={{ height: 220 }} className='object-fit-cover' />
                         <Card.Body>
                             <Card.Title>{location.name}</Card.Title>
-                            <button className='btn btn-outline-dark'>View</button>
+                            <button className='btn btn-outline-dark'>Xem</button>
                         </Card.Body>
                     </Card>
                 </NavLink>

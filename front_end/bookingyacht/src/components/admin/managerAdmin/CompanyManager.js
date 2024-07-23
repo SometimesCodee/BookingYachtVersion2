@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 import { fetchCompanies } from '../../../redux/action/AdminAction';
 import './Manager.scss';
 const CompanyManager = () => {
-    const getImageApi = `http://localhost:8080/api/customer/file/`
+    const getImageApi = `https://booking18-fzc0ghgvcve8f7fs.eastasia-01.azurewebsites.net/api/customer/file/`
     const dispatch = useDispatch();
     const companies = useSelector(state => state.admin.companies);
 
@@ -113,9 +113,9 @@ const CompanyManager = () => {
     const handleCreateCompany = async event => {
         event.preventDefault();
         const form = event.currentTarget;
-        const username = form.elements.username.value;
-        const password = form.elements.password.value;
-        const confirmPassword = form.elements.confirmPassword.value;
+        const username = form.elements.username.value.trim();
+        const password = form.elements.password.value.trim();
+        const confirmPassword = form.elements.confirmPassword.value.trim();
         // Kiểm tra điều kiện cho tên tài khoản
         if (username.length < 3 || !/^[a-zA-Z]/.test(username)) {
             toast.error('Tên tài khoản phải bắt đầu bằng một chữ cái và có ít nhất 3 ký tự!');
@@ -137,7 +137,7 @@ const CompanyManager = () => {
         try {
             const config = {
                 method: 'post',
-                url: 'http://localhost:8080/api/admins/accounts',
+                url: 'https://booking18-fzc0ghgvcve8f7fs.eastasia-01.azurewebsites.net/api/admins/accounts',
                 headers: {
                     'Authorization': getAuthHeader(),
                 },
@@ -166,16 +166,16 @@ const CompanyManager = () => {
         event.preventDefault();
         const { address, email, logo, name } = companyDetail;
         const data = new FormData();
-        data.append('address', address);
-        data.append('email', email);
+        data.append('address', address.trim());
+        data.append('email', email.trim());
         data.append('logo', logo);
-        data.append('name', name);
+        data.append('name', name.trim());
         data.append('idAccount', newAccountId);
 
         try {
             const config = {
                 method: 'post',
-                url: `http://localhost:8080/api/admins/accounts/${newAccountId}`,
+                url: `https://booking18-fzc0ghgvcve8f7fs.eastasia-01.azurewebsites.net/api/admins/accounts/${newAccountId}`,
                 headers: {
                     'Authorization': getAuthHeader(),
                     // 'Content-Type': 'multipart/form-data'
@@ -224,7 +224,7 @@ const CompanyManager = () => {
         try {
             const config = {
                 method: 'put',
-                url: `http://localhost:8080/api/admins/companies/${selectedCompany.idCompany}`,
+                url: `https://booking18-fzc0ghgvcve8f7fs.eastasia-01.azurewebsites.net/api/admins/companies/${selectedCompany.idCompany}`,
                 headers: {
                     'Authorization': getAuthHeader(),
                 },

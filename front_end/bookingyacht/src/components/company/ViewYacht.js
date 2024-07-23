@@ -144,7 +144,7 @@ const ViewYacht = (props) => {
 
                                     <div className="media">
 
-                                        <img className="mr-4" src={`http://localhost:8080/api/customer/file/${yacht.image}`} alt="Generic placeholder image" />
+                                        <img className="mr-4" src={yacht.image} alt="Generic placeholder" />
 
                                         <div className="media-body">
                                             <div className='card-content'>

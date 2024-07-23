@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class RoomService implements IRoom {
@@ -30,9 +31,9 @@ public class RoomService implements IRoom {
     @Autowired
     private RoomTypeRepository roomTypeRepository;
     @Autowired
-    private IFile iFile;
-    @Autowired
     private BookingRoomRepository bookingRoomRepository;
+    @Autowired
+    private CloudinaryService cloudinaryService;
 
     @Override
     public List<RoomDTO> getAllRoom() {
@@ -113,8 +114,13 @@ public class RoomService implements IRoom {
             room.setName(roomName);
             room.setArea(area);
             room.setDescription(description);
-            iFile.save(avatar);
-            room.setAvatar(avatar.getOriginalFilename());
+            Map uploadResult = cloudinaryService.upload(avatar);
+            String imageUrl = (String) uploadResult.get("url");
+            if (imageUrl == null) {
+                System.out.println("Error uploading image to Cloudinary");
+                return false;
+            }
+            room.setAvatar(imageUrl);
 
             RoomType  roomType = roomTypeRepository.findById(idRoomType)
                     .orElseThrow(()-> new RuntimeException("Not found!!!!"));
@@ -143,14 +149,13 @@ public class RoomService implements IRoom {
             }else {
                 room.setDescription(room.getDescription());
             }
-
-            if(roomName!= null){
-                room.setName(roomName);
-            }else {
-                room.setName(room.getName());
+            Map uploadResult = cloudinaryService.upload(avatar);
+            String imageUrl = (String) uploadResult.get("url");
+            if (imageUrl == null) {
+                System.out.println("Error uploading image to Cloudinary");
+                return false;
             }
-            iFile.save(avatar);
-            room.setAvatar(avatar.getOriginalFilename());
+            room.setAvatar(imageUrl);
             roomRepository.save(room);
             return  true;
         }catch (Exception e){

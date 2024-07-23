@@ -1,6 +1,7 @@
 package com.example.YachtBookingBackEnd.service.implement;
 
 import com.example.YachtBookingBackEnd.dto.BookingOrderDTO;
+import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.List;
 
@@ -20,4 +21,8 @@ public interface IBookingOrder {
     boolean cancelBookingByCustomer(String idCustomer, String idBooking, String reason);
 
     void autoConfirmAndCancelBookings();
+
+
+//    ======= New =============
+//    boolean creteBooking(List<String> selectedRoomIds, List<String> selectedServiceIds, String requirement, String idCustomer, String idSchedule);
 }

@@ -7,10 +7,9 @@ import './FindYacht.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { getYachtListApi } from '../../redux/action/YachtListAction';
-import NotFound from '../page404/NotFound';
-import axios from 'axios';
-import { getFile, getHighestAndLowestPriceByYacht } from '../../services/ApiServices';
+import { getHighestAndLowestPriceByYacht } from '../../services/ApiServices';
 import { useSearchTrigger } from '../home/TriggerFormSearch';
+import NotFound from '../page404/NotFound';
 const YachtList = () => {
     const [pagging, setPagging] = useState([]); // page 1, 2, 3, ...
     const [paggingYacht, setPaggingYacht] = useState([]); // yachts in a page
@@ -41,7 +40,7 @@ const YachtList = () => {
         }
     }, [yachtList, currentPage]);
 
-    const avatarYachtApi = 'http://localhost:8080/api/customer/file/'
+    const avatarYachtApi = 'https://booking18-fzc0ghgvcve8f7fs.eastasia-01.azurewebsites.net/api/customer/file/'
 
     const handelChangePage = (pageNumber) => {
         setCurrentPage(pageNumber)

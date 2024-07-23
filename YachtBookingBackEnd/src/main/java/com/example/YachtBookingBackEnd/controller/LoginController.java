@@ -16,7 +16,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@CrossOrigin("*")
+@CrossOrigin("https://yb.sh.io.vn")
 @RequestMapping("/login")
 public class LoginController {
 
@@ -50,13 +50,14 @@ public class LoginController {
                 if("ROLE_COMPANY".equalsIgnoreCase(role)){
                     String idCompany = companyRepository.findIdCompanyByIdAccount(idAccount);
                     dataResponse.setIdCompany(idCompany);
+                    dataResponse.setIdAccount(idAccount);
                 }
                 else if("ROLE_CUSTOMER".equalsIgnoreCase(role)){
                     String idCustomer = customerRepository.findIdCustomerByIdAccount(idAccount);
                     System.out.println(idCustomer);
                     dataResponse.setIdCustomer(idCustomer);
+                    dataResponse.setIdAccount(idAccount);
                 }
-
                 dataResponse.setData(token);
                 dataResponse.setSuccess(true);
                 return new ResponseEntity<>(dataResponse, HttpStatus.OK);

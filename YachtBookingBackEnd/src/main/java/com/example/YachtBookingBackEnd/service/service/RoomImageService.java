@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class RoomImageService implements IRoomImage {
@@ -19,6 +20,8 @@ public class RoomImageService implements IRoomImage {
     private RoomRepository roomRepository;
     @Autowired
     private RoomImageRepository roomImageRepository;
+    @Autowired
+    private CloudinaryService cloudinaryService;
     @Override
     public boolean insertRoomImages(String roomId, MultipartFile image) {
         try {
@@ -27,7 +30,14 @@ public class RoomImageService implements IRoomImage {
 
             RoomImage roomImage = new RoomImage();
             roomImage.setRoom(room);
-            roomImage.setImageRoom(image.getOriginalFilename());
+            Map uploadResult = cloudinaryService.upload(image);
+            String imageUrl = (String) uploadResult.get("url");
+            if (imageUrl == null) {
+                System.out.println("Error uploading image to Cloudinary");
+                return false;
+            }
+            roomImage.setImageRoom(imageUrl);
+
             roomImageRepository.save(roomImage);
             return  true;
 
@@ -42,7 +52,15 @@ public class RoomImageService implements IRoomImage {
         try {
             RoomImage roomImage = roomImageRepository.findById(imageId)
                     .orElseThrow(()-> new RuntimeException("Not found"));
-            roomImage.setImageRoom(image.getOriginalFilename());
+
+            Map uploadResult = cloudinaryService.upload(image);
+            String imageUrl = (String) uploadResult.get("url");
+            if (imageUrl == null) {
+                System.out.println("Error uploading image to Cloudinary");
+                return false;
+            }
+            roomImage.setImageRoom(imageUrl);
+
             roomImageRepository.save(roomImage);
             return true;
         }catch (Exception e){

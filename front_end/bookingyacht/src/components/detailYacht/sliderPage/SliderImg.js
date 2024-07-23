@@ -5,6 +5,7 @@ import { getHighestAndLowestPriceByYacht, getImagesYacht } from '../../../servic
 import { LuShip } from "react-icons/lu";
 import { useDispatch, useSelector } from 'react-redux';
 import { getYachtImagesApi } from '../../../redux/action/YachtImagesAction';
+import './SliderImg.scss';
 
 const SimpleSlider = ({ yacht }) => {
   const { images } = useSelector(state => state.YachtImagesReducer);
@@ -28,7 +29,7 @@ const SimpleSlider = ({ yacht }) => {
     }
   };
 
-  const getImageApi = `http://localhost:8080/api/customer/file/`
+
 
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -56,14 +57,14 @@ const SimpleSlider = ({ yacht }) => {
     <div className="custom-slider">
       <div className='title_page mb-4' style={{ justifyContent: 'space-between', alignItems: 'center' }}>
         <h1 style={{ fontWeight: 'bold', color: '#0E4F4F' }}><span><LuShip color='gold' size={80}></LuShip></span> {yacht.name}</h1>
-        <h3 style={{ color: '#0E4F4F', fontWeight: 'normal' }}>Price: {priceData[yacht.idYacht] ? `${priceData[yacht.idYacht].lowestPrice.toLocaleString()} - ${priceData[yacht.idYacht].highestPrice.toLocaleString()} đ` : 'Loading...'}</h3>
+        <h3 style={{ color: '#0E4F4F', fontWeight: 'normal' }}>Giá: {priceData[yacht.idYacht] ? `${priceData[yacht.idYacht].lowestPrice.toLocaleString()} - ${priceData[yacht.idYacht].highestPrice.toLocaleString()} đ` : 'Loading...'}</h3>
       </div>
 
       <div className='slider_page'>
         <Carousel activeIndex={currentIndex} onSelect={handleSelect} slide={false} indicators={false} interval={null}>
           {images.map((image, index) => (
             <Carousel.Item key={image.idYachtImage}>
-              <Image src={`${getImageApi}${image.imageYacht}`} alt={index} fluid className='img1' />
+              <Image src={image.imageYacht} alt={index} fluid className='img1' />
             </Carousel.Item>
           ))}
         </Carousel>
@@ -87,8 +88,8 @@ const SimpleSlider = ({ yacht }) => {
           >
             <Image
               className='img2'
-              src={`${getImageApi}${image.imageYacht}`}
-              alt={`${getImageApi}${image.imageYacht}`}
+              src={image.imageYacht}
+              alt={image.imageYacht}
               thumbnail
             />
           </div>

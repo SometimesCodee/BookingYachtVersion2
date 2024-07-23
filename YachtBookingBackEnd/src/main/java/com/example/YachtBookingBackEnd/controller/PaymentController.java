@@ -21,19 +21,12 @@ import java.util.Map;
 public class PaymentController {
     IPayment iPayment;
 
-    @GetMapping("/payment-callback")
+    @PostMapping("/payment-callback")
     public ResponseEntity<?> createVnIpnPayment(HttpServletRequest request) {
-        Map<String, String> respone = iPayment.handleIPN(request);
-        String redirectUrl = respone.get("redirectUrl");
+        DataResponse dataResponse = new DataResponse();
+        dataResponse.setData(iPayment.handleIPN(request));
 
-        if ("00".equals(respone.get("RspCode"))) {
-            return ResponseEntity.status(HttpStatus.FOUND).location(URI.create(redirectUrl)).build();
-        } else {
-            DataResponse dataResponse = new DataResponse();
-            dataResponse.setData(respone);
-
-            return new ResponseEntity<>(dataResponse, HttpStatus.OK);
-        }
+        return new ResponseEntity<>(dataResponse, HttpStatus.OK);
     }
 
 }

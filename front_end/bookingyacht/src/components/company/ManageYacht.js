@@ -3,14 +3,15 @@ import './ManageYacht.scss'
 import { AiFillHome } from "react-icons/ai";
 import { NavLink, useParams } from 'react-router-dom';
 import { Button, Col, Row } from 'react-bootstrap';
-import ViewFeedback from './ViewFeedback';
-import ManageInforYacht from './ManageInforYacht';
 import { FaCirclePlus } from "react-icons/fa6";
-import { deleteYachtImage, getYachtImage } from '../../services/ApiServices';
-import ModalCreateImageYacht from './Modal/ModalCreateImageYacht';
-import { toast } from 'react-toastify';
-import ModalUpdateImageYacht from './Modal/ModalUpdateImageYacht';
 import ReactPaginate from 'react-paginate';
+import { toast } from 'react-toastify';
+import { deleteYachtImage, getYachtImage } from '../../services/ApiServices';
+import ManageInforYacht from './ManageInforYacht';
+import './ManageYacht.scss';
+import ModalCreateImageYacht from './Modal/ModalCreateImageYacht';
+import ModalUpdateImageYacht from './Modal/ModalUpdateImageYacht';
+import ViewFeedback from './ViewFeedback';
 
 const ManageYacht = () => {
     const { idYacht } = useParams();
@@ -105,7 +106,7 @@ const ManageYacht = () => {
                                         className="table-primary"
                                     >
                                         <td>
-                                            <img src={`http://localhost:8080/api/customer/file/${image.imageYacht}`} width={200} alt='' />
+                                            <img src={image.imageYacht} width={200} alt='' />
                                         </td>
                                         <td width={300}>
                                             <Row>

@@ -51,7 +51,7 @@ const Signin = () => {
                     navigate(`/information/${res.data.idAccount}`)
                 }else if(resAccount && resAccount.data && resAccount.data.data !== '0'){
                     toast.success("Login Successful");
-                    // navigate(-2);
+                    navigate(`/duthuyen`);
                 }
             }
         } else {

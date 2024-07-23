@@ -17,7 +17,7 @@ const ModalCreateRoom = (props) => {
     const [roomName, setRoomName] = useState('');
     const [area, setArea] = useState(0);
     const [description, setDescription] = useState('');
-    const [roomType, setRoomType] = useState(listRoomType[0].idRoomType);
+    const [roomType, setRoomType] = useState('');
 
     useEffect(() => {
         if (show) {
@@ -28,6 +28,8 @@ const ModalCreateRoom = (props) => {
     useEffect(() => {
         if (show && _.isEmpty(listRoomType)) {
             toast.warning('Please create room type before creating room')
+        }else if(!_.isEmpty(listRoomType)){
+            setRoomType(listRoomType[0].idRoomType)
         }
 
     }, [show, listRoomType])
@@ -37,7 +39,7 @@ const ModalCreateRoom = (props) => {
         setRoomName('');
         setArea('');
         setDescription('');
-        setRoomType('');
+        setRoomType(listRoomType[0].idRoomType);
         setPreviewImage('');
         setImage('');
     }
@@ -106,7 +108,7 @@ const ModalCreateRoom = (props) => {
                                     {
 
                                         listRoomType && listRoomType.map((type) =>
-                                            <option key={type.idRoomType} value={type.idRoomType}>{type.utilities}</option>
+                                            <option key={type.idRoomType} value={type.idRoomType}>{type.type}</option>
                                         )
                                     }
 

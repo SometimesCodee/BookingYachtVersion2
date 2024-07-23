@@ -46,9 +46,8 @@ const ManageInforYacht = (props) => {
             setDataUpdate(inforYacht)
             setIdLocation(inforYacht.location.idLocation);
             setIdYachtType(inforYacht.yachtType.idYachtType);
-            if (dataUpdate.image) {
-                setPreviewImage(dataUpdate.image)
-            }
+            setPreviewImage(inforYacht.image)
+        
         }
     }, [inforYacht]);
 
@@ -85,10 +84,9 @@ const ManageInforYacht = (props) => {
         )
     }
     const handelUploadImage = (event) => {
-        if (event.target.files[0] && event.target && event.target.files) {
-
-            setPreviewImage(URL.createObjectURL(event.target.files[0]));
+        if (event.target.files && event.target.files[0]) {
             setImage(event.target.files[0]);
+            setPreviewImage(URL.createObjectURL(event.target.files[0]));
         }
     }
 
@@ -103,10 +101,21 @@ const ManageInforYacht = (props) => {
 
     const handleUpdateYacht = async () => {
         if (!validateInput()) return;
-        let res = await updateYacht(idYacht, dataUpdate.name.trim(), image,
-            dataUpdate.hullBody.trim(), dataUpdate.description.trim(),
-            dataUpdate.rule.trim(), dataUpdate.itinerary.trim(),
-            idYachtType, idLocation);
+        console.log('ima', image)
+        let formData = new FormData();
+        formData.append('name', dataUpdate.name.trim());
+        formData.append('hullBody', dataUpdate.hullBody.trim());
+        formData.append('description', dataUpdate.description.trim());
+        formData.append('rule', dataUpdate.rule.trim());
+        formData.append('itinerary', dataUpdate.itinerary.trim());
+        formData.append('idYachtType', idYachtType);
+        formData.append('idLocation', idLocation);
+
+        if (image) {
+            formData.append('image', image);
+        }
+
+        let res = await updateYacht(idYacht, formData);
 
         if (res && res.data.data === true) {
             toast.success('Update Success');

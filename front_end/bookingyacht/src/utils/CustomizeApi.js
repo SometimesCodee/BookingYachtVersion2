@@ -16,7 +16,7 @@ NProgress.configure({
     // trickleRate: 0.5,
     // easing: 'ease',
     // speed: 200,
-    // trickle: true,
+    // trickle: true, 
     // trickleRate: 0.02
 })
 

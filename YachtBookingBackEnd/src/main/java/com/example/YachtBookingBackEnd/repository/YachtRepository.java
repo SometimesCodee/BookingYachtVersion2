@@ -14,7 +14,7 @@ public interface YachtRepository extends JpaRepository<Yacht, String> {
     List<Yacht> findAllYachts();
 
 
-    @Query("SELECT y FROM Yacht y WHERE y.company.idCompany = :companyId")
+    @Query("SELECT y FROM Yacht y WHERE y.company.idCompany = :companyId AND y.company.exist = 1")
     List<Yacht> findAllByCompanyId(@Param("companyId") String companyId);
 
 

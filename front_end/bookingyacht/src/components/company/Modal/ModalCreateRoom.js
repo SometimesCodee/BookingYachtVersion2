@@ -5,9 +5,8 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import { Button } from 'react-bootstrap'
 import { FcPlus } from "react-icons/fc";
-import { createRoom, getAllRoomTypeCompany } from '../../../services/ApiServices';
+import { createRoom } from '../../../services/ApiServices';
 import { toast } from 'react-toastify';
-import { useSelector } from 'react-redux';
 import _ from 'lodash';
 
 const ModalCreateRoom = (props) => {
@@ -28,6 +27,8 @@ const ModalCreateRoom = (props) => {
     useEffect(() => {
         if (show && _.isEmpty(listRoomType)) {
             toast.warning('Please create room type before creating room')
+        } else if (!_.isEmpty(listRoomType)) {
+            setRoomType(listRoomType[0].idRoomType)
         }
 
     }, [show, listRoomType])
@@ -37,13 +38,10 @@ const ModalCreateRoom = (props) => {
         setRoomName('');
         setArea('');
         setDescription('');
-        setRoomType('');
+        setRoomType(listRoomType[0].idRoomType);
         setPreviewImage('');
         setImage('');
     }
-
-    console.log('type', roomType)
-    console.log('list', listRoomType)
     const handelUploadImage = (event) => {
         if (event.target.files[0] && event.target && event.target.files) {
             setPreviewImage(URL.createObjectURL(event.target.files[0]));
@@ -52,7 +50,7 @@ const ModalCreateRoom = (props) => {
     }
     const handleCreateRoom = async () => {
         if (!roomName || !area || !description || !roomType || !previewImage || !image) {
-            toast.error('Input Not Empty')
+            toast.error('Please fill in all fields')
         } else {
             let res = await createRoom(roomName.trim(), area, description.trim(), roomType, image, idYacht)
             if (res && res.data.data === true) {
@@ -105,7 +103,7 @@ const ModalCreateRoom = (props) => {
                                 <Form.Select value={roomType} onChange={event => setRoomType(event.target.value)} >
                                     {
                                         listRoomType && listRoomType.map((type) =>
-                                            <option key={type.idRoomType} value={type.idRoomType}>{type.utilities}</option>
+                                            <option key={type.idRoomType} value={type.idRoomType}>{type.type}</option>
                                         )
                                     }
 

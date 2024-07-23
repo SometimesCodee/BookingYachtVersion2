@@ -2,15 +2,13 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 
-const ProtectedRoute = (props) => {
+const ProtectedHomepage = (props) => {
     const isAuthenticated = useSelector(state => state.account.isAuthenticated);
     const role = useSelector(state => state.account.account.role);
 
-
-    if (!isAuthenticated || role !== 'ROLE_COMPANY') {
-        return <Navigate to='/signin'></Navigate>
+    if (role !== 'ROLE_CUSTOMER') {
+        return <Navigate to='/manage-company'></Navigate>
     }
-
 
 
     return (
@@ -21,4 +19,4 @@ const ProtectedRoute = (props) => {
     );
 };
 
-export default ProtectedRoute;
+export default ProtectedHomepage;

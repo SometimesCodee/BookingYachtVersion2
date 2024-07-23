@@ -14,7 +14,6 @@ import Information from './components/auths/Information';
 import Signin from './components/auths/Signin';
 import Signup from './components/auths/Signup';
 import Blog from './components/blog/Blog';
-import Bill from './components/company/Bill';
 import ManageCompany from './components/company/ManageCompany';
 import ManageRoom from './components/company/ManageRoom';
 import ManageYacht from './components/company/ManageYacht';
@@ -31,13 +30,13 @@ import YachtQuestion from './components/yacht/YachtQuestion';
 import YachtRule from './components/yacht/YachtRule';
 
 import { useSelector } from 'react-redux';
-import ManageRoomType from './components/company/ManageRoomType';
 import ManageSchedule from './components/company/ManageSchedule';
 import ManageServiceYacht from './components/company/ManageServiceYacht';
 import Page404 from './components/page404/Page404';
 import ProtectedRoute from './components/routers/ProtectedRoute';
 import VerifyOTP from './components/auths/VerifyOTP';
 import ChangePassword1 from './components/auths/ChangePassword1';
+import ProtectedHomepage from './components/routers/ProtectedHomepage';
 import PaymentReturn from './components/home/PaymentReturn';
 
 const Layout = () => {
@@ -45,12 +44,21 @@ const Layout = () => {
     return (
         <>
             <Routes>
-                <Route path="/" element={<App />}>
-                    <Route index element={<HomePage />} />
+                <Route path="/" element={
+                    <App />
+                }>
+                    <Route index element={
+                        <HomePage />} />
                     <Route path='/blog' element={<Blog />} />
-                    <Route path='/duthuyen' element={<FindYacht />} />
+                    <Route path='/duthuyen' element={
+                        <FindYacht />
+                    } />
                     <Route path='/doanhnhiep' element={<Enterprise />} />
-                    <Route path='/mainpage/:yachtId' element={<MainPage />} />
+                    <Route path='/mainpage/:yachtId' element={
+                        <ProtectedHomepage>
+                            <MainPage />
+                        </ProtectedHomepage>
+                    } />
                     <Route path='/yacht-rule' element={<YachtRule />} />
                     <Route path='/yacht-question' element={<YachtQuestion />} />
                     <Route path='/payment-return' element={<PaymentReturn/>}/>
@@ -60,12 +68,16 @@ const Layout = () => {
                 <Route path='/signup' element={<Signup />
                 }
                 />
-                <Route path='/profile' element={<Profile />} />
+                <Route path='/profile' element={
+                    <Profile />
+                } />
                 <Route path='/forgotpassowd' element={<ForgotPassword />}></Route>
+                <Route path='/information/:idCustomer' element={<Information />} />
                 <Route path='/information/:idAccount' element={<Information />} />
                 {/* <Route path='/information-company' element={<InformationCompany />} /> */}
                 <Route path='/verifyOTP/:email' element={<VerifyOTP />} />
                 <Route path='/changePasswordByEmail/:email' element={<ChangePassword1 />} />
+
 
 
 
@@ -77,9 +89,7 @@ const Layout = () => {
                 } >
                     <Route index element={<ViewBooking />} />
                     <Route path='view-yacht' element={<ViewYacht />} />
-                    <Route path='bill' element={<Bill />} />
                     <Route path='profile' element={<ProfileCompany />} />
-                    <Route path='room-type' element={<ManageRoomType />} />
 
                 </Route>
 
@@ -96,7 +106,7 @@ const Layout = () => {
                         <Route path="customer" element={<CustomerManager />} />
                         <Route path="company" element={<CompanyManager />} />
                     </Route>
-                    )
+                )
                 }
                 <Route path='/deltailInfo/:idCompany' element={<DetailEnterprise />} />
 

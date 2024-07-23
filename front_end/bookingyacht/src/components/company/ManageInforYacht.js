@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Button, ButtonGroup, Col, Row } from 'react-bootstrap';
+import { Button, Col, Row } from 'react-bootstrap';
 import Accordion from 'react-bootstrap/Accordion';
-import { getAllLocation, getYachtById, getYachtByIdYacht, getYachtType, updateYacht } from '../../services/ApiServices';
+import { getAllLocation, getYachtByIdYacht, getYachtType, updateYacht } from '../../services/ApiServices';
 import Form from 'react-bootstrap/Form';
 import { FcPlus } from "react-icons/fc";
 import _ from 'lodash'
@@ -53,10 +53,6 @@ const ManageInforYacht = (props) => {
     }, [inforYacht]);
 
 
-
-
-
-
     const [dataUpdate, setDataUpdate] = useState(initInforYacht)
 
     const getLocation = async () => {
@@ -102,7 +98,7 @@ const ManageInforYacht = (props) => {
     };
 
     const handleUpdateYacht = async () => {
-        if (!validateInput()) return;
+        if (validateInput() === true) return;
         let res = await updateYacht(idYacht, dataUpdate.name.trim(), image,
             dataUpdate.hullBody.trim(), dataUpdate.description.trim(),
             dataUpdate.rule.trim(), dataUpdate.itinerary.trim(),

@@ -43,9 +43,9 @@ const ModalUpdateRoom = (props) => {
 
     const handleUpdateRoom = async () => {
         if (!name || !description) {
-            toast.error("Input Not Empty")
+            toast.error("Please fill in all fields")
         } else {
-            let res = await updateRoom(dataUpdateRoom.idRoom, name.trim(), description.trim(), image)
+            let res = await updateRoom(dataUpdateRoom.idRoom, description.trim(), name.trim(), image)
             if (res && res.data.data === true) {
                 toast.success("Update Successfully")
                 handleClose();
@@ -55,7 +55,6 @@ const ModalUpdateRoom = (props) => {
             }
         }
     }
-
 
 
     return (

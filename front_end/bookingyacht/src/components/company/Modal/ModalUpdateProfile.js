@@ -41,7 +41,7 @@ const ModalUpdateProfile = (props) => {
     const handleUpdateProfile = async () => {
         let res = await updateProfileCompany(idCompany, name.trim(), address.trim(), image)
         if (!name || !address) {
-            toast.error("Input Not Empty")
+            toast.error("Please fill in all fields")
         } else if (res && res.data && res.data.data === true) {
             toast.success('Update Successfully');
             handleClose();

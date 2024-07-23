@@ -20,7 +20,7 @@ const ModalChangePassCompany = (props) => {
 
     const handleChangePassword = async () => {
         if (!oldPassword || !newPassword || !confirmPassword) {
-            toast.error('Input Not Empty!')
+            toast.error('Please fill in all fields')
         } else if (newPassword.length < 8) {
             toast.error('New Password must be at least 8 charaters')
         } else {

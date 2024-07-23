@@ -9,6 +9,7 @@ import com.example.YachtBookingBackEnd.entity.RoomImage;
 import com.example.YachtBookingBackEnd.entity.RoomType;
 import com.example.YachtBookingBackEnd.entity.Yacht;
 import com.example.YachtBookingBackEnd.repository.*;
+import com.example.YachtBookingBackEnd.service.implement.IFile;
 import com.example.YachtBookingBackEnd.service.implement.IRoom;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,7 @@ import java.util.Map;
 
 @Service
 public class RoomService implements IRoom {
+
     @Autowired
     private RoomRepository roomRepository;
     @Autowired
@@ -36,6 +38,7 @@ public class RoomService implements IRoom {
     @Override
     public List<RoomDTO> getAllRoom() {
         List<RoomDTO> roomDTOList = new ArrayList<>();
+
         try {
             List<Room> roomList = roomRepository.findAll();
             for (Room room : roomList
@@ -49,11 +52,14 @@ public class RoomService implements IRoom {
                 roomDTO.setRoomType(roomTypeDTO);
                 roomDTOList.add(roomDTO);
             }
+
         } catch (Exception e) {
             System.out.println("Error by: "+e);
         }
         return roomDTOList;
     }
+
+
 
     @Override
     public RoomDTO getRoomByID(String roomId) {
@@ -61,7 +67,9 @@ public class RoomService implements IRoom {
         RoomDTO roomDTO = new RoomDTO();
         Room room = roomRepository.findById(roomId)
                 .orElseThrow(() -> new RuntimeException("Not found"));
+
         try {
+
             roomDTO.setIdRoom(roomId);
             roomDTO.setName(room.getName());
             roomDTO.setDescription(room.getDescription());
@@ -135,6 +143,7 @@ public class RoomService implements IRoom {
         try {
             Room room = roomRepository.findById(roomId)
                     .orElseThrow(()-> new RuntimeException("Not found room!!"));
+
             if(description!= null){
                 room.setDescription(description);
             }else {
@@ -204,6 +213,7 @@ public class RoomService implements IRoom {
                         roomDTO.setArea(room.getArea());
                         roomDTO.setDescription(room.getDescription());
                         roomDTO.setAvatar(room.getAvatar());
+
                         return roomDTO;
                     })
                     .toList();
@@ -219,6 +229,7 @@ public class RoomService implements IRoom {
         if (unBookedRooms != null) {
             for (Room room : unBookedRooms) {
                 RoomDTO roomDTO = new RoomDTO();
+
                 roomDTO.setIdRoom(room.getIdRoom());
                 roomDTO.setName(room.getName());
                 roomDTO.setArea(room.getArea());

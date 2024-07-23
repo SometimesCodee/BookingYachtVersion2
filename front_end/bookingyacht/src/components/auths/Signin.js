@@ -30,7 +30,7 @@ const Signin = () => {
         let res = await login(userName.trim(), password.trim());
 
         if (userName === '' || password === '') {
-            toast.error('Input Not Empty');
+            toast.error('Please fill in all fields');
             setLoading(false);
         } else if (res && res.data && res.data.data) {
             const role = jwtDecode(res.data.data);

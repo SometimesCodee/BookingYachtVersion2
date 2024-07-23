@@ -7,12 +7,14 @@ import { Button } from 'react-bootstrap'
 import { FcPlus } from "react-icons/fc";
 import { createYacht, getYachtType } from '../../../services/ApiServices';
 import { toast } from 'react-toastify';
+import _ from 'lodash';
 
 const ModalCreateYacht = (props) => {
     const { show, setShow, idCompany, location } = props;
     const [image, setImage] = useState("");
     const [previewImage, setPreviewImage] = useState("");
     const [yachtType, setYachtType] = useState([]);
+
 
     const initInforYacht = {
         name: '',
@@ -21,13 +23,25 @@ const ModalCreateYacht = (props) => {
         itinerary: '',
         rule: '',
         description: '',
-        location: '1',
-        yachtType: '1',
+        location: '',
+        yachtType: '',
     }
+
 
     useEffect(() => {
         getAllType()
     }, [])
+
+    useEffect(() => {
+        if (show && !_.isEmpty(location) && !_.isEmpty(yachtType)) {
+            setData({
+                ...initInforYacht,
+                location: location ? location[0].idLocation : '',
+                yachtType: yachtType ? yachtType[0].idYachtType : ''
+
+            })
+        }
+    }, [show])
 
     const handleClose = () => {
         setShow(false)
@@ -58,7 +72,7 @@ const ModalCreateYacht = (props) => {
     const handleCreateYacht = async () => {
         let res = await createYacht(idCompany, data.name.trim(), image, data.launch, data.hullBody.trim(), data.description.trim(), data.rule.trim(), data.itinerary.trim(), data.location, data.yachtType);
         if (!data.name || !image || !data.launch || !data.hullBody || !data.description || !data.rule || !data.itinerary || !data.location || !data.yachtType) {
-            toast.error("Input Not Empty")
+            toast.error("Please fill in all fields")
         } else {
             if (res && res.data.data === true) {
                 toast.success('Create Successfully');

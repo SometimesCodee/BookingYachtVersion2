@@ -19,8 +19,6 @@ import ModalRoomType from './Modal/ModalRoomType';
 const ManageRoom = () => {
     const [isShowModalRoomImage, setIsShowModalRoomImage] = useState(false);
 
-    const [isShowModalRoomService, setIsShowModalRoomService] = useState(false);
-
     const [isShowModalUpdateRoom, setIsShowModalUpdateRoom] = useState(false);
 
     const [isShowModalCreateRoom, setIsShowModalCreateRoom] = useState(false);
@@ -152,10 +150,6 @@ const ManageRoom = () => {
                 idRoom={idRoom}
             />
 
-            <ModalManageRoomService
-                show={isShowModalRoomService}
-                setIsShowModalRoomService={setIsShowModalRoomService}
-            />
 
             <ModalUpdateRoom
                 show={isShowModalUpdateRoom}

@@ -27,7 +27,7 @@ const ModalUpdateRoomType = (props) => {
 
     const handleUpdateRoomType = async () => {
         if (!price || !type || !utilities) {
-            toast.error("Input Not Empty")
+            toast.error("Please fill in all fields")
         } else {
             let res = await updateRoomType(dataUpdate.idRoomType, price, type, utilities.trim());
             if (res && res.data.data === true) {

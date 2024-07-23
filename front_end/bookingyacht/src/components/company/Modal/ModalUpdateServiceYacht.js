@@ -22,7 +22,7 @@ const ModalUpdateServiceYacht = (props) => {
     const handleUpdateServiceYacht = async () => {
         let res = await upadteServiceYacht(idYacht, serviceUpdate.idService, service.trim(), price);
         if (!service || !price) {
-            toast.error('Input Not Empty')
+            toast.error('Please fill in all fields')
             return;
         } else {
             if (res && res.data.data === true) {

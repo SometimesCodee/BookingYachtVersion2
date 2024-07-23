@@ -232,10 +232,10 @@ export const createRoom = (roomName, area, description, roomType, avatar, idYach
     return axios.post(`/api/companies/room/addRoom/${idYacht}`, data);
 }
 
-export const updateRoom = (roomId, roomName, description, avatar) => {
+export const updateRoom = (roomId, description, roomName, avatar) => {
     const data = new FormData();
-    data.append('roomName', roomName);
     data.append('description', description);
+    data.append('roomName', roomName);
     data.append('avatar', avatar);
 
     return axios.put(`/api/companies/room/updateRoom/${roomId}`, data)

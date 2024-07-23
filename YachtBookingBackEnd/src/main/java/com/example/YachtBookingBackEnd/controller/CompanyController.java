@@ -114,11 +114,12 @@ public class CompanyController {
 
     @PutMapping("/room/updateRoom/{roomId}")
     public ResponseEntity<?> updateRoom(@PathVariable String roomId,
-                                        @RequestParam String roomName,
+
                                         @RequestParam String description,
+                                        @RequestParam String roomName,
                                         @RequestParam MultipartFile avatar){
         DataResponse dataResponse = new DataResponse();
-        dataResponse.setData(iRoom.updateRoom(roomId,roomName, description, avatar));
+        dataResponse.setData(iRoom.updateRoom(roomId,description, roomName, avatar));
         return new ResponseEntity<>(dataResponse, HttpStatus.OK);
 
 

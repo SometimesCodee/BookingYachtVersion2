@@ -4,7 +4,7 @@ import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import { Accordion, Button } from 'react-bootstrap';
-import { createRoomType, deleteRoomType, getAllRoomTypeCompany, updateRoomType } from '../../../services/ApiServices';
+import { createRoomType, deleteRoomType, getAllRoomTypeCompany } from '../../../services/ApiServices';
 import { toast } from 'react-toastify';
 import { GoArrowDown, GoArrowUp } from 'react-icons/go';
 import ReactPaginate from 'react-paginate';
@@ -27,7 +27,7 @@ const ModalRoomType = (props) => {
 
     const handleCreateRoomType = async () => {
         if (price === 0 || !type || !utilities) {
-            toast.error('Input Not Empty')
+            toast.error('Please fill in all fields')
         } else if (price < 0) {
             toast.error('Price not Negative number')
         } else {
@@ -220,11 +220,6 @@ const ModalRoomType = (props) => {
                                 renderOnZeroPageCount={null}
                             />
                         </div>
-                        {/* <ModalCreateRoomType
-                show={isShowModalCreateRoomType}
-                setIsShowModalCreateRoomType={setIsShowModalCreateRoomType}
-                getRoomType={getRoomType}
-            /> */}
 
                         <ModalUpdateRoomType
                             show={isShowModalUpdateRoomType}

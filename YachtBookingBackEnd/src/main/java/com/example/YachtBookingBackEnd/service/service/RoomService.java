@@ -143,6 +143,12 @@ public class RoomService implements IRoom {
             }else {
                 room.setDescription(room.getDescription());
             }
+
+            if(roomName!= null){
+                room.setName(roomName);
+            }else {
+                room.setName(room.getName());
+            }
             iFile.save(avatar);
             room.setAvatar(avatar.getOriginalFilename());
             roomRepository.save(room);

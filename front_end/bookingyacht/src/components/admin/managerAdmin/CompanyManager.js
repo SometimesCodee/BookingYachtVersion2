@@ -6,7 +6,6 @@ import { toast } from 'react-toastify';
 import { fetchCompanies } from '../../../redux/action/AdminAction';
 import './Manager.scss';
 const CompanyManager = () => {
-    const getImageApi = `https://booking18-fzc0ghgvcve8f7fs.eastasia-01.azurewebsites.net/api/customer/file/`
     const dispatch = useDispatch();
     const companies = useSelector(state => state.admin.companies);
 
@@ -480,7 +479,7 @@ const CompanyManager = () => {
                         </Form.Group>
                         <Form.Group controlId='formCompanyLogo'>
                             <Form.Label>Logo</Form.Label>
-                            <img src={logo || `${getImageApi}${companyDetail.logo}`} alt="Company Logo" style={{ width: 200, marginTop: 20 }} />
+                            <img src={logo || `${companyDetail.logo}`} alt="Company Logo" style={{ width: 200, marginTop: 20 }} />
                             <Form.Control
                                 type='file'
                                 onChange={handleFileChange}

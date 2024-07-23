@@ -40,8 +40,6 @@ const YachtList = () => {
         }
     }, [yachtList, currentPage]);
 
-    const avatarYachtApi = 'https://booking18-fzc0ghgvcve8f7fs.eastasia-01.azurewebsites.net/api/customer/file/'
-
     const handelChangePage = (pageNumber) => {
         setCurrentPage(pageNumber)
     }
@@ -99,7 +97,7 @@ const YachtList = () => {
                             return (
                                 <div className="card row" key={yacht.idYacht} onClick={() => { hanldeSelectedYacht(yacht.idYacht) }} style={{ cursor: 'pointer' }}>
                                     <div className="col-md-5">
-                                        <img style={{ height: '250px', width: '100%' }} className="card-img-top object-fit-cover" src={`${avatarYachtApi}${yacht.image}`} alt="Card cap" />
+                                        <img style={{ height: '250px', width: '100%' }} className="card-img-top object-fit-cover" src={`${yacht.image}`} alt="Card cap" />
                                     </div>
                                     <div className="card-body col-md-7">
                                         <div className='card-content'>

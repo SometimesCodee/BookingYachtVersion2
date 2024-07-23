@@ -10,7 +10,6 @@ import { getHighestAndLowestPriceByYacht } from '../../services/ApiServices';
 import '../yacht/FindYacht.scss';
 import './InfoCompany.scss';
 const ProfilePage = () => {
-    const getImageApi = `https://booking18-fzc0ghgvcve8f7fs.eastasia-01.azurewebsites.net/api/customer/file/`
     const { idCompany } = useParams();
     const navigate = useNavigate();
     const [pagging, setPagging] = useState([]);
@@ -74,8 +73,6 @@ const ProfilePage = () => {
         }
     }, [yachtList, currentPage]);
 
-    const avatarYachtApi = 'https://booking18-fzc0ghgvcve8f7fs.eastasia-01.azurewebsites.net/api/customer/file/'
-
     const handelChangePage = (pageNumber) => {
         setCurrentPage(pageNumber)
     }
@@ -104,7 +101,7 @@ const ProfilePage = () => {
                     <Col xs={12} className="text-center cover-photo-container">
                         {company && (
                             <div className="profile-info container">
-                                <Image src={`${getImageApi}${company.logo}`} className="profile-photo" />
+                                <Image src={`${company.logo}`} className="profile-photo" />
                                 <div className="profile-text">
                                     <h2 style={{ fontWeight: 'bold', fontSize: '50px', color: '#0E4F4F', fontFamily: 'Roboto, sans-serif' }}><IoMdBoat />{company.name}</h2>
                                     <p style={{ fontWeight: 'bold' }}><i>Chào mừng bạn đến với du thuyền, điểm đến hàng đầu cho những trải nghiệm du thuyền
@@ -141,7 +138,7 @@ const ProfilePage = () => {
                                             <div className="card row d-flex" key={yacht.idYacht} onClick={() => { hanldeSelectedYacht(yacht.idYacht) }} style={{ cursor: 'pointer', marginTop: '20px' }}>
                                                 <Row>
                                                     <div className="col-md-5">
-                                                        <img style={{ height: '250px', width: '100%', borderRadius: '35px', padding: '15px 0' }} className="card-img-top object-fit-cover" src={`${avatarYachtApi}${yacht.image}`} alt="Card cap" />
+                                                        <img style={{ height: '250px', width: '100%', borderRadius: '35px', padding: '15px 0' }} className="card-img-top object-fit-cover" src={`${yacht.image}`} alt="Card cap" />
                                                     </div>
                                                     <div className="card-body col-md-7">
                                                         <div className='card-content'>

@@ -15,7 +15,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
-@CrossOrigin("*")
+@CrossOrigin("https://yb.sh.io.vn")
 @Configuration
 @EnableWebSecurity
 public class CustomFilterSecurity {
@@ -58,7 +58,7 @@ public class CustomFilterSecurity {
                                 .requestMatchers("/login/**","/mail/**").permitAll() // Cho phép tất cả các yêu cầu đến /login/**
                                 .requestMatchers("/api/admins/**").hasRole("ADMIN") // Chỉ cho phép vai trò ADMIN truy cập /admin/**
                                 .requestMatchers("/api/companies/**").hasRole("COMPANY") // Chỉ cho phép vai trò COMPANY truy cập /company/**
-                                .requestMatchers("/api/customer/payment").hasRole("CUSTOMER")  // Chỉ cho phép vai trò CUSTOMER truy cập /customer/**
+                                // .requestMatchers("/api/customer/payment").hasRole("CUSTOMER")  // Chỉ cho phép vai trò CUSTOMER truy cập /customer/**
                                 .requestMatchers("/api/customer/profile/**").hasRole("CUSTOMER")
                                 .requestMatchers("/api/customer/bookingOrders/**").hasRole("CUSTOMER")
                                 .requestMatchers("/api/customer/bills/**").hasRole("CUSTOMER")

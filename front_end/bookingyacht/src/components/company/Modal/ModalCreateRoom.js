@@ -104,7 +104,6 @@ const ModalCreateRoom = (props) => {
                                 <Form.Label>Room Type</Form.Label>
                                 <Form.Select value={roomType} onChange={event => setRoomType(event.target.value)} >
                                     {
-
                                         listRoomType && listRoomType.map((type) =>
                                             <option key={type.idRoomType} value={type.idRoomType}>{type.utilities}</option>
                                         )

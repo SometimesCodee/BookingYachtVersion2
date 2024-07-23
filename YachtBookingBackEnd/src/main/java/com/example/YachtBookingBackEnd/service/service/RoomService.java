@@ -9,7 +9,6 @@ import com.example.YachtBookingBackEnd.entity.RoomImage;
 import com.example.YachtBookingBackEnd.entity.RoomType;
 import com.example.YachtBookingBackEnd.entity.Yacht;
 import com.example.YachtBookingBackEnd.repository.*;
-import com.example.YachtBookingBackEnd.service.implement.IFile;
 import com.example.YachtBookingBackEnd.service.implement.IRoom;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

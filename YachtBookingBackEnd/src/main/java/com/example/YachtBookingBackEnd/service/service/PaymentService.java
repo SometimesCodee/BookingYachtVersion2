@@ -260,10 +260,11 @@ public class PaymentService implements IPayment {
 
             // Check checksum
             String signValue = vnpayConfig.hashAllFields(fields);
-
             log.info("Received vnp_SecureHash: " + vnp_SecureHash);
             log.info("Calculated signValue: " + signValue);
+
             if (signValue.equals(vnp_SecureHash)) {
+                log.info("Calculated signValue is equals with vnp_SecureHash");
                 // Get data from request
                 String sender = request.getParameter("vnp_BankTranNo");
                 String vnpTxnRef = request.getParameter("vnp_TxnRef");
@@ -340,11 +341,11 @@ public class PaymentService implements IPayment {
                     response.put("Message", "Order not Found");
                 }
             } else {
+                log.error("Calculated signValue is not equals with vnp_SecureHash");
                 response.put("RspCode", "97");
                 response.put("Message", "Invalid Checksum");
             }
 
-            response.put("redirectUrl", "https://yb.sh.io.vn/");
         } catch (Exception e) {
             log.error("Lỗi xử lý callback thanh toán: ", e);
             response.put("RspCode", "99");

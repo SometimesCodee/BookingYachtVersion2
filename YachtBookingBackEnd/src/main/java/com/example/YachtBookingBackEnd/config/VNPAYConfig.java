@@ -81,7 +81,7 @@ public class VNPAYConfig {
         while (itr.hasNext()) {
             String fieldName = (String) itr.next();
             String fieldValue = (String) fields.get(fieldName);
-            if ((fieldValue != null) && (!fieldValue.isEmpty())) {
+            if ((fieldValue != null) && (fieldValue.length() > 0)) {
                 sb.append(fieldName);
                 sb.append("=");
                 sb.append(fieldValue);

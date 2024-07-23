@@ -108,6 +108,17 @@ public class CompanyService implements ICompany {
     public boolean changeExistCompany(String idCompany) {
         Company company = companyRepository.findById(idCompany)
                 .orElseThrow(() -> new RuntimeException("Company not found! Try again"));
+        Account account = accountRepository.findAccountByCompany(company);
+        if (account != null) {
+            if (account.getStatus() == 1) {
+                account.setStatus(0);
+            } else if (account.getStatus() == 0){
+                account.setStatus(1);
+            }
+        } else  {
+            log.error("Can not find account by company");
+            return false;
+        }
         boolean isExist = company.getExist() == 1;
 
         if (isExist) {

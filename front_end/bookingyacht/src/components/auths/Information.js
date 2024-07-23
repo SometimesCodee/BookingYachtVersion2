@@ -20,7 +20,7 @@ const Information = () => {
     const [phoneNumber, setPhoneNumber] = useState('');
     const [address, setAddress] = useState('');
 
-    const { idCustomer } = useParams()
+    const { idAccount } = useParams()
 
     // const phonenumber = (inputtxt) => {
     //     var phoneno = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
@@ -39,7 +39,7 @@ const Information = () => {
             // if (phonenumber(phoneNumber) === false) {
             //     toast.error('Phone Number Start 0 And 10 Number')
             // } else {
-            let res = await fillInformationCustomer(idCustomer, fullName, email, phoneNumber, address);
+            let res = await fillInformationCustomer(idAccount, fullName, email, phoneNumber, address);
             if (res && res.data.data === '1') {
                 toast.error('Invalid Form Email')
             } else if (res && res.data.data === '2') {

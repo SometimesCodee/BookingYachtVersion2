@@ -208,7 +208,7 @@ public class BookingOrderService implements IBookingOrder {
 
         for (BookingOrder bookingOrder : pendingOrders) {
             LocalDateTime bookingTime = bookingOrder.getBookingTime();
-            boolean isOverdue = now.isAfter(bookingTime.plusMinutes(5));
+            boolean isOverdue = now.isAfter(bookingTime.plusMinutes(15));
             boolean isTransactionSuccess = bookingOrder.getTransaction() != null
                     && TRANSACTION_SUCCESS.equals(bookingOrder.getTransaction().getStatus());
             boolean isTransactionFailed = bookingOrder.getTransaction() != null
@@ -251,5 +251,15 @@ public class BookingOrderService implements IBookingOrder {
         }
     }
 
+
+
+//    ================================== Remove VNPAY Version ========================================
+
+
+
+//    @Override
+//    public boolean creteBooking(List<String> selectedRoomIds, List<String> selectedServiceIds, String requirement, String idCustomer, String idSchedule) {
+//
+//    }
 
 }

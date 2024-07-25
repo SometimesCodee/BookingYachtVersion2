@@ -61,7 +61,7 @@ const Layout = () => {
                     } />
                     <Route path='/yacht-rule' element={<YachtRule />} />
                     <Route path='/yacht-question' element={<YachtQuestion />} />
-                    <Route path='/payment-return' element={<PaymentReturn/>}/>
+                    <Route path='/payment-return' element={<PaymentReturn />} />
                 </Route>
 
                 <Route path='/signin' element={<Signin />} />
@@ -72,7 +72,7 @@ const Layout = () => {
                     <Profile />
                 } />
                 <Route path='/forgotpassowd' element={<ForgotPassword />}></Route>
-                <Route path='/information/:idCustomer' element={<Information />} />
+                {/* <Route path='/information/:idCustomer' element={<Information />} /> */}
                 <Route path='/information/:idAccount' element={<Information />} />
                 {/* <Route path='/information-company' element={<InformationCompany />} /> */}
                 <Route path='/verifyOTP/:email' element={<VerifyOTP />} />

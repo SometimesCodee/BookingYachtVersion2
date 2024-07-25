@@ -28,8 +28,10 @@ const ModalUpdateProfile = (props) => {
             setAddress(profile.address);
             setName(profile.name);
             setPreviewImage(profile.logo)
+            setImage(profile.logo)
         }
     }, [profile])
+
     const handelUploadImage = (event) => {
         if (event.target.files[0] && event.target && event.target.files) {
             setPreviewImage(URL.createObjectURL(event.target.files[0]));
@@ -37,8 +39,12 @@ const ModalUpdateProfile = (props) => {
         }
 
     }
+    console.log('image', image)
+
 
     const handleUpdateProfile = async () => {
+        console.log('image2', image)
+
         let res = await updateProfileCompany(idCompany, name.trim(), address.trim(), image)
         if (!name || !address) {
             toast.error("Please fill in all fields")

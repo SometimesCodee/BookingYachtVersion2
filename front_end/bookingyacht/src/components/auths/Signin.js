@@ -28,28 +28,30 @@ const Signin = () => {
     const handleLogin = async () => {
         setLoading(true)
         let res = await login(userName.trim(), password.trim());
-
+        console.log('check', res)
         if (userName === '' || password === '') {
             toast.error('Please fill in all fields');
             setLoading(false);
+        } else if (res === undefined) {
+            toast.error("The Account Has Been Banned By Admin")
         } else if (res && res.data && res.data.data) {
             const role = jwtDecode(res.data.data);
-            
+
             let resAccount = await getIdCustomer(res.data.idAccount);
-            
+
             dispatch(doLogin(res.data.data, role.role, res.data.idCompany ? res.data.idCompany : "", res.data.idCustomer ? res.data.idCustomer : ""))
             if (role && role.role === 'ROLE_COMPANY') {
                 setLoading(false);
-                
-                    toast.success("Login Successful");
-                    navigate(`/manage-company`);
-                
+
+                toast.success("Login Successful");
+                navigate(`/manage-company`);
+
             } else if (role && role.role === 'ROLE_CUSTOMER') {
                 setLoading(false);
-                if(resAccount && resAccount.data && resAccount.data.data === '0'){
+                if (resAccount && resAccount.data && resAccount.data.data === '0') {
                     toast.error("Please Fill Information Before Sign-in")
                     navigate(`/information/${res.data.idAccount}`)
-                }else if(resAccount && resAccount.data && resAccount.data.data !== '0'){
+                } else if (resAccount && resAccount.data && resAccount.data.data !== '0') {
                     toast.success("Login Successful");
                     // navigate(-2);
                 }

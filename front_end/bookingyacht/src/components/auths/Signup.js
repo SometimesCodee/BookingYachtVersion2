@@ -19,20 +19,20 @@ const Signup = () => {
         let res = await registerCustomer(userName.trim(), password.trim());
         console.log('id acc', res)
         if (userName === '' || password === '' || confrimPassword === '') {
-            toast.error('Please fill in all fields')
+            toast.error('Vui Lòng Nhập Đầy Đủ Thông Tin')
         } else if (userName.length < 3) {
-            toast.error('User name must be more than 3 chars')
+            toast.error('Tài Khoản Phải Chứa Ít Nhất 3 Ký Tự')
         } else if (password.length < 8) {
-            toast.error('Password must be at least 8 characters long.')
+            toast.error('Mật Khẩu Phải Chứa Ít Nhất 8 Ký Tự')
         }
         else if (confrimPassword.trim() !== password.trim()) {
-            toast.error('Confirm Passwod Fail');
+            toast.error('Mật Khẩu Xác Nhận Không Khớp');
         }
         else if (res && res.data.data === true) {
-            toast.success('register success')
+            toast.success('Đăng Ký Thành Công')
             navigate(`/information/${res.data.desc}`)
         } else {
-            toast.error('User Name Exits')
+            toast.error('Tài Khoản Đã Tồn Tại')
         }
     }
 
@@ -59,7 +59,7 @@ const Signup = () => {
                                                     <i className="fas fa-envelope fa-lg me-3 fa-fw" />
                                                     <div className="form-outline flex-fill mb-0">
                                                         <input type="text"
-                                                            placeholder='UserName'
+                                                            placeholder='Tài Khoản'
                                                             className="form-control"
                                                             value={userName}
                                                             onKeyDown={e => handleKeyDown(e)}
@@ -71,7 +71,7 @@ const Signup = () => {
                                                     <i className="fas fa-lock fa-lg me-3 fa-fw" />
                                                     <div className="form-outline flex-fill mb-0">
                                                         <input type="password"
-                                                            placeholder='Password'
+                                                            placeholder='Mật Khẩu'
                                                             className="form-control"
                                                             value={password}
                                                             onKeyDown={e => handleKeyDown(e)}
@@ -83,7 +83,7 @@ const Signup = () => {
                                                     <i className="fa-solid fa-key fa-lg me-3"></i>
                                                     <div className="form-outline flex-fill mb-0 mx-1">
                                                         <input type="password"
-                                                            placeholder='Confirm Password'
+                                                            placeholder='Xác Nhận Mật Khẩu'
                                                             className="form-control"
                                                             value={confrimPassword}
                                                             onKeyDown={e => handleKeyDown(e)}

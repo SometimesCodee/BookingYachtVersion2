@@ -1,6 +1,6 @@
 import logo from '../../assets/logo_swp.png';
 import './Auth.scss';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { getIdCustomer, login } from '../../services/ApiServices';
 import { toast } from 'react-toastify';
 import { useNavigate, Link } from 'react-router-dom';
@@ -30,10 +30,10 @@ const Signin = () => {
         let res = await login(userName.trim(), password.trim());
         console.log('check', res)
         if (userName === '' || password === '') {
-            toast.error('Please fill in all fields');
+            toast.error('Vui Lòng Nhập Đầy Đủ Thông Tin');
             setLoading(false);
         } else if (res === undefined) {
-            toast.error("The Account Has Been Banned By Admin")
+            toast.error("Tài Khoản Của Bạn Không Tồn Tại")
         } else if (res && res.data && res.data.data) {
             const role = jwtDecode(res.data.data);
 
@@ -43,21 +43,21 @@ const Signin = () => {
             if (role && role.role === 'ROLE_COMPANY') {
                 setLoading(false);
 
-                toast.success("Login Successful");
+                toast.success("Đăng Nhập Thành Công");
                 navigate(`/manage-company`);
 
             } else if (role && role.role === 'ROLE_CUSTOMER') {
                 setLoading(false);
                 if (resAccount && resAccount.data && resAccount.data.data === '0') {
-                    toast.error("Please Fill Information Before Sign-in")
+                    toast.error("Hãy Điền Thông Tin Của Bạn")
                     navigate(`/information/${res.data.idAccount}`)
                 } else if (resAccount && resAccount.data && resAccount.data.data !== '0') {
-                    toast.success("Login Successful");
+                    toast.success("Đăng Nhập Thành Công");
                     // navigate(-2);
                 }
             }
         } else {
-            toast.error('User Name Or Password Invalid')
+            toast.error('Tài Khoản Hoặc Mật Khẩu Không Đúng')
             setLoading(false);
 
         }

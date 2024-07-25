@@ -34,19 +34,19 @@ const Information = () => {
 
     const handleFillInformation = async () => {
         if (!email || !fullName || !phoneNumber || !address) {
-            toast.error('Please fill in all fields')
+            toast.error('Vui Lòng Nhập Đầy Đủ Thông Tin')
         } else {
             // if (phonenumber(phoneNumber) === false) {
             //     toast.error('Phone Number Start 0 And 10 Number')
             // } else {
             let res = await fillInformationCustomer(idAccount, fullName, email, phoneNumber, address);
             if (res && res.data.data === '1') {
-                toast.error('Invalid Form Email')
+                toast.error('Email Không Tồn Tại')
             } else if (res && res.data.data === '2') {
-                toast.error('Invalid Phone Number')
+                toast.error('Số Điện Thoại Không Tồn Tại')
             } else if (res && res.data.data === '0') {
 
-                toast.success('Fill Information Successfully');
+                toast.success('Điền Thông Tin Thành Công');
                 dispatch(information(email, fullName, phoneNumber, address));
                 setEmail('');
                 setAddress('');
@@ -55,7 +55,7 @@ const Information = () => {
                 navigate('/signin')
 
             } else {
-                toast.error('Fill Information Fail')
+                toast.error('Không Thành Công Kiểm Tra Lại Thông Tin Của Bạn')
             }
         }
     }
@@ -78,7 +78,7 @@ const Information = () => {
                     </Form.Group>
 
                     <Form.Group as={Col} controlId="formGridPassword">
-                        <Form.Label>FullName</Form.Label>
+                        <Form.Label>Họ Và Tên</Form.Label>
                         <Form.Control
                             type="text"
                             placeholder="FullName"
@@ -91,7 +91,7 @@ const Information = () => {
 
                 <Row className="mb-3">
                     <Form.Group as={Col} controlId="formGridCity">
-                        <Form.Label>PhoneNumber</Form.Label>
+                        <Form.Label>Số Điện Thoại</Form.Label>
                         <Form.Control
                             type='text'
                             placeholder='Start With 0 and 10 Number'
@@ -101,7 +101,7 @@ const Information = () => {
 
 
                     <Form.Group as={Col} controlId="formGridZip">
-                        <Form.Label>Address</Form.Label>
+                        <Form.Label>Địa Chỉ</Form.Label>
                         <Form.Control
                             type='text'
                             placeholder='Address'
@@ -116,7 +116,7 @@ const Information = () => {
                     <Button
                         variant="primary"
                         onClick={() => handleFillInformation()}>
-                        Submit
+                        Gửi
                     </Button>
                 </div>
 

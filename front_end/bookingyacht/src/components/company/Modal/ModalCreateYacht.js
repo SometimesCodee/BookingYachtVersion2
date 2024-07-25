@@ -8,13 +8,14 @@ import { FcPlus } from "react-icons/fc";
 import { createYacht, getYachtType } from '../../../services/ApiServices';
 import { toast } from 'react-toastify';
 import _ from 'lodash';
+import { useSelector } from 'react-redux';
 
 const ModalCreateYacht = (props) => {
-    const { show, setShow, idCompany, location } = props;
+    const { show, setShow, location } = props;
     const [image, setImage] = useState("");
     const [previewImage, setPreviewImage] = useState("");
     const [yachtType, setYachtType] = useState([]);
-
+    const idCompany = useSelector(state => state.account.account.idCompany)
 
     const initInforYacht = {
         name: '',
@@ -64,11 +65,16 @@ const ModalCreateYacht = (props) => {
     }
 
     const handelUploadImage = (event) => {
+
         if (event.target.files[0] && event.target && event.target.files) {
             setPreviewImage(URL.createObjectURL(event.target.files[0]));
             setImage(event.target.files[0]);
         }
     }
+
+    console.log('location', data.location);
+    console.log('type', data.yachtType);
+
     const handleCreateYacht = async () => {
         let res = await createYacht(idCompany, data.name.trim(), image, data.launch, data.hullBody.trim(), data.description.trim(), data.rule.trim(), data.itinerary.trim(), data.location, data.yachtType);
         if (!data.name || !image || !data.launch || !data.hullBody || !data.description || !data.rule || !data.itinerary || !data.location || !data.yachtType) {

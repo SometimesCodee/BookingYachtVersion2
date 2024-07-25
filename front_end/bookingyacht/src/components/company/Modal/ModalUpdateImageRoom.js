@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import { Button } from 'react-bootstrap'
 import { FcPlus } from "react-icons/fc";
@@ -14,6 +14,9 @@ const ModalUpdateImageRoom = (props) => {
         setImage('');
         setPreviewImage('');
     }
+    useEffect(() => {
+        setPreviewImage(imageUpdate)
+    }, [imageUpdate])
 
     const handelUpdateImageRoom = (event) => {
         if (event.target.files[0] && event.target && event.target.files) {

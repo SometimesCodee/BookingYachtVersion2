@@ -181,7 +181,7 @@ public class PaymentService implements IPayment {
         // Parse vnp_PayDate using DateTimeFormatter
         String vnpPayDateStr = vnp_CreateDate;
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
-        LocalDateTime vnpPayDateFormat = LocalDateTime.parse(vnpPayDateStr, dateTimeFormatter);
+        LocalDateTime vnpPayDateFormat = LocalDateTime.parse(vnpPayDateStr, dateTimeFormatter).plusHours(7);
 
         transaction.setTransactionDate(vnpPayDateFormat);
         transaction.setStatus("Pending");

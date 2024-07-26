@@ -6,7 +6,6 @@ import { TbMeterSquare } from "react-icons/tb";
 import ReactPaginate from 'react-paginate';
 import { NavLink, useParams } from 'react-router-dom';
 import ModalManageRoomImage from './Modal/ModalManageRoomImage';
-import ModalManageRoomService from './Modal/ModalManageRoomService';
 import ModalUpdateRoom from './Modal/ModalUpdateRoom';
 import { getAllRoomByYacht, getAllRoomTypeCompany } from '../../services/ApiServices';
 import { toast } from 'react-toastify';

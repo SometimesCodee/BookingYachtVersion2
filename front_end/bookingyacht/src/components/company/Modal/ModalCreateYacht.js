@@ -8,9 +8,11 @@ import { FcPlus } from "react-icons/fc";
 import { createYacht, getYachtType } from '../../../services/ApiServices';
 import { toast } from 'react-toastify';
 import _ from 'lodash';
+import { useSelector } from 'react-redux';
 
 const ModalCreateYacht = (props) => {
-    const { show, setShow, idCompany, location } = props;
+    const { show, setShow, location } = props;
+    const idCompany = useSelector(state => state.account.account.idCompany)
     const [image, setImage] = useState("");
     const [previewImage, setPreviewImage] = useState("");
     const [yachtType, setYachtType] = useState([]);

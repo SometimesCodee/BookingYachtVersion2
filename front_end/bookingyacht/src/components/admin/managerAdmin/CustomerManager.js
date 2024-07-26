@@ -15,6 +15,7 @@ const CustomerManager = () => {
     const [showModal, setShowModal] = useState(false);
     const [searchName, setSearchName] = useState("");
     const [searchEmail, setSearchEmail] = useState("");
+    const [searchId, setSearchId] = useState("");
     const [searchPhone, setSearchPhone] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
     const [paging, setPaging] = useState([]);
@@ -42,19 +43,25 @@ const CustomerManager = () => {
 
     const handleSearchByName = value => {
         setSearchName(value);
-        filterCustomers(value, searchEmail, searchPhone);
+        filterCustomers(value, searchEmail, searchId, searchPhone);
         setCurrentPage(1);
     };
 
     const handleSearchByEmail = value => {
         setSearchEmail(value);
-        filterCustomers(searchName, value, searchPhone);
+        filterCustomers(searchName, value, searchId, searchPhone);
         setCurrentPage(1);
     };
 
+    const handleSearchById = value => {
+        setSearchId(value);
+        filterCustomers(searchName, searchEmail, value, searchPhone);
+        setCurrentPage(1);
+    };
+    
     const handleSearchByPhone = value => {
         setSearchPhone(value);
-        filterCustomers(searchName, searchEmail, value);
+        filterCustomers(searchName, searchEmail, searchId, value);
         setCurrentPage(1);
     };
 

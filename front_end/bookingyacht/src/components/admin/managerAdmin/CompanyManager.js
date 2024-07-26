@@ -49,6 +49,7 @@ const CompanyManager = () => {
 
     const [searchName, setSearchName] = useState('');
     const [searchEmail, setSearchEmail] = useState('');
+    const [searchId, setSearchId] = useState('');
 
     const [currentPage, setCurrentPage] = useState(1);
     const [paging, setPaging] = useState([]);
@@ -96,8 +97,14 @@ const CompanyManager = () => {
     // Hàm tìm kiếm khách hàng theo tên
     const handleSearchByEmail = value => {
         setSearchEmail(value);
-        filterCompanies(searchName, value)
+        filterCompanies(searchName, value, searchId)
 
+        setCurrentPage(1);
+    };
+    
+    const handleSearchById = value => {
+        setSearchId(value);
+        filterCompanies(searchName, searchEmail, value);
         setCurrentPage(1);
     };
 

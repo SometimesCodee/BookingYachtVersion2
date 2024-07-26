@@ -58,7 +58,7 @@ public class PaymentService implements IPayment {
 
         // Create a new booking order
         BookingOrder bookingOrder = new BookingOrder();
-        bookingOrder.setBookingTime(LocalDateTime.now());
+        bookingOrder.setBookingTime(LocalDateTime.now().plusHours(7));
         bookingOrder.setRequirement(requirement);
         bookingOrder.setStatus(DEFAULT_STATUS);
 

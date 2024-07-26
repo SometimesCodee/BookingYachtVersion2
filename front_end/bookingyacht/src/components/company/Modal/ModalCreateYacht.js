@@ -64,6 +64,7 @@ const ModalCreateYacht = (props) => {
         )
 
     }
+    console.log('data', data)
 
     const handelUploadImage = (event) => {
         if (event.target.files[0] && event.target && event.target.files) {
@@ -72,6 +73,7 @@ const ModalCreateYacht = (props) => {
         }
     }
     const handleCreateYacht = async () => {
+        console.log('data', data)
         if (!data.name || !image || !data.launch || !data.hullBody || !data.description || !data.rule || !data.itinerary || !data.location || !data.yachtType) {
             toast.error("Please fill in all fields")
         } else {

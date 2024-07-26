@@ -15,7 +15,6 @@ const CustomerManager = () => {
     const [showModal, setShowModal] = useState(false);
     const [searchName, setSearchName] = useState("");
     const [searchEmail, setSearchEmail] = useState("");
-    const [searchId, setSearchId] = useState("");
     const [searchPhone, setSearchPhone] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
     const [paging, setPaging] = useState([]);
@@ -43,25 +42,19 @@ const CustomerManager = () => {
 
     const handleSearchByName = value => {
         setSearchName(value);
-        filterCustomers(value, searchEmail, searchId, searchPhone);
+        filterCustomers(value, searchEmail, searchPhone);
         setCurrentPage(1);
     };
 
     const handleSearchByEmail = value => {
         setSearchEmail(value);
-        filterCustomers(searchName, value, searchId, searchPhone);
-        setCurrentPage(1);
-    };
-
-    const handleSearchById = value => {
-        setSearchId(value);
-        filterCustomers(searchName, searchEmail, value, searchPhone);
+        filterCustomers(searchName, value, searchPhone);
         setCurrentPage(1);
     };
 
     const handleSearchByPhone = value => {
         setSearchPhone(value);
-        filterCustomers(searchName, searchEmail, searchId, value);
+        filterCustomers(searchName, searchEmail, value);
         setCurrentPage(1);
     };
 
@@ -95,10 +88,10 @@ const CustomerManager = () => {
                 },
             };
             await axios(config);
-            toast.success('Customer hidden successfully.');
+            toast.success('Vô hiệu hóa người dùng thành công.');
             dispatch(fetchCustomers());
         } catch (error) {
-            toast.error('Failed to hide customer. Please try again.');
+            toast.error('Vô hiệu hóa không thành công. Please try again.');
         } finally {
             setShowConfirmModal(false);
             setSelectedCustomer(null);
@@ -143,22 +136,12 @@ const CustomerManager = () => {
     return (
         <div className="container mt-5">
             <div>
-                <h1>Admin Manager</h1>
+                <h1 style={{ fontWeight: 'bold' }}>Admin Manager</h1>
                 <h2>Customer Accounts</h2>
             </div>
             <div className="d-flex mb-3">
-                <div style={{ marginRight: '50px' }}>
-                    <label>Tìm kiếm theo Id</label>
-                    <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Search customer by ID"
-                        value={searchId}
-                        onChange={e => handleSearchById(e.target.value)}
-                    />
-                </div>
                 <div>
-                    <label>Tìm kiếm theo phone</label>
+                    <label>Tìm Kiếm Theo SDT</label>
                     <input
                         type="text"
                         className="form-control"
@@ -170,7 +153,7 @@ const CustomerManager = () => {
             </div>
             <div className="d-flex mb-3">
                 <div style={{ marginRight: '50px' }}>
-                    <label>Tìm kiếm theo tên</label>
+                    <label>Tìm Kiếm Theo Tên</label>
                     <input
                         type="text"
                         className="form-control"
@@ -180,7 +163,7 @@ const CustomerManager = () => {
                     />
                 </div>
                 <div>
-                    <label>Tìm kiếm theo email</label>
+                    <label>Tìm Kiếm Theo Email</label>
                     <input
                         type="text"
                         className="form-control"
@@ -194,24 +177,20 @@ const CustomerManager = () => {
             <Table striped bordered hover>
                 <thead>
                     <tr>
-                        <th onClick={() => handleSortChange('idCustomer')}>
-                            ID {sortConfig.key === 'idCustomer' ? (sortConfig.direction === 'asc' ? <FaSortUp /> : <FaSortDown />) : <FaSort />}
-                        </th>
-                        <th onClick={() => handleSortChange('fullName')}>
+                        <th onClick={() => handleSortChange('fullName')} style={{ textAlign: 'center' }}>
                             Họ Và Tên {sortConfig.key === 'fullName' ? (sortConfig.direction === 'asc' ? <FaSortUp /> : <FaSortDown />) : <FaSort />}
                         </th>
-                        <th onClick={() => handleSortChange('email')}>
+                        <th onClick={() => handleSortChange('email')} style={{ textAlign: 'center' }}>
                             Email {sortConfig.key === 'email' ? (sortConfig.direction === 'asc' ? <FaSortUp /> : <FaSortDown />) : <FaSort />}
                         </th>
-                        <th>Số Điện Thoại</th>
-                        <th>Địa chỉ</th>
-                        <th>Hành Động</th>
+                        <th style={{ textAlign: 'center' }}>Số Điện Thoại</th>
+                        <th style={{ textAlign: 'center' }}>Địa chỉ</th>
+                        <th style={{ textAlign: 'center' }}>Hành Động</th>
                     </tr>
                 </thead>
                 <tbody>
                     {pagedCustomers.map(customer => (
                         <tr key={customer.idCustomer}>
-                            <td>{customer.idCustomer}</td>
                             <td>{customer.fullName}</td>
                             <td>{customer.email}</td>
                             <td>{customer.phone}</td>

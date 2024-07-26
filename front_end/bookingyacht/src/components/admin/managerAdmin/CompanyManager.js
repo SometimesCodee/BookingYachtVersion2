@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { Button, Dropdown, DropdownButton, Form, Modal, Table } from 'react-bootstrap';
+import { Button, Form, Modal, Table } from 'react-bootstrap';
+import { FaSort, FaSortDown, FaSortUp } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { fetchCompanies } from '../../../redux/action/AdminAction';
@@ -26,7 +27,7 @@ const CompanyManager = () => {
     })
 
     const [logo, setLogo] = useState(null);
-
+    const [sortConfig, setSortConfig] = useState({ key: 'idCompany', direction: 'asc' });
     useEffect(() => {
         if (companyDetail.logo) {
             const reader = new FileReader();
@@ -48,7 +49,6 @@ const CompanyManager = () => {
 
     const [searchName, setSearchName] = useState('');
     const [searchEmail, setSearchEmail] = useState('');
-    const [searchId, setSearchId] = useState('');
 
     const [currentPage, setCurrentPage] = useState(1);
     const [paging, setPaging] = useState([]);
@@ -88,7 +88,7 @@ const CompanyManager = () => {
 
     const handleSearchByName = value => {
         setSearchName(value);
-        filterCompanies(value, searchEmail, searchId)
+        filterCompanies(value, searchEmail)
 
         setCurrentPage(1);
     };
@@ -96,17 +96,10 @@ const CompanyManager = () => {
     // Hàm tìm kiếm khách hàng theo tên
     const handleSearchByEmail = value => {
         setSearchEmail(value);
-        filterCompanies(searchName, value, searchId)
+        filterCompanies(searchName, value)
 
         setCurrentPage(1);
     };
-
-    const handleSearchById = value => {
-        setSearchId(value);
-        filterCompanies(searchName, searchEmail, value);
-        setCurrentPage(1);
-    };
-
 
     //Hàm tạo tài khoản cho company
     const handleCreateCompany = async event => {
@@ -144,7 +137,7 @@ const CompanyManager = () => {
             };
             const response = await axios(config);
             if (response.data.data) {
-                toast.success('Company created successfully.')
+                toast.success('Tạo tài khoản công ty thành công.')
                 fetchCompanies();
                 setNewAccountId(response.data.idAccount)
                 setShowInfoDetailModal(true)
@@ -177,15 +170,14 @@ const CompanyManager = () => {
                 url: `https://booking18-fzc0ghgvcve8f7fs.eastasia-01.azurewebsites.net/api/admins/accounts/${newAccountId}`,
                 headers: {
                     'Authorization': getAuthHeader(),
-                    // 'Content-Type': 'multipart/form-data'
                 },
                 data: data
             };
             const response = await axios(config);
             if (response.data.data === false) {
-                toast.error('Adding information failed, this email may already exist!')
+                toast.error('Thêm thông tin không thành công, email này có thể đã tồn tại !')
             } else {
-                toast.success('Company details added successfully.');
+                toast.success('Bạn vừa tạo một công ty thành công.');
                 setShowInfoDetailModal(false);
                 dispatch(fetchCompanies());
 
@@ -201,7 +193,7 @@ const CompanyManager = () => {
             }
 
         } catch (error) {
-            toast.error('Created infomation company false');
+            toast.error('Tạo công ty không thành công');
         }
     }
 
@@ -229,10 +221,10 @@ const CompanyManager = () => {
                 },
             };
             await axios(config);
-            toast.success('Company hidden successfully.');
+            toast.success('Thao tác thành công.');
             dispatch(fetchCompanies())
         } catch (error) {
-            toast.error('Failed to hide company. Please try again.');
+            toast.error('Công ty này đã bị ẩn không thành công. Please try again.');
         } finally {
             setShowConfirmModal(false);
             setSelectedCompany(null);
@@ -249,29 +241,27 @@ const CompanyManager = () => {
     };
 
     // Hàm thay đổi tùy chọn sắp xếp
-    const handleSortChange = (key, direction) => {
+    const handleSortChange = (key) => {
+        const direction = sortConfig.key === key && sortConfig.direction === 'asc' ? 'desc' : 'asc';
         sortCompanys(key, direction);
+        setSortConfig({ key, direction });
     }
 
     // Hàm sắp xếp khách hàng theo khóa và hướng
     const sortCompanys = (key, direction) => {
-        const sortedCustomers = [...filteredCompanies].sort((a, b) => {
+        const sortedCompanies = [...filteredCompanies].sort((a, b) => {
             if (key === 'idCompany') {
-                return direction === 'asc'
-                    ? a[key] - b[key]
-                    : b[key] - a[key];
+                return direction === 'asc' ? a[key] - b[key] : b[key] - a[key];
             } else {
-                if (a[key].toLowerCase() < b[key].toLowerCase()) {
-                    return direction === 'asc' ? -1 : 1;
-                }
-                if (a[key].toLowerCase() > b[key].toLowerCase()) {
-                    return direction === 'asc' ? 1 : -1;
-                }
-                return 0;
+                const aValue = a[key] || '';
+                const bValue = b[key] || '';
+                return direction === 'asc'
+                    ? aValue.localeCompare(bValue)
+                    : bValue.localeCompare(aValue);
             }
         });
 
-        setFilteredCompanies(sortedCustomers);
+        setFilteredCompanies(sortedCompanies);
         setCurrentPage(1);
     };
 
@@ -287,23 +277,11 @@ const CompanyManager = () => {
 
     return (
         <div className="container mt-5">
-            <h1>Admin Manager</h1>
+            <h1 style={{ fontWeight: 'bold' }}>Admin Manager</h1>
             <h2>Company Accounts</h2>
             <div className="d-flex mb-3">
                 <div style={{ marginRight: '50px' }}>
-                    <label>Tìm kiếm theo Id</label>
-                    <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Search companies by ID"
-                        value={searchId}
-                        onChange={e => handleSearchById(e.target.value)}
-                    />
-                </div>
-            </div>
-            <div className="d-flex mb-3">
-                <div style={{ marginRight: '50px' }}>
-                    <label>Tìm kiếm theo tên</label>
+                    <label>Tìm Kiếm Theo Tên</label>
                     <input
                         type="text"
                         className="form-control"
@@ -313,7 +291,7 @@ const CompanyManager = () => {
                     />
                 </div>
                 <div>
-                    <label>Tìm kiếm theo email</label>
+                    <label>Tìm Kiếm Theo Email</label>
                     <input
                         type="text"
                         className="form-control"
@@ -323,35 +301,24 @@ const CompanyManager = () => {
                     />
                 </div>
             </div>
-            <div className='mb-3'>
-                <div className='row'>
-                    <div className='col d-flex justify-content-between'>
-                        <DropdownButton id="dropdown-basic-button" title="Sắp xếp" variant='dark'>
-                            <Dropdown.Item onClick={() => handleSortChange('idCompany', 'asc')}>ID tăng dần</Dropdown.Item>
-                            <Dropdown.Item onClick={() => handleSortChange('idCompany', 'desc')}>ID giảm dần</Dropdown.Item>
-                            <Dropdown.Item onClick={() => handleSortChange('name', 'asc')}>Tên tăng dần</Dropdown.Item>
-                            <Dropdown.Item onClick={() => handleSortChange('name', 'desc')}>Tên giảm dần</Dropdown.Item>
-                        </DropdownButton>
-                        <Button variant="success" onClick={() => setShowCompanyModal(true)} className="ml-2">Tạo Tài Khoản</Button>
-                    </div>
-                </div>
-            </div>
-
+            <Button variant="success" onClick={() => setShowCompanyModal(true)} className="ml-2 mt-2 mb-2">Tạo Tài Khoản</Button>
             <Table striped bordered hover responsive>
                 <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>Họ Và Tên</th>
-                        <th>Địa Chỉ</th>
-                        <th>Email</th>
-                        <th>Trạng Thái</th>
-                        <th>Hành Động</th>
+                        <th onClick={() => handleSortChange('name')} style={{ textAlign: 'center' }}>
+                            Họ Và Tên {sortConfig.key === 'name' ? (sortConfig.direction === 'asc' ? <FaSortUp /> : <FaSortDown />) : <FaSort />}
+                        </th>
+                        <th style={{ textAlign: 'center' }}>Địa Chỉ</th>
+                        <th onClick={() => handleSortChange('email')} style={{ textAlign: 'center' }}>
+                            Email {sortConfig.key === 'email' ? (sortConfig.direction === 'asc' ? <FaSortUp /> : <FaSortDown />) : <FaSort />}
+                        </th>
+                        <th style={{ textAlign: 'center' }}>Trạng Thái</th>
+                        <th style={{ textAlign: 'center' }}>Hành Động</th>
                     </tr>
                 </thead>
                 <tbody>
                     {pagedCompany.map(company => (
                         <tr key={company.idCompany}>
-                            <td>{company.idCompany}</td>
                             <td>{company.name}</td>
                             <td>{company.address}</td>
                             <td>{company.email}</td>
@@ -412,7 +379,7 @@ const CompanyManager = () => {
                             <Form.Control type='password' placeholder="Confirm password" name="confirmPassword" required />
                         </Form.Group>
                         {createAccountMessage && <p className="text-danger">{createAccountMessage}</p>}
-                        <Button variant="dark" type="submit">
+                        <Button variant="dark" type="submit" className='mt-2 mb-2'>
                             Create
                         </Button>
                     </Form>
@@ -430,7 +397,6 @@ const CompanyManager = () => {
                             <p><strong>Username:</strong> {selectedCompany.accountDTO.username}</p>
                             <p><strong>Password:</strong> {selectedCompany.accountDTO.password}</p>
                             <p><strong>Role:</strong> {selectedCompany.accountDTO.role}</p>
-                            {/* Add other company details here */}
                         </>
                     )}
                 </Modal.Body>
@@ -486,7 +452,7 @@ const CompanyManager = () => {
                                 required
                             />
                         </Form.Group>
-                        <Button variant='dark' type='submit'>
+                        <Button variant='dark' type='submit' className='mt-2 mb-2'>
                             Insert
                         </Button>
                     </Form>
@@ -498,8 +464,8 @@ const CompanyManager = () => {
                 </Modal.Header>
                 <Modal.Body>
                     {selectedCompany?.exist
-                        ? 'Are you sure you want to hide this company?'
-                        : 'Are you sure you want to unhide this company?'}
+                        ? 'Bạn có chắc chắn muốn ẩn công ty này không?'
+                        : 'Bạn có chắc chắn muốn bỏ ẩn công ty này không?'}
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant='secondary' onClick={() => setShowConfirmModal(false)}>

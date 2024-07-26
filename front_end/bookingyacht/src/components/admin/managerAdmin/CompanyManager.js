@@ -89,7 +89,7 @@ const CompanyManager = () => {
 
     const handleSearchByName = value => {
         setSearchName(value);
-        filterCompanies(value, searchEmail)
+        filterCompanies(value, searchEmail, searchId)
 
         setCurrentPage(1);
     };
@@ -101,7 +101,7 @@ const CompanyManager = () => {
 
         setCurrentPage(1);
     };
-    
+
     const handleSearchById = value => {
         setSearchId(value);
         filterCompanies(searchName, searchEmail, value);

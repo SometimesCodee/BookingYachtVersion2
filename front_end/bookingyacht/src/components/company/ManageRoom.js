@@ -48,7 +48,7 @@ const ManageRoom = () => {
         getAllRoom();
         fetchRoomType()
 
-    }, [])
+    }, [isShowModalCreateRoom])
 
     useEffect(() => {
         filterAndPaginateRoom();

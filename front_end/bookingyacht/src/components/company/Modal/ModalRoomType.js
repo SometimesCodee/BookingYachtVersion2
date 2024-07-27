@@ -31,13 +31,18 @@ const ModalRoomType = (props) => {
         } else if (price < 0) {
             toast.error('Price not Negative number')
         } else {
-            let res = await createRoomType(price, type.trim(), utilities.trim(), idYacht);
-            if (res && res.data.data === true) {
-                toast.success('Create Successfully')
-                getRoomType()
-                handleClose()
+            if (roomType.find(t => t.type === type.trim())) {
+                toast.error('Room Type Is Exits');
+                return;
             } else {
-                toast.error('Create Fail')
+                let res = await createRoomType(price, type.trim(), utilities.trim(), idYacht);
+                if (res && res.data.data === true) {
+                    toast.success('Create Successfully')
+                    await getRoomType()
+                    handleClose()
+                } else {
+                    toast.error('Create Fail')
+                }
             }
         }
     }
@@ -84,7 +89,6 @@ const ModalRoomType = (props) => {
         }
 
     }
-
 
     const handleSortByPriceDown = () => {
         const newList = [...roomType].sort((a, b) => a.price - b.price);

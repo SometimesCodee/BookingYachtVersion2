@@ -9,7 +9,6 @@ import './Company.scss'
 import { FaCirclePlus } from "react-icons/fa6";
 import ModalCreateYacht from './Modal/ModalCreateYacht';
 import { deleteYacht, getAllLocation, getYachtByIdCompany, getYachtType } from '../../services/ApiServices';
-import _ from 'lodash';
 import Form from 'react-bootstrap/Form';
 import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
@@ -59,7 +58,7 @@ const ViewYacht = () => {
         if (confirm) {
             let res = await deleteYacht(id);
             if (res.data.data === true) {
-                toast.success('Delete Successfully');
+                toast.success('Successfully');
                 listYacht();
                 setCurrentPage(prevPage => {
                     const maxPage = Math.ceil((yacht.length - 1) / itemsPerPage) - 1;

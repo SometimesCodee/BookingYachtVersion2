@@ -50,14 +50,15 @@ const BookingOrderHistory = () => {
     }
 
     const handleCancelBooking = async () => {
-        let res = await cancelBookingByCustomer(idCustomer, selectedBooking.idBooking, cancelReason || null)
-
-        if (res && res.data.data) {
-            getBookingOrder()
-            setShowModalCancel(false);
-            toast.success("Hủy đặt chỗ thành công");
-        } else {
-            toast.error("Hủy đặt chỗ thất bại");
+        try{
+            const response = await cancelBookingByCustomer(idCustomer, selectedBooking.idBooking, cancelReason)
+            if(response.data.data === false){
+                toast.success('Cancel Booking Successfully')
+                getBookingOrder()
+                setShowModalCancel(false);
+            }
+        }catch(error){
+            toast.error('Cancel Booking Fail')
         }
     }
 
@@ -98,10 +99,10 @@ const BookingOrderHistory = () => {
 
     return (
         <div className="container">
-            <h2 className='text-center mt-4 mb-5'>Lịch Sử Đặt Chỗ</h2>
+            <h1>Lịch Sử Đặt Chỗ</h1>
             <div>
                 {slicedBooking && slicedBooking.length > 0 && slicedBooking.map(bookingOrder => (
-                    <div key={bookingOrder.idBooking} className="card mb-3 p-4" style={{ boxShadow: ' 1px 8px 8px 3px rgba(0.3, 0.5, 150, 0.4)', backgroundColor: 'whitesmoke' }}>
+                    <div key={bookingOrder.idBooking} className="card mb-3" style={{ boxShadow: ' 0 4px 8px 0 rgba(0, 0, 255, 0.2)' }}>
                         <div className='card-body'>
                             <div className="row align-items-center">
                                 <div className="col-11">
@@ -128,12 +129,12 @@ const BookingOrderHistory = () => {
                                 <div className="col-12">
                                     <p className="card-text">
                                         <strong>Trạng thái:</strong>
-                                        <strong style={{
-                                            color: bookingOrder.status === 'Pending' ? 'orange' :
+                                        <span style={{
+                                            color: bookingOrder.status === 'Pending' ? 'gray' :
                                                 (bookingOrder.status === 'Confirmed' ? 'green' :
                                                     (bookingOrder.status === 'Cancelled' ? 'red' : 'black'))
                                         }}> {bookingOrder.status}
-                                        </strong>
+                                        </span>
                                     </p>
                                 </div>
                             </div>

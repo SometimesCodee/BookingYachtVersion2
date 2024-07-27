@@ -10,8 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ScheduleService implements ISchedule {
@@ -37,6 +39,13 @@ public class ScheduleService implements ISchedule {
         }catch (Exception e){
             System.out.println("error get all schedule "+e.getMessage());
         }
+
+
+        // Sort by startDate using streams
+        scheduleDTOList = scheduleDTOList.stream()
+                .sorted(Comparator.comparing(ScheduleDTO::getStartDate))
+                .collect(Collectors.toList());
+
         return scheduleDTOList;
     }
 

@@ -57,6 +57,6 @@ public class BookingOrder {
     private Set<BookingService> bookingServiceSet;
 
     //add thêm
-    @Column(name = "txn_ref", unique = true, nullable = false) // Thêm trường txn_ref
+    @Column(name = "txn_ref", unique = true) // Thêm trường txn_ref
     private String txnRef;
 }

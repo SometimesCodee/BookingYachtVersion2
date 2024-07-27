@@ -85,7 +85,7 @@ public class CustomerService implements ICustomer {
             customerRepository.save(customer);
             return "0";
         } catch (Exception e) {
-            log.error("Error occurred while adding customer: {}", e.getMessage());
+            log.error("Errooccurredr  while adding customer: {}", e.getMessage());
             return "Error occurred while adding customer: " + e.getMessage();
         }
     }
@@ -142,7 +142,7 @@ public class CustomerService implements ICustomer {
             accountDTO.setUsername(customer.get().getAccount().getUsername());
             accountDTO.setPassword(customer.get().getAccount().getPassword());
             accountDTO.setPassword(customer.get().getAccount().getRole());
-
+            accountDTO.setStatus(customer.get().getAccount().getStatus());
             customerDTO.setAccountDTO(accountDTO);
         }
         return customerDTO;
@@ -165,6 +165,7 @@ public class CustomerService implements ICustomer {
             customerDTO.setAddress(customer.getAddress());
             accountDTO.setIdAccount(account.getIdAccount());
             accountDTO.setUsername(username);
+            accountDTO.setStatus(account.getStatus());
             accountDTO.setPassword(account.getPassword());
             accountDTO.setRole(account.getRole());
             customerDTO.setAccountDTO(accountDTO);
@@ -321,7 +322,11 @@ public class CustomerService implements ICustomer {
                 .orElseThrow(() -> new IllegalArgumentException("Invalid account ID"));
 
         if(account != null){
-            account.setStatus(0);
+            if(customer.getAccountDTO().getStatus() == 1){
+                account.setStatus(0);
+            }else if(customer.getAccountDTO().getStatus() == 0){
+                account.setStatus(1);
+            }
             accountRepository.save(account);
             return true;
         }

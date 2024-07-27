@@ -34,10 +34,9 @@ import ChangePassword1 from './components/auths/ChangePassword1';
 import VerifyOTP from './components/auths/VerifyOTP';
 import ManageSchedule from './components/company/ManageSchedule';
 import ManageServiceYacht from './components/company/ManageServiceYacht';
-import PaymentReturn from './components/home/PaymentReturn';
 import Page404 from './components/page404/Page404';
-import ProtectedHomepage from './components/routers/ProtectedHomepage';
 import ProtectedRoute from './components/routers/ProtectedRoute';
+import PaymentReturn from './components/home/PaymentReturn';
 
 const Layout = () => {
     const { role } = useSelector((state) => state.loginAdmin);
@@ -110,7 +109,7 @@ const Layout = () => {
 
             <ToastContainer
                 position="top-right"
-                autoClose={15000}
+                autoClose={5000}
                 hideProgressBar={false}
                 newestOnTop={false}
                 closeOnClick

@@ -20,10 +20,10 @@ public class Customer {
     @Column(name = "full_name", length = 50)
     private String fullName;
 
-    @Column(name = "email", length = 50)
+    @Column(name = "email", length = 50, unique = true)
     private String email;
 
-    @Column(name = "phone_number", length = 20)
+    @Column(name = "phone_number", length = 20, unique = true)
     private String phoneNumber;
 
     @Column(name = "address")

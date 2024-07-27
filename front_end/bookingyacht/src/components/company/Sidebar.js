@@ -19,8 +19,6 @@ import { doLogout } from '../../redux/action/UserAction';
 const Sidebar = (props) => {
     const { collapsed, toggled, handleToggleSidebar } = props;
 
-    const { idCompany } = useParams();
-
     const dispatch = useDispatch();
 
     const handleLogout = () => {
@@ -73,7 +71,6 @@ const Sidebar = (props) => {
                     <Menu iconShape="circle">
                         <MenuItem
                             icon={<ImProfile />}
-                            idCompany={idCompany}
                         >
                             Profile
                             <Link to='/manage-company/profile' />

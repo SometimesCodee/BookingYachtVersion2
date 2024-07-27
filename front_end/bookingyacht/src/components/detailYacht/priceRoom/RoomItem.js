@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { FormCheck } from 'react-bootstrap';
 import { MdOutlineBedroomParent, MdOutlinePerson } from "react-icons/md";
-import ServiceSelection from './ServiceSelection';
 import './form-sel.scss';
 
 const RoomItem = ({ room, handleDetail, handleRoomSelect, isSelected, services, selectedServices, handleServiceChange }) => {
@@ -14,7 +13,7 @@ const RoomItem = ({ room, handleDetail, handleRoomSelect, isSelected, services, 
         setIsChecked(newState);
         handleRoomSelect(room, newState); // Pass the room object and new state to the parent component
     };
-    // const getAvatarApi = `http://localhost:8080/api/customer/file/`
+
     return (
         <div key={room.idRoom} className="my-3 p-3 border form-sel">
             <div className="row align-items-center">
@@ -44,18 +43,6 @@ const RoomItem = ({ room, handleDetail, handleRoomSelect, isSelected, services, 
                     />
                 </div>
 
-            </div>
-            <div className='service-selection'>
-                <p style={{ fontWeight: 'bold', fontSize: '14px', marginTop: '7px', marginBottom: '0px' }}>Chọn dịch vụ: </p>
-                {services.map(service => (
-                    <ServiceSelection
-                        key={service.idService}
-                        service={service}
-                        roomId={room.idRoom}
-                        selectedServices={selectedServices}
-                        handleServiceChange={handleServiceChange}
-                    />
-                ))}
             </div>
         </div>
     );

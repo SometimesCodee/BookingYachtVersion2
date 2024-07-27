@@ -127,7 +127,7 @@ const MainPage = () => {
       <div id="title" className="content-section-sticky1">
         <SimpleSlider yacht={yacht} />
       </div>
-      <div id="features" className="content-section-sticky2 mb-4">
+      <div id="features" className="content-section-sticky2" style={{ marginBottom: '100px' }}>
         <SectionHeader yacht={yacht} />
       </div>
 

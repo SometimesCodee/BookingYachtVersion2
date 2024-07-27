@@ -71,9 +71,12 @@ const ManageSchedule = () => {
         if (res && res.data.data === true) {
             toast.success("Created new schedule successfully");
             fetchScheduleYacht();
+            setStartDate("");
+            setEndDate("");
         } else {
             toast.error("Create new schedule failure");
         }
+
     }
 
     const handleUpdateScheduleYacht = async (schedule) => {

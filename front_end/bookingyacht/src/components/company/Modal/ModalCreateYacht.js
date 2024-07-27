@@ -1,22 +1,21 @@
-import _ from 'lodash';
-import React, { useEffect, useState } from 'react';
-import { Button } from 'react-bootstrap';
+import React, { useEffect, useState } from 'react'
+import Modal from 'react-bootstrap/Modal';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
-import Modal from 'react-bootstrap/Modal';
 import Row from 'react-bootstrap/Row';
+import { Button } from 'react-bootstrap'
 import { FcPlus } from "react-icons/fc";
-import { useSelector } from 'react-redux';
-import { toast } from 'react-toastify';
 import { createYacht, getYachtType } from '../../../services/ApiServices';
+import { toast } from 'react-toastify';
+import _ from 'lodash';
+import { useSelector } from 'react-redux';
 
 const ModalCreateYacht = (props) => {
     const { show, setShow, location } = props;
-    const idCompany = useSelector(state => state.account.account.idCompany)
     const [image, setImage] = useState("");
     const [previewImage, setPreviewImage] = useState("");
     const [yachtType, setYachtType] = useState([]);
-
+    const idCompany = useSelector(state => state.account.account.idCompany)
 
     const initInforYacht = {
         name: '',
@@ -64,7 +63,6 @@ const ModalCreateYacht = (props) => {
         )
 
     }
-    console.log('data', data)
 
     const handelUploadImage = (event) => {
         if (event.target.files[0] && event.target && event.target.files) {
@@ -73,7 +71,6 @@ const ModalCreateYacht = (props) => {
         }
     }
     const handleCreateYacht = async () => {
-        console.log('data', data)
         if (!data.name || !image || !data.launch || !data.hullBody || !data.description || !data.rule || !data.itinerary || !data.location || !data.yachtType) {
             toast.error("Please fill in all fields")
         } else {
@@ -203,7 +200,7 @@ const ModalCreateYacht = (props) => {
                             />
                         </Row>
                         <div className='col-mad-12'>
-                            <label className='form-label label-upload' htmlFor='labelUpload'> <FcPlus /> Upload File IMAGE</label>
+                            <label style={{ width: 'fit-content' }} className='form-label label-upload' htmlFor='labelUpload'> <FcPlus /> Upload File IMAGE</label>
                             <input
                                 type='file'
                                 accept='image/*'

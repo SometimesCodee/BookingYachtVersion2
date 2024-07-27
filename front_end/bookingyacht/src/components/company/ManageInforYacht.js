@@ -23,7 +23,6 @@ const ManageInforYacht = (props) => {
         rule: '',
         description: '',
 
-
     }
 
     useEffect(() => {
@@ -46,8 +45,9 @@ const ManageInforYacht = (props) => {
             setDataUpdate(inforYacht)
             setIdLocation(inforYacht.location.idLocation);
             setIdYachtType(inforYacht.yachtType.idYachtType);
-            setPreviewImage(inforYacht.image)
-        
+            if (inforYacht.image) {
+                setPreviewImage(inforYacht.image)
+            }
         }
     }, [inforYacht]);
 
@@ -100,22 +100,11 @@ const ManageInforYacht = (props) => {
     };
 
     const handleUpdateYacht = async () => {
-        if (!validateInput()) return;
-        console.log('ima', image)
-        let formData = new FormData();
-        formData.append('name', dataUpdate.name.trim());
-        formData.append('hullBody', dataUpdate.hullBody.trim());
-        formData.append('description', dataUpdate.description.trim());
-        formData.append('rule', dataUpdate.rule.trim());
-        formData.append('itinerary', dataUpdate.itinerary.trim());
-        formData.append('idYachtType', idYachtType);
-        formData.append('idLocation', idLocation);
-
-        if (image) {
-            formData.append('image', image);
-        }
-
-        let res = await updateYacht(idYacht, formData);
+        if (validateInput() === false) return;
+        let res = await updateYacht(idYacht, dataUpdate.name.trim(), image,
+            dataUpdate.hullBody.trim(), dataUpdate.description.trim(),
+            dataUpdate.rule.trim(), dataUpdate.itinerary.trim(),
+            idYachtType, idLocation);
 
         if (res && res.data.data === true) {
             toast.success('Update Success');
@@ -209,7 +198,7 @@ const ManageInforYacht = (props) => {
                                 />
                             </Row>
                             <div className='col-mad-12'>
-                                <label className='form-label label-upload' htmlFor='labelUpload'> <FcPlus /> Upload File IMAGE</label>
+                                <label style={{ width: 'fit-content' }} className='form-label label-upload' htmlFor='labelUpload'> <FcPlus /> Upload File IMAGE</label>
                                 <input
                                     type='file'
                                     accept='image/*'

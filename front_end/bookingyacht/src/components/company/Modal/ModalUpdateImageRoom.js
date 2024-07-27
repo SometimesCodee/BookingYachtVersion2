@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import { Button } from 'react-bootstrap'
 import { FcPlus } from "react-icons/fc";
@@ -14,6 +14,9 @@ const ModalUpdateImageRoom = (props) => {
         setImage('');
         setPreviewImage('');
     }
+    useEffect(() => {
+        setPreviewImage(imageUpdate)
+    }, [imageUpdate])
 
     const handelUpdateImageRoom = (event) => {
         if (event.target.files[0] && event.target && event.target.files) {
@@ -46,7 +49,7 @@ const ModalUpdateImageRoom = (props) => {
                 </Modal.Header>
                 <Modal.Body>
                     <div className='col-mad-12'>
-                        <label className='form-label label-upload' htmlFor='labelUpdateImageRoom'> <FcPlus /> Upload File IMAGE</label>
+                        <label style={{ width: 'fit-content' }} className='form-label label-upload' htmlFor='labelUpdateImageRoom'> <FcPlus /> Upload File IMAGE</label>
                         <input
                             type='file'
                             accept='image/*'

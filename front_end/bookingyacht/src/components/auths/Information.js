@@ -21,24 +21,15 @@ const Information = () => {
 
     const { idAccount } = useParams()
 
-    // const phonenumber = (inputtxt) => {
-    //     var phoneno = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
-    //     if (inputtxt.value.match(phoneno)) {
-    //         return true;
-    //     }
-    //     else {
-    //         return false;
-    //     }
-    // }
+
 
     const handleFillInformation = async () => {
         if (!email || !fullName || !phoneNumber || !address) {
             toast.error('Please fill in all fields')
         } else {
-            // if (phonenumber(phoneNumber) === false) {
-            //     toast.error('Phone Number Start 0 And 10 Number')
-            // } else {
-            let res = await fillInformationCustomer(idAccount, fullName, email, phoneNumber, address);
+
+            let res = await fillInformationCustomer(idAccount, fullName.trim(), email.trim(), phoneNumber.trim(), address.trim());
+            console.log(res)
             if (res && res.data.data === '1') {
                 toast.error('Invalid Form Email')
             } else if (res && res.data.data === '2') {
@@ -48,7 +39,6 @@ const Information = () => {
             } else if (res && res.data.data === '888') {
                 toast.error('Số Điện Thoại đã tồn tại')
             } else if (res && res.data.data === '0') {
-
                 toast.success('Fill Information Successfully');
                 dispatch(information(email, fullName, phoneNumber, address));
                 setEmail('');

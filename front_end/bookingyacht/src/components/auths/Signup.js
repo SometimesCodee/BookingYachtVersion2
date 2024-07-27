@@ -16,6 +16,7 @@ const Signup = () => {
 
 
     const handleRegister = async () => {
+        var regexp = /^\S*$/;
         let res = await registerCustomer(userName.trim(), password.trim());
         if (userName === '' || password === '' || confrimPassword === '') {
             toast.error('Please fill in all fields')
@@ -23,9 +24,10 @@ const Signup = () => {
             toast.error('User name must be more than 3 chars')
         } else if (password.length < 8) {
             toast.error('Password must be at least 8 characters long.')
-        }
-        else if (confrimPassword.trim() !== password.trim()) {
             toast.error('Confirm Passwod Fail');
+        } else if (!userName.match(regexp)) {
+            toast.error('Tài Khoản Không Được Để Khoảng Trắng')
+        } else if (confrimPassword.trim() !== password.trim()) {
         }
         else if (res && res.data.data === true) {
             toast.success('register success')

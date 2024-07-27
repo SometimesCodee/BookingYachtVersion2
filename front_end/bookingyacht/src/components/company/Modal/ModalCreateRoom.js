@@ -4,6 +4,7 @@ import { FcPlus } from "react-icons/fc";
 import { createRoom } from '../../../services/ApiServices';
 import { toast } from 'react-toastify';
 import _ from 'lodash';
+import { set } from 'nprogress';
 
 const ModalCreateRoom = (props) => {
     const { show, setIsShowModalCreateRoom, idYacht, listRoomType, fetchRoomType, getAllRoom } = props;
@@ -15,15 +16,19 @@ const ModalCreateRoom = (props) => {
     const [roomType, setRoomType] = useState('');
 
     useEffect(() => {
+        fetchRoomType();
         if (show) {
-            fetchRoomType();
             if (_.isEmpty(listRoomType)) {
                 toast.warning('Please create room type before creating room');
             } else {
-                setRoomType(listRoomType[0]?.idRoomType || '');
+                setRoomType(listRoomType[0]?.idRoomType)
             }
         }
     }, [show]);
+
+    console.log('d', listRoomType)
+    console.log('d2', roomType)
+
 
     const handleClose = () => {
         setIsShowModalCreateRoom(false);
@@ -34,7 +39,7 @@ const ModalCreateRoom = (props) => {
         setRoomName('');
         setArea('');
         setDescription('');
-        setRoomType(listRoomType[0]?.idRoomType || '');
+        setRoomType(listRoomType[0]?.idRoomType);
         setPreviewImage('');
         setImage('');
     };

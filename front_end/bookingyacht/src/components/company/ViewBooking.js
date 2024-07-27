@@ -154,7 +154,7 @@ const ViewBooking = () => {
                                                 <h6 className="mb-3"><b href="#">
                                                 </b><b className="text-dark">{booking.customerDTO.fullName}</b>
                                                 </h6>
-                                                <p className="text-black-50 mb-1"><i className="feather-map-pin" /> {booking.yachtName}, Amount: {booking.amount}
+                                                <p className="text-black-50 mb-1"><i className="feather-map-pin" /> {booking.yachtName}, Amount: {booking.amount.toLocaleString()}VNĐ
                                                 </p>
                                                 <p className="text-black-50 mb-1"><i className="feather-list" /> Schedule - <i className="feather-clock ml-2" />
                                                     Start Date: {formatDate(booking.schedule.startDate)}, End Date: {formatDate(booking.schedule.endDate)} </p>

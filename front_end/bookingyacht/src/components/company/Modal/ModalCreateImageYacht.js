@@ -68,7 +68,7 @@ const ModalCreateImageYacht = (props) => {
                     </div>
                     <div className='col-md-12 img-preview'>
                         {previewImage ?
-                            <img src={previewImage} />
+                            <img src={previewImage} alt='image upload' />
                             :
                             <span>Preview Avartar</span>
                         }

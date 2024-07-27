@@ -42,7 +42,7 @@ const ModalManageRoomImage = (props) => {
     const handleCreateImageRoom = async () => {
         let res = await createImageRoom(idRoom, image);
         if (res && res.data.data === true) {
-            toast.success('Creaet Successfully');
+            toast.success('Create Successfully');
             setImage('')
             setPreviewImage('')
             getImageRoomById();

@@ -16,13 +16,17 @@ const ModalReasonCompany = (props) => {
     const [reason, setReason] = useState('');
 
     const handleCancelBooking = async () => {
-        let res = await canelBooking(idCompany, idCancel, reason);
-        if (res && res.data && res.data.data === true) {
-            toast.success('Cancel Booking Successfully')
-            await props.getBooking();
-            handleClose();
+        if (!reason) {
+            toast.error('Input Not Empty')
         } else {
-            toast.error('Cancel Fail')
+            let res = await canelBooking(idCompany, idCancel, reason.trim());
+            if (res && res.data && res.data.data === true) {
+                toast.success('Cancel Booking Successfully')
+                await props.getBooking();
+                handleClose();
+            } else {
+                toast.error('Cancel Fail')
+            }
         }
     }
 

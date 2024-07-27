@@ -56,18 +56,9 @@ const ModalUpdateProfile = (props) => {
 
     }
 
-<<<<<<< HEAD
-    console.log('imae2', previewImage)
-
-    const handleUpdateProfile = async () => {
-        console.log('imae', image)
-
-        let res = await updateProfileCompany(idCompany, name.trim(), address.trim(), image)
-=======
 
     const handleUpdateProfile = async () => {
 
->>>>>>> fiximage
         if (!name || !address) {
             toast.error("Please fill in all fields")
         } else {

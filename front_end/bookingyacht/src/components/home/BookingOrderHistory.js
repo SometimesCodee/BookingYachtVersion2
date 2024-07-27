@@ -39,7 +39,7 @@ const BookingOrderHistory = () => {
             setPageCount(totalPages);
             setBooking(sortedBookings);
         } else {
-            toast.error("Can not found Booking Order")
+            toast.error("Không tìm thấy đơn đặt chỗ nào")
             console.log("can not found Booking Order")
         }
     }
@@ -53,11 +53,11 @@ const BookingOrderHistory = () => {
         let res = await cancelBookingByCustomer(idCustomer, selectedBooking.idBooking, cancelReason || null)
 
         if (res && res.data.data) {
-            toast.success("Cancel Successfully");
             getBookingOrder()
             setShowModalCancel(false);
+            toast.success("Hủy đặt chỗ thành công");
         } else {
-            toast.error("Cancel Fail");
+            toast.error("Hủy đặt chỗ thất bại");
         }
     }
 
@@ -69,7 +69,7 @@ const BookingOrderHistory = () => {
             setBookingDetails(res.data.data);
             setShowModalDetail(true);
         } else {
-            toast.error("Can not load detail Booking Order")
+            toast.error("Không thể tải Chi tiết đơn đặt chỗ")
             console.log("Can not load detail Booking Order")
         }
     }

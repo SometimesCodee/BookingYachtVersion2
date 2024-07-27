@@ -25,20 +25,21 @@ const ModalCreateImageYacht = (props) => {
     }
 
     const handleCreateImageYacht = async () => {
-        const res = await createYachtImage(idYacht, image);
         if (_.isEmpty(image) && _.isEmpty(previewImage)) {
             toast.error("Please Choose File ")
             return;
-        } else if (res && res.data.data === true) {
-            toast.success("Create Image Successfully")
-            handleClose();
-            setPreviewImage('');
-            setImage('');
-            await props.getAllImagesYacht();
         } else {
-            toast.error("Image Invalid")
+            const res = await createYachtImage(idYacht, image);
+            if (res && res.data.data === true) {
+                toast.success("Create Image Successfully")
+                handleClose();
+                setPreviewImage('');
+                setImage('');
+                await props.getAllImagesYacht();
+            } else {
+                toast.error("Image Invalid")
+            }
         }
-
 
     }
     return (
@@ -56,7 +57,7 @@ const ModalCreateImageYacht = (props) => {
                 </Modal.Header>
                 <Modal.Body>
                     <div className='col-mad-12'>
-                        <label className='form-label label-upload' htmlFor='labelCreateImage'> <FcPlus /> Upload File IMAGE</label>
+                        <label style={{ width: 'fit-content' }} className='form-label label-upload' htmlFor='labelCreateImage'> <FcPlus /> Upload File IMAGE</label>
                         <input
                             type='file'
                             accept='image/*'

@@ -162,8 +162,11 @@ const ViewBooking = () => {
 
                                                 <hr />
                                                 <div className='action d-flex'>
-                                                    <p className="mb-0 text-dark text-dark pt-2"><span className="text-dark font-weight-bold"> Status :</span>
-                                                        {booking.status}
+                                                    <p className="mb-0 text-dark text-dark pt-2">Status: <span style={{
+                                                        color: booking.status === 'Pending' ? 'orange' :
+                                                            (booking.status === 'Confirmed' ? 'green' :
+                                                                (booking.status === 'Cancelled' ? 'red' : 'black'))
+                                                    }} className=" font-weight-bold">{booking.status} </span>
                                                     </p>
                                                     <div className="float-right">
                                                         {

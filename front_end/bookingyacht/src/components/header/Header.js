@@ -48,9 +48,14 @@ const Header = () => {
                                         {
                                             role === 'ROLE_COMPANY'
                                                 ?
-                                                <NavDropdown.Item>
-                                                    <NavLink to='/manage-company' className='nav-link'>Company Manager</NavLink>
-                                                </NavDropdown.Item>
+                                                <>
+                                                    <NavDropdown.Item>
+                                                        <NavLink to='/manage-company' className='nav-link'>Company Manager</NavLink>
+                                                    </NavDropdown.Item>
+                                                    <NavDropdown.Item>
+                                                        <NavLink onClick={handleLogout} className='nav-link'>Đăng Xuất</NavLink>
+                                                    </NavDropdown.Item>
+                                                </>
                                                 :
                                                 <>
                                                     <NavDropdown.Item>

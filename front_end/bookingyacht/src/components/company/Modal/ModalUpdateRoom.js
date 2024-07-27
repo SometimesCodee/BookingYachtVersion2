@@ -25,7 +25,7 @@ const ModalUpdateRoom = (props) => {
         if (!_.isEmpty(dataUpdateRoom)) {
             setName(dataUpdateRoom.name);
             setDescription(dataUpdateRoom.description);
-
+            setPreviewImage(dataUpdateRoom.avatar)
         }
     }, [dataUpdateRoom])
 
@@ -87,7 +87,7 @@ const ModalUpdateRoom = (props) => {
                             />
                         </FloatingLabel>
                         <div className='col-mad-12 my-3'>
-                            <label className='form-label label-upload' htmlFor='labelUpload'> <FcPlus /> Upload File IMAGE</label>
+                            <label style={{ width: 'fit-content' }} className='form-label label-upload' htmlFor='labelUpload'> <FcPlus /> Upload File IMAGE</label>
                             <input
                                 type='file'
                                 accept='image/*'

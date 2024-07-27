@@ -13,7 +13,7 @@ import _ from 'lodash';
 import Form from 'react-bootstrap/Form';
 import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
-const ViewYacht = (props) => {
+const ViewYacht = () => {
     const navigate = useNavigate();
     const [isShowModal, setIsShowModal] = useState(false);
     const idCompany = useSelector(state => state.account.account.idCompany);
@@ -29,6 +29,7 @@ const ViewYacht = (props) => {
 
     const [currentPage, setCurrentPage] = useState(0);
     const itemsPerPage = 3;
+
     useEffect(() => {
         listYacht();
         getLocation();
@@ -49,7 +50,13 @@ const ViewYacht = (props) => {
     }
 
     const handleDeleteYacht = async (id, name) => {
-        if (window.confirm(`Delete Yacht With Name: ${name}`)) {
+        let confirm;
+        if (!name) {
+            confirm = window.confirm(`You Want To Show Yacht`)
+        } else {
+            confirm = window.confirm(`Delete Yacht With Name: ${name}`)
+        }
+        if (confirm) {
             let res = await deleteYacht(id);
             if (res.data.data === true) {
                 toast.success('Delete Successfully');
@@ -68,8 +75,6 @@ const ViewYacht = (props) => {
         let res = await getAllLocation();
         if (res && res.data && res.data.data) {
             setLocation(res.data.data);
-        } else {
-            setLocation('Not Found')
         }
     }
 
@@ -89,13 +94,12 @@ const ViewYacht = (props) => {
             .filter(y => y.name.toLowerCase().includes(searchYacht.toLowerCase().trim()))
             .filter(y => filterLocation === '0' ? y : y.location.idLocation.includes(filterLocation))
             .filter(y => filterYachtType === '0' ? y : y.yachtType.idYachtType.includes(filterYachtType))
-            .filter(y => y.exist === 1);
+
 
         setFilteredYachts(filtered);
     };
 
     const displayedYachts = filteredYachts.slice(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage);
-
 
     return (
         <div className='view-yacht-container'>
@@ -157,11 +161,21 @@ const ViewYacht = (props) => {
                                                 <p className="mb-0 text-dark text-dark pt-2"><span className="text-dark font-weight-bold"></span>
                                                 </p>
                                                 <div className="float-right">
-                                                    <Button className="btn btn-sm btn-infor" onClick={() => navigate(`/manage-services-yacht/${yacht.idYacht}`)}><i className="feather-check-circle" />Manage Services Yacht</Button>
-                                                    <Button className="btn btn-sm btn-light" onClick={() => navigate(`/manage-schedule/${yacht.idYacht}`)}><i className="feather-trash" /> Manage Schedule </Button>
-                                                    <Button className="btn btn-sm btn-success" onClick={() => navigate(`/manage-yacht/${yacht.idYacht}`)}><i className="feather-check-circle" />Manage Yacht</Button>
-                                                    <Button className="btn btn-sm btn-warning" onClick={() => navigate(`/manage-room/${yacht.idYacht}`)}><i className="feather-trash" /> Manage Room </Button>
-                                                    <Button className="btn btn-sm btn-danger" onClick={() => handleDeleteYacht(yacht.idYacht, yacht.name)}><i className="feather-trash" /> Delete Yacht </Button>
+
+                                                    {
+                                                        yacht.exist === 1
+                                                            ?
+                                                            <>
+                                                                <Button className="btn btn-sm btn-infor" onClick={() => navigate(`/manage-services-yacht/${yacht.idYacht}`)}><i className="feather-check-circle" />Manage Services Yacht</Button>
+                                                                <Button className="btn btn-sm btn-light" onClick={() => navigate(`/manage-schedule/${yacht.idYacht}`)}><i className="feather-trash" /> Manage Schedule </Button>
+                                                                <Button className="btn btn-sm btn-success" onClick={() => navigate(`/manage-yacht/${yacht.idYacht}`)}><i className="feather-check-circle" />Manage Yacht</Button>
+                                                                <Button className="btn btn-sm btn-warning" onClick={() => navigate(`/manage-room/${yacht.idYacht}`)}><i className="feather-trash" /> Manage Room </Button>
+                                                                <Button className="btn btn-sm btn-danger" onClick={() => handleDeleteYacht(yacht.idYacht, yacht.name)}><i className="feather-trash" /> Hidden Yacht </Button>
+                                                            </>
+                                                            :
+                                                            <Button className="btn btn-sm btn-success" onClick={() => handleDeleteYacht(yacht.idYacht)}><i className="feather-trash" /> Show Yacht </Button>
+
+                                                    }
 
                                                 </div>
                                             </div>

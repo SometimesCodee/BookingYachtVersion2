@@ -50,14 +50,15 @@ const BookingOrderHistory = () => {
     }
 
     const handleCancelBooking = async () => {
-        let res = await cancelBookingByCustomer(idCustomer, selectedBooking.idBooking, cancelReason || null)
-
-        if (res && res.data.data) {
-            getBookingOrder()
-            setShowModalCancel(false);
-            toast.success("Hủy đặt chỗ thành công");
-        } else {
-            toast.error("Hủy đặt chỗ thất bại");
+        try{
+            const response = await cancelBookingByCustomer(idCustomer, selectedBooking.idBooking, cancelReason)
+            if(response.data.data === false){
+                toast.success('Cancel Booking Successfully')
+                getBookingOrder()
+                setShowModalCancel(false);
+            }
+        }catch(error){
+            toast.error('Cancel Booking Fail')
         }
     }
 

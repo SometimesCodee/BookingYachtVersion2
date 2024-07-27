@@ -49,10 +49,24 @@ public class CustomerService implements ICustomer {
                 log.error("Invalid email format");
                 return ("1");
             }
+            Customer customerCheckMail = customerRepository.findCustomerByEmail(email);
+            if(customerCheckMail!=null){
+                log.error("Duplicated mail");
+                return "999";
+            }
+
             if (!isValidPhoneNumber(phoneNumber)) {
                 log.error("Invalid phone number format");
                 return ("2");
             }
+
+            Customer customerCheckPhone = customerRepository.findCustomerByPhoneNumber(phoneNumber);
+            if(customerCheckPhone!=null){
+                log.error("Duplicated phone number");
+                return "888";
+            }
+
+
 
             // Check if the account exists
             Account account = accountRepository.findById(idAccount)
@@ -71,7 +85,7 @@ public class CustomerService implements ICustomer {
             customerRepository.save(customer);
             return "0";
         } catch (Exception e) {
-            log.error("Error occurred while adding customer: {}", e.getMessage());
+            log.error("Errooccurredr  while adding customer: {}", e.getMessage());
             return "Error occurred while adding customer: " + e.getMessage();
         }
     }
@@ -128,7 +142,7 @@ public class CustomerService implements ICustomer {
             accountDTO.setUsername(customer.get().getAccount().getUsername());
             accountDTO.setPassword(customer.get().getAccount().getPassword());
             accountDTO.setPassword(customer.get().getAccount().getRole());
-
+            accountDTO.setStatus(customer.get().getAccount().getStatus());
             customerDTO.setAccountDTO(accountDTO);
         }
         return customerDTO;
@@ -151,6 +165,7 @@ public class CustomerService implements ICustomer {
             customerDTO.setAddress(customer.getAddress());
             accountDTO.setIdAccount(account.getIdAccount());
             accountDTO.setUsername(username);
+            accountDTO.setStatus(account.getStatus());
             accountDTO.setPassword(account.getPassword());
             accountDTO.setRole(account.getRole());
             customerDTO.setAccountDTO(accountDTO);
@@ -161,7 +176,7 @@ public class CustomerService implements ICustomer {
     }
 
     @Override
-    public boolean updateCustomer(String customerId, String fullName, String email, String phone, String address) {
+    public String  updateCustomer(String customerId, String fullName, String email, String phone, String address) {
         //System.out.println(customerId);
         Optional<Customer> customer = customerRepository.findById(customerId);
         System.out.println(customer);
@@ -169,6 +184,27 @@ public class CustomerService implements ICustomer {
             Customer customerEntity = customer.get();
             System.out.println(customerEntity);
             try {
+
+                if (!isValidEmail(email)) {
+                    log.error("Invalid email format");
+                    return "1001";
+                }
+                if (!isValidPhoneNumber(phone)) {
+                    log.error("Invalid phone number format");
+                    return "1000";
+                }
+
+                Customer customerCheckMail = customerRepository.findCustomerByEmail(email);
+                if(customerCheckMail!=null){
+                    log.error("Duplicated mail");
+                    return "999";
+                }
+
+                Customer customerCheckPhone = customerRepository.findCustomerByPhoneNumber(phone);
+                if(customerCheckPhone!=null){
+                    log.error("Duplicated phone number");
+                    return "888";
+                }
 
                 customerEntity.setFullName(fullName);
 
@@ -178,13 +214,16 @@ public class CustomerService implements ICustomer {
                 customerEntity.setAddress(address);
 
                 customerRepository.save(customerEntity);
-                return true;
+                return "200";
 
             } catch (Exception e) {
-                return false;
+                log.error("Update fail");
+                return "1005";
+
             }
         } else {
-            return false;
+            log.error("Not found customer");
+            return "1005";
         }
 
     }
@@ -283,7 +322,11 @@ public class CustomerService implements ICustomer {
                 .orElseThrow(() -> new IllegalArgumentException("Invalid account ID"));
 
         if(account != null){
-            account.setStatus(0);
+            if(customer.getAccountDTO().getStatus() == 1){
+                account.setStatus(0);
+            }else if(customer.getAccountDTO().getStatus() == 0){
+                account.setStatus(1);
+            }
             accountRepository.save(account);
             return true;
         }
@@ -400,5 +443,7 @@ public class CustomerService implements ICustomer {
         }
         return idAccount;
     }
+
+
 
 }

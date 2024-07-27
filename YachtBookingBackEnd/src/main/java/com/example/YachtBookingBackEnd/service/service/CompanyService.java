@@ -188,6 +188,8 @@ public class CompanyService implements ICompany {
                     return false;
                 }
                 company.setLogo(imageUrl);
+            }else{
+                System.out.println("Image Is Empty");
             }
             companyRepository.save(company);
             return true;

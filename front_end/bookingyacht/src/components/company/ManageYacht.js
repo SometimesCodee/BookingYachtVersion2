@@ -11,7 +11,6 @@ import ManageInforYacht from './ManageInforYacht';
 import './ManageYacht.scss';
 import ModalCreateImageYacht from './Modal/ModalCreateImageYacht';
 import ModalUpdateImageYacht from './Modal/ModalUpdateImageYacht';
-import ViewFeedback from './ViewFeedback';
 
 const ManageYacht = () => {
     const { idYacht } = useParams();
@@ -153,11 +152,7 @@ const ManageYacht = () => {
 
             </div>
 
-            <div className='view-feedback container my-5'>
-                <ViewFeedback
-                />
 
-            </div>
 
             <ModalCreateImageYacht
                 show={isShowModalCreateImage}

@@ -65,8 +65,6 @@ public class CompanyController {
     }
 
     //Done
-
-    //Done
     @PostMapping("/yacht/insertYacht/{idCompany}")
     public ResponseEntity<?> insertYacht(@RequestParam String name,
                                          @RequestParam MultipartFile image,

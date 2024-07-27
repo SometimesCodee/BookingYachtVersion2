@@ -23,8 +23,6 @@ const Signin = () => {
 
     const navigate = useNavigate();
 
-
-
     const handleLogin = async () => {
         setLoading(true)
         if (userName === '' || password === '') {
@@ -32,20 +30,24 @@ const Signin = () => {
             setLoading(false);
         } else {
             let res = await login(userName.trim(), password.trim());
+            console.log('login', res)
             if (res === undefined) {
                 toast.error("Tài Khoản Của Bạn Không Tồn Tại")
+                setLoading(false);
+                return;
             } else if (res && res.data && res.data.data) {
                 const role = jwtDecode(res.data.data);
-
                 let resAccount = await getIdCustomer(res.data.idAccount);
 
                 dispatch(doLogin(res.data.data, role.role, res.data.idCompany ? res.data.idCompany : "", res.data.idCustomer ? res.data.idCustomer : ""))
+                if (res && res.data && res.data.data === 'Invalid credentials') {
+                    toast.error('Tài Khoản Hoặc Mật Khẩu Không Đúng')
+                    setLoading(false);
+                }
                 if (role && role.role === 'ROLE_COMPANY') {
                     setLoading(false);
-
                     toast.success("Đăng Nhập Thành Công");
                     navigate(`/manage-company`);
-
                 } else if (role && role.role === 'ROLE_CUSTOMER') {
                     setLoading(false);
                     if (resAccount && resAccount.data && resAccount.data.data === '0') {
@@ -53,8 +55,10 @@ const Signin = () => {
                         navigate(`/information/${res.data.idAccount}`)
                     } else if (resAccount && resAccount.data && resAccount.data.data !== '0') {
                         toast.success("Đăng Nhập Thành Công");
-                        // navigate(-2);
+                        navigate('/');
                     }
+                } else if (role && role.role === 'ROLE_ADMIN') {
+                    navigate('/admin')
                 }
             } else {
                 toast.error('Tài Khoản Hoặc Mật Khẩu Không Đúng')

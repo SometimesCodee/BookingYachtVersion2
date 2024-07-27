@@ -36,11 +36,7 @@ const ManageRoom = () => {
     const [searchNameRoom, setSearchNameRoom] = useState('');
     const [filteredRoom, setFilteredRoom] = useState([]);
 
-
     const [listRoomType, setListRoomType] = useState([]);
-
-
-
 
     const handlManageImageRoom = (idRoom) => {
         setIsShowModalRoomImage(true);
@@ -84,7 +80,6 @@ const ManageRoom = () => {
     const filterAndPaginateRoom = () => {
         const filtered = listRoom
             .filter(y => y.name.toLowerCase().includes(searchNameRoom.toLowerCase().trim()))
-
 
         setFilteredRoom(filtered);
     };

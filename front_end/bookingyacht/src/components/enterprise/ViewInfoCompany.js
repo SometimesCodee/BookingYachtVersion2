@@ -52,6 +52,7 @@ const CompanyList = () => {
                                         <h5 style={{fontWeight : 'bold'}}>{company.name}</h5>
                                         <p>{company.address}</p>
                                         <p style={{fontStyle : 'italic'}}>{company.email}</p>
+                                        <span style={{color: '#AAAAAA'}}>Xem chi tiết</span>
                                     </Col>
                                 </Row>
                             </Card>

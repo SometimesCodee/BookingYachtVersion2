@@ -46,7 +46,7 @@ const ModalUpdateImageYacht = (props) => {
                 </Modal.Header>
                 <Modal.Body>
                     <div className='col-mad-12'>
-                        <label className='form-label label-upload' htmlFor='labelCreateImage'> <FcPlus /> Upload File IMAGE</label>
+                        <label style={{ width: 'fit-content' }} className='form-label label-upload' htmlFor='labelCreateImage'> <FcPlus /> Upload File IMAGE</label>
                         <input
                             type='file'
                             accept='image/*'

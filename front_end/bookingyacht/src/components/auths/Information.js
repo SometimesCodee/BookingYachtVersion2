@@ -9,7 +9,6 @@ import { fillInformationCustomer } from '../../services/ApiServices';
 import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
 import { information } from '../../redux/action/InformationAction';
-import { dark } from '@mui/material/styles/createPalette';
 const Information = () => {
 
     const navigate = useNavigate();
@@ -20,40 +19,25 @@ const Information = () => {
     const [phoneNumber, setPhoneNumber] = useState('');
     const [address, setAddress] = useState('');
 
-    const { idAccount } = useParams()
-
-    // const phonenumber = (inputtxt) => {
-    //     var phoneno = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
-    //     if (inputtxt.value.match(phoneno)) {
-    //         return true;
-    //     }
-    //     else {
-    //         return false;
-    //     }
-    // }
+    const { idAccount } = useParams();
 
     const handleFillInformation = async () => {
         if (!email || !fullName || !phoneNumber || !address) {
             toast.error('Vui Lòng Nhập Đầy Đủ Thông Tin')
         } else {
-            // if (phonenumber(phoneNumber) === false) {
-            //     toast.error('Phone Number Start 0 And 10 Number')
-            // } else {
             let res = await fillInformationCustomer(idAccount, fullName, email, phoneNumber, address);
             if (res && res.data.data === '1') {
                 toast.error('Email Không Tồn Tại')
             } else if (res && res.data.data === '2') {
                 toast.error('Số Điện Thoại Không Tồn Tại')
             } else if (res && res.data.data === '0') {
-
                 toast.success('Điền Thông Tin Thành Công');
                 dispatch(information(email, fullName, phoneNumber, address));
                 setEmail('');
                 setAddress('');
                 setFullName('');
                 setPhoneNumber('');
-                navigate('/signin')
-
+                navigate('/signin');
             } else {
                 toast.error('Không Thành Công Kiểm Tra Lại Thông Tin Của Bạn')
             }

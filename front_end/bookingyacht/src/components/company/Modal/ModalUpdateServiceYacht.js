@@ -20,11 +20,11 @@ const ModalUpdateServiceYacht = (props) => {
     }, [serviceUpdate])
 
     const handleUpdateServiceYacht = async () => {
-        let res = await upadteServiceYacht(idYacht, serviceUpdate.idService, service.trim(), price);
         if (!service || !price) {
             toast.error('Please fill in all fields')
             return;
         } else {
+            let res = await upadteServiceYacht(idYacht, serviceUpdate.idService, service.trim(), price);
             if (res && res.data.data === true) {
                 toast.success('Update Successfully');
                 setPrice('');

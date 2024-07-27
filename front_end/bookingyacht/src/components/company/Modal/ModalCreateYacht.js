@@ -72,10 +72,10 @@ const ModalCreateYacht = (props) => {
         }
     }
     const handleCreateYacht = async () => {
-        let res = await createYacht(idCompany, data.name.trim(), image, data.launch, data.hullBody.trim(), data.description.trim(), data.rule.trim(), data.itinerary.trim(), data.location, data.yachtType);
         if (!data.name || !image || !data.launch || !data.hullBody || !data.description || !data.rule || !data.itinerary || !data.location || !data.yachtType) {
             toast.error("Please fill in all fields")
         } else {
+            let res = await createYacht(idCompany, data.name.trim(), image, data.launch, data.hullBody.trim(), data.description.trim(), data.rule.trim(), data.itinerary.trim(), data.location, data.yachtType);
             if (res && res.data.data === true) {
                 toast.success('Create Successfully');
                 await props.listYacht();
@@ -201,7 +201,7 @@ const ModalCreateYacht = (props) => {
                             />
                         </Row>
                         <div className='col-mad-12'>
-                            <label className='form-label label-upload' htmlFor='labelUpload'> <FcPlus /> Upload File IMAGE</label>
+                            <label style={{ width: 'fit-content' }} className='form-label label-upload' htmlFor='labelUpload'> <FcPlus /> Upload File IMAGE</label>
                             <input
                                 type='file'
                                 accept='image/*'

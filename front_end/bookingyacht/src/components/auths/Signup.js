@@ -16,8 +16,6 @@ const Signup = () => {
 
 
     const handleRegister = async () => {
-        let res = await registerCustomer(userName.trim(), password.trim());
-        console.log('id acc', res)
         if (userName === '' || password === '' || confrimPassword === '') {
             toast.error('Vui Lòng Nhập Đầy Đủ Thông Tin')
         } else if (userName.length < 3) {
@@ -27,12 +25,14 @@ const Signup = () => {
         }
         else if (confrimPassword.trim() !== password.trim()) {
             toast.error('Mật Khẩu Xác Nhận Không Khớp');
-        }
-        else if (res && res.data.data === true) {
-            toast.success('Đăng Ký Thành Công')
-            navigate(`/information/${res.data.desc}`)
         } else {
-            toast.error('Tài Khoản Đã Tồn Tại')
+            let res = await registerCustomer(userName.trim(), password.trim());
+            if (res && res.data.data === true) {
+                toast.success('Đăng Ký Thành Công')
+                navigate(`/information/${res.data.desc}`)
+            } else {
+                toast.error('Tài Khoản Đã Tồn Tại')
+            }
         }
     }
 

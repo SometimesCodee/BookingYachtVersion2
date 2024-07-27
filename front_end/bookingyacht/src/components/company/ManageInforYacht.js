@@ -23,7 +23,6 @@ const ManageInforYacht = (props) => {
         rule: '',
         description: '',
 
-
     }
 
     useEffect(() => {
@@ -46,8 +45,8 @@ const ManageInforYacht = (props) => {
             setDataUpdate(inforYacht)
             setIdLocation(inforYacht.location.idLocation);
             setIdYachtType(inforYacht.yachtType.idYachtType);
-            if (dataUpdate.image) {
-                setPreviewImage(dataUpdate.image)
+            if (inforYacht.image) {
+                setPreviewImage(inforYacht.image)
             }
         }
     }, [inforYacht]);
@@ -98,7 +97,7 @@ const ManageInforYacht = (props) => {
     };
 
     const handleUpdateYacht = async () => {
-        if (validateInput() === true) return;
+        if (validateInput() === false) return;
         let res = await updateYacht(idYacht, dataUpdate.name.trim(), image,
             dataUpdate.hullBody.trim(), dataUpdate.description.trim(),
             dataUpdate.rule.trim(), dataUpdate.itinerary.trim(),
@@ -196,7 +195,7 @@ const ManageInforYacht = (props) => {
                                 />
                             </Row>
                             <div className='col-mad-12'>
-                                <label className='form-label label-upload' htmlFor='labelUpload'> <FcPlus /> Upload File IMAGE</label>
+                                <label style={{ width: 'fit-content' }} className='form-label label-upload' htmlFor='labelUpload'> <FcPlus /> Upload File IMAGE</label>
                                 <input
                                     type='file'
                                     accept='image/*'

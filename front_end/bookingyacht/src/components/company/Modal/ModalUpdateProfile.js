@@ -39,21 +39,21 @@ const ModalUpdateProfile = (props) => {
         }
 
     }
-    console.log('image', image)
 
 
     const handleUpdateProfile = async () => {
-        console.log('image2', image)
 
-        let res = await updateProfileCompany(idCompany, name.trim(), address.trim(), image)
         if (!name || !address) {
             toast.error("Please fill in all fields")
-        } else if (res && res.data && res.data.data === true) {
-            toast.success('Update Successfully');
-            handleClose();
-            await props.getProfile();
         } else {
-            toast.error('Update Fail')
+            let res = await updateProfileCompany(idCompany, name.trim(), address.trim(), image)
+            if (res && res.data && res.data.data === true) {
+                toast.success('Update Successfully');
+                handleClose();
+                await props.getProfile();
+            } else {
+                toast.error('Update Fail')
+            }
         }
     }
 
@@ -82,7 +82,7 @@ const ModalUpdateProfile = (props) => {
                             <Form.Control type='text' value={name} onChange={event => setName(event.target.value)} />
                         </Form.Group>
                         <div className='col-mad-12'>
-                            <label className='form-label label-upload' htmlFor='labelCreateImage'> <FcPlus /> Upload File IMAGE</label>
+                            <label style={{ width: 'fit-content' }} className='form-label label-upload' htmlFor='labelCreateImage'> <FcPlus /> Upload File IMAGE</label>
                             <input
                                 type='file'
                                 accept='image/*'

@@ -85,7 +85,7 @@ public class CustomerService implements ICustomer {
             customerRepository.save(customer);
             return "0";
         } catch (Exception e) {
-            log.error("Error occurred while adding customer: {}", e.getMessage());
+            log.error("Errooccurredr  while adding customer: {}", e.getMessage());
             return "Error occurred while adding customer: " + e.getMessage();
         }
     }

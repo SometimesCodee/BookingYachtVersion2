@@ -136,7 +136,7 @@ const CompanyManager = () => {
         try {
             const config = {
                 method: 'post',
-                url: 'https://booking18-fzc0ghgvcve8f7fs.eastasia-01.azurewebsites.net/api/admins/accounts',
+                url: 'http://localhost:8080/api/admins/accounts',
                 headers: {
                     'Authorization': getAuthHeader(),
                 },
@@ -174,7 +174,7 @@ const CompanyManager = () => {
         try {
             const config = {
                 method: 'post',
-                url: `https://booking18-fzc0ghgvcve8f7fs.eastasia-01.azurewebsites.net/api/admins/accounts/${newAccountId}`,
+                url: `http://localhost:8080/api/admins/accounts/${newAccountId}`,
                 headers: {
                     'Authorization': getAuthHeader(),
                     // 'Content-Type': 'multipart/form-data'
@@ -223,7 +223,7 @@ const CompanyManager = () => {
         try {
             const config = {
                 method: 'put',
-                url: `https://booking18-fzc0ghgvcve8f7fs.eastasia-01.azurewebsites.net/api/admins/companies/${selectedCompany.idCompany}`,
+                url: `http://localhost:8080/api/admins/companies/${selectedCompany.idCompany}`,
                 headers: {
                     'Authorization': getAuthHeader(),
                 },

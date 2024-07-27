@@ -41,7 +41,7 @@ const PaymentReturn = () => {
         try {
             // const response = await paymentReturn(data);
             const response = await axios.post(
-                `https://booking18-fzc0ghgvcve8f7fs.eastasia-01.azurewebsites.net/api/payment/payment-callback`,
+                `http://localhost:8080/api/payment/payment-callback`,
                 qs.stringify(data),
                 {
                     headers: {
@@ -85,11 +85,11 @@ const PaymentReturn = () => {
 
     const formatAmount = (amount) => {
         if (!amount) return 'N/A';
-        
-        const formattedAmount = (amount/100).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+
+        const formattedAmount = (amount / 100).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
         return `${formattedAmount} VND`;
     };
-    
+
     return (
         <Container className='mt-5 my-5'>
             <Row className='justify-content-md-center'>
@@ -102,7 +102,7 @@ const PaymentReturn = () => {
                         </Card.Header>
                         <Card.Body>
                             <Card.Text>
-                                {payment?.vnp_ResponseCode === '00' 
+                                {payment?.vnp_ResponseCode === '00'
                                     ? 'Thank you for your purchase!'
                                     : 'There was an issue with your payment.'}
                             </Card.Text>

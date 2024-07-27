@@ -49,10 +49,24 @@ public class CustomerService implements ICustomer {
                 log.error("Invalid email format");
                 return ("1");
             }
+            Customer customerCheckMail = customerRepository.findCustomerByEmail(email);
+            if(customerCheckMail!=null){
+                log.error("Duplicated mail");
+                return "999";
+            }
+
             if (!isValidPhoneNumber(phoneNumber)) {
                 log.error("Invalid phone number format");
                 return ("2");
             }
+
+            Customer customerCheckPhone = customerRepository.findCustomerByPhoneNumber(phoneNumber);
+            if(customerCheckPhone!=null){
+                log.error("Duplicated phone number");
+                return "888";
+            }
+
+
 
             // Check if the account exists
             Account account = accountRepository.findById(idAccount)
@@ -161,7 +175,7 @@ public class CustomerService implements ICustomer {
     }
 
     @Override
-    public boolean updateCustomer(String customerId, String fullName, String email, String phone, String address) {
+    public String  updateCustomer(String customerId, String fullName, String email, String phone, String address) {
         //System.out.println(customerId);
         Optional<Customer> customer = customerRepository.findById(customerId);
         System.out.println(customer);
@@ -169,6 +183,27 @@ public class CustomerService implements ICustomer {
             Customer customerEntity = customer.get();
             System.out.println(customerEntity);
             try {
+
+                if (!isValidEmail(email)) {
+                    log.error("Invalid email format");
+                    return "1001";
+                }
+                if (!isValidPhoneNumber(phone)) {
+                    log.error("Invalid phone number format");
+                    return "1000";
+                }
+
+                Customer customerCheckMail = customerRepository.findCustomerByEmail(email);
+                if(customerCheckMail!=null){
+                    log.error("Duplicated mail");
+                    return "999";
+                }
+
+                Customer customerCheckPhone = customerRepository.findCustomerByPhoneNumber(phone);
+                if(customerCheckPhone!=null){
+                    log.error("Duplicated phone number");
+                    return "888";
+                }
 
                 customerEntity.setFullName(fullName);
 
@@ -178,13 +213,16 @@ public class CustomerService implements ICustomer {
                 customerEntity.setAddress(address);
 
                 customerRepository.save(customerEntity);
-                return true;
+                return "200";
 
             } catch (Exception e) {
-                return false;
+                log.error("Update fail");
+                return "1005";
+
             }
         } else {
-            return false;
+            log.error("Not found customer");
+            return "1005";
         }
 
     }
@@ -400,5 +438,7 @@ public class CustomerService implements ICustomer {
         }
         return idAccount;
     }
+
+
 
 }

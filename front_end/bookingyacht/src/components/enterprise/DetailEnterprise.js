@@ -20,7 +20,7 @@ const ProfilePage = () => {
     const [priceData, setPriceData] = useState({});
 
     useEffect(() => {
-        axios.get(`https://booking18-fzc0ghgvcve8f7fs.eastasia-01.azurewebsites.net/api/customer/yacht/findByCompany/${idCompany}`)
+        axios.get(`http://localhost:8080/api/customer/yacht/findByCompany/${idCompany}`)
             .then(res => {
                 setPaggingYacht(res.data.data)
                 setYachtList(res.data.data)
@@ -28,7 +28,7 @@ const ProfilePage = () => {
             .catch(error => {
                 console.log(error)
             });
-        axios.get(`https://booking18-fzc0ghgvcve8f7fs.eastasia-01.azurewebsites.net/api/customer/profilesCompany/${idCompany}`)
+        axios.get(`http://localhost:8080/api/customer/profilesCompany/${idCompany}`)
             .then(res => {
                 setCompany(res.data.data)
                 console.log(res.data.data)

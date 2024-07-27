@@ -1,11 +1,11 @@
+import _ from 'lodash';
 import React, { useEffect, useState } from 'react';
 import { Button, Col, Row } from 'react-bootstrap';
 import Accordion from 'react-bootstrap/Accordion';
-import { getAllLocation, getYachtByIdYacht, getYachtType, updateYacht } from '../../services/ApiServices';
 import Form from 'react-bootstrap/Form';
 import { FcPlus } from "react-icons/fc";
-import _ from 'lodash'
 import { toast } from 'react-toastify';
+import { getAllLocation, getYachtByIdYacht, getYachtType, updateYacht } from '../../services/ApiServices';
 const ManageInforYacht = (props) => {
     const { idYacht } = props;
     const [inforYacht, setInforYacht] = useState({})
@@ -98,7 +98,7 @@ const ManageInforYacht = (props) => {
     };
 
     const handleUpdateYacht = async () => {
-        if (validateInput() === true) return;
+        if (validateInput() === false) return;
         let res = await updateYacht(idYacht, dataUpdate.name.trim(), image,
             dataUpdate.hullBody.trim(), dataUpdate.description.trim(),
             dataUpdate.rule.trim(), dataUpdate.itinerary.trim(),

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Container } from 'react-bootstrap';
+import { Button, Container, Form } from 'react-bootstrap';
 import { FaArrowRightLong } from "react-icons/fa6";
 import { useDispatch, useSelector } from 'react-redux';
 import { addRoomAction, removeRoomAction, resetSelectionAction, setTotalPrice } from '../../../redux/action/OrderAction';
@@ -8,13 +8,12 @@ import BookNowModal from './BookNowModal';
 import './FormRoom.scss';
 import RoomDetailModal from './RoomDetailModal';
 import RoomItem from './RoomItem';
-// import OrderReducer from './../../../redux/reducer/OrderReducer';
 
 const RoomSelection = ({ yacht, selectedSchedule }) => {
     const [originalRooms, setOriginalRooms] = useState([]);
     const [filteredRooms, setFilteredRooms] = useState([]);
     const [selectedRoomType, setSelectedRoomType] = useState(null);
-    const [selectedServices, setSelectedServices] = useState({});
+    const [selectedServices, setSelectedServices] = useState([]);
     const [showBookNow, setShowBookNow] = useState(false);
     const [selectedRoom, setSelectedRoom] = useState(null);
     const [showDetailRoom, setShowDetailRoom] = useState(false);
@@ -38,11 +37,6 @@ const RoomSelection = ({ yacht, selectedSchedule }) => {
                 setFilteredRooms(roomsData.filter(room => room.roomType.type === initialRoomType));
                 const responseServices = await getAddingServiceByYacht(yacht.idYacht);
                 setServices(responseServices.data.data);
-                //Đoạn mã này tạo ra một đối tượng mà mỗi phòng trong roomsData có một mảng rỗng riêng để lưu trữ các dịch vụ đã chọn.
-                setSelectedServices(roomsData.reduce((acc, room) => ({
-                    ...acc,
-                    [room.idRoom]: []
-                }), {}));
             } catch (error) {
                 console.error('Error fetching unbooked rooms:', error);
             }
@@ -56,31 +50,26 @@ const RoomSelection = ({ yacht, selectedSchedule }) => {
     useEffect(() => {
         const calculateTotalPrice = () => {
             const totalRoomPrice = selectedRooms.reduce((total, room) => {
-                const roomPrice = room.roomType.price;
-                //room 5 co id_service 6 8 thi se la: {5:[6, 8]}
-                const roomServices = selectedServices[room.idRoom] || [];
-                //serviceId la cac service id trong roomServices 6, 8
-                const servicePrice = roomServices.reduce((serviceTotal, serviceId) => {
-                    const service = services.find(service => service.idService === serviceId);
-                    return serviceTotal + (service ? service.price : 0);
-                }, 0);
-                return total + roomPrice + servicePrice;
+                return total + room.roomType.price;
             }, 0);
-            dispatch(setTotalPrice(totalRoomPrice));
+
+            const totalServicePrice = selectedServices.reduce((total, serviceId) => {
+                const service = services.find(service => service.idService === serviceId);
+                return total + (service ? service.price : 0);
+            }, 0);
+
+            dispatch(setTotalPrice(totalRoomPrice + totalServicePrice));
         };
 
         calculateTotalPrice();
     }, [selectedRooms, selectedServices, services, dispatch]);
-    const handleServiceChange = (roomId, serviceId) => {
+    const handleServiceChange = (serviceId) => {
         //prevServices là giá trị trạng thái trước đó của selectedServices.
         setSelectedServices(prevServices => {
-            //Lấy mảng các ID dịch vụ đã chọn cho phòng với roomId từ trạng thái trước đó.
-            const roomServices = prevServices[roomId] || [];
-            //kiem tra xem mang cu da co service do hay chua, neu chua thi them vao, co roi thi loai bo ra
-            const newRoomServices = roomServices.includes(serviceId)
-                ? roomServices.filter(id => id !== serviceId)
-                : [...roomServices, serviceId];
-            return { ...prevServices, [roomId]: newRoomServices };
+            const newSelectedServices = prevServices.includes(serviceId)
+                ? prevServices.filter(id => id !== serviceId)
+                : [...prevServices, serviceId];
+            return newSelectedServices;
         });
     };
 
@@ -151,12 +140,24 @@ const RoomSelection = ({ yacht, selectedSchedule }) => {
                         //If a room with the same idRoom is found in selectedRooms, isSelected will be true; otherwise, it will be false.
                         isSelected={selectedRooms.some(selectedRoom => selectedRoom.idRoom === room.idRoom)}
                         handleDetail={handleDetail}
-                        services={services}
-                        selectedServices={selectedServices[room.id] || []}
-                        handleServiceChange={handleServiceChange}
                         handleRoomSelect={hanldeRoomSelect}
                     />
                 ))}
+
+                <hr></hr>
+                <div className='service-selection'>
+                    <p style={{ fontWeight: 'bold', fontSize: '14px', marginTop: '7px', marginBottom: '0px' }}>Chọn dịch vụ: </p>
+                    {services.map(service => (
+                        <Form.Check
+                            style={{ fontSize: '14px' }}
+                            key={service.idService}
+                            type="checkbox"
+                            label={`${service.service} (+ ${service.price.toLocaleString()} đ)`}
+                            // checked={selectedServices.includes(service.idService)}
+                            onChange={() => handleServiceChange(service.idService)}
+                        />
+                    ))}
+                </div>
 
                 <div className='my-3'>
                     <div className="row">

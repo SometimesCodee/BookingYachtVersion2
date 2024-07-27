@@ -32,6 +32,10 @@ const Information = () => {
                 toast.error('Email Không Tồn Tại')
             } else if (res && res.data.data === '2') {
                 toast.error('Số Điện Thoại Không Tồn Tại')
+            } else if (res && res.data.data === '999') {
+                toast.error('Email Đã Tồn Tại')
+            } else if (res && res.data.data === '888') {
+                toast.error('Số Điện Thoại Đã Tồn Tại')
             } else if (res && res.data.data === '0') {
                 toast.success('Điền Thông Tin Thành Công');
                 dispatch(information(email, fullName, phoneNumber, address));

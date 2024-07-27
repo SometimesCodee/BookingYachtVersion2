@@ -145,9 +145,15 @@ public class YachtService implements IYacht {
         try{
             Optional<Yacht> yacht = yachtRepository.findById(id);
             if(yacht.isPresent()){
-                yacht.get().setExist(0);
+                if(yacht.get().getExist() == 0){
+                    yacht.get().setExist(1);
+                }else {
+                    yacht.get().setExist(0);
+                }
                 yachtRepository.save(yacht.get());
+
             }
+
             return true;
         }catch (Exception e){
             System.out.println("Error hidden Yacht " + e.getMessage());
@@ -195,7 +201,6 @@ public class YachtService implements IYacht {
             if(yachtList != null) {
                 for (Yacht yacht : yachtList) {
                     YachtDTO yachtDTO = new YachtDTO();
-                    if(yacht.getExist() == 1) {
                         yachtDTO.setIdYacht(yacht.getIdYacht());
                         yachtDTO.setName(yacht.getName());
                         yachtDTO.setImage(yacht.getImage());
@@ -227,7 +232,6 @@ public class YachtService implements IYacht {
                         yachtDTO.setLocation(locationDTO);
 
                         yachtDTOList.add(yachtDTO);
-                    }
                 }
             }
         }catch (Exception e){

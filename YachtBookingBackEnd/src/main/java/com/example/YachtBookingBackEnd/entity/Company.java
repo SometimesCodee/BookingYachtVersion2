@@ -26,7 +26,7 @@ public class Company {
     @Column(name = "logo", length = 255)
     private String logo;
 
-    @Column(name = "email", length = 255)
+    @Column(name = "email", length = 255, unique = true)
     private String email;
 
     @Column(name = "exist")

@@ -178,7 +178,7 @@ const ModalRoomType = (props) => {
                                 {
                                     displayedRoomTypes && displayedRoomTypes.length > 0 && displayedRoomTypes.map((type) =>
                                         <tr key={type.idRoomType}>
-                                            <td>{type.price}</td>
+                                            <td>{type.price.toLocaleString()}</td>
                                             <td>{type.type}</td>
                                             <td>{type.utilities}</td>
                                             <td>

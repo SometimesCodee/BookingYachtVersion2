@@ -53,9 +53,7 @@ const Layout = () => {
                         <FindYacht />
                     } />
                     <Route path='/doanhnhiep' element={<Enterprise />} />
-                    <Route path='/mainpage/:yachtId' element={
-                        <MainPage />
-                    } />
+                    <Route path='/mainpage/:yachtId' element={<MainPage />} />
                     <Route path='/yacht-rule' element={<YachtRule />} />
                     <Route path='/yacht-question' element={<YachtQuestion />} />
                     <Route path='/payment-return' element={<PaymentReturn />} />
@@ -111,7 +109,7 @@ const Layout = () => {
 
             <ToastContainer
                 position="top-right"
-                autoClose={15000}
+                autoClose={5000}
                 hideProgressBar={false}
                 newestOnTop={false}
                 closeOnClick

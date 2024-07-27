@@ -16,9 +16,13 @@ const Signup = () => {
 
 
     const handleRegister = async () => {
+        var regexp = /^\S+$/;
         if (userName === '' || password === '' || confrimPassword === '') {
             toast.error('Vui Lòng Nhập Đầy Đủ Thông Tin')
-        } else if (userName.length < 3) {
+        } else if (!userName.match(regexp)) {
+            toast.error('Tài Khoản Không Được Để Khoảng Trắng')
+        }
+        else if (userName.length < 3) {
             toast.error('Tài Khoản Phải Chứa Ít Nhất 3 Ký Tự')
         } else if (password.length < 8) {
             toast.error('Mật Khẩu Phải Chứa Ít Nhất 8 Ký Tự')

@@ -8,6 +8,7 @@ import './Company.scss';
 
 import { Link } from 'react-router-dom';
 import ModalViewDetailBooking from './ModalViewDetailBooking';
+import ModalReasonCompany from './Modal/ModalReasonCompany';
 
 const ViewBooking = () => {
     const idCompany = useSelector(state => state.account.account.idCompany);
@@ -24,6 +25,9 @@ const ViewBooking = () => {
     const itemsPerPage = 3;
 
     const [bookingDetail, setBookingDetail] = useState({})
+
+    const [showModalReason, setShowModalReason] = useState(false);
+    const [idCancel, setIdCancel] = useState('');
     useEffect(() => {
         getBooking();
     }, [])
@@ -77,13 +81,9 @@ const ViewBooking = () => {
     }
 
     const handleCancelBooking = async (idBooking) => {
-        let res = await canelBooking(idCompany, idBooking);
-        if (res && res.data && res.data.data === true) {
-            toast.success('Cancel Booking Successfully')
-            getBooking();
-        } else {
-            toast.error('Cancel Fail')
-        }
+        setIdCancel(idBooking);
+        setShowModalReason(true);
+
     }
 
     const handlePageChange = (selectedItem) => {
@@ -218,6 +218,13 @@ const ViewBooking = () => {
                     show={isShowModalViewBooking}
                     setIsShowModalViewBooking={setIsShowModalViewBooking}
                     bookingDetail={bookingDetail}
+                />
+
+                <ModalReasonCompany
+                    showModalReason={showModalReason}
+                    setShowModalReason={setShowModalReason}
+                    idCancel={idCancel}
+                    getBooking={getBooking}
                 />
             </div >
 

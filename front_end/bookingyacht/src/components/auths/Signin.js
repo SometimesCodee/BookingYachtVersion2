@@ -36,16 +36,12 @@ const Signin = () => {
                 toast.error("Tài Khoản Của Bạn Không Tồn Tại")
             } else if (res && res.data && res.data.data) {
                 const role = jwtDecode(res.data.data);
-
                 let resAccount = await getIdCustomer(res.data.idAccount);
-
                 dispatch(doLogin(res.data.data, role.role, res.data.idCompany ? res.data.idCompany : "", res.data.idCustomer ? res.data.idCustomer : ""))
                 if (role && role.role === 'ROLE_COMPANY') {
                     setLoading(false);
-
                     toast.success("Đăng Nhập Thành Công");
                     navigate(`/manage-company`);
-
                 } else if (role && role.role === 'ROLE_CUSTOMER') {
                     setLoading(false);
                     if (resAccount && resAccount.data && resAccount.data.data === '0') {

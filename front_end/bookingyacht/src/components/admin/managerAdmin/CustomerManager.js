@@ -204,7 +204,11 @@ const CustomerManager = () => {
                             <td>{customer.address}</td>
                             <td className='button_mana'>
                                 <Button variant="info" onClick={() => handleShowModal(customer)}>Chi tiết</Button>
-                                <Button variant="danger" onClick={() => handleHideCustomer(customer)}>Vô Hiệu Hóa</Button>
+                                <Button variant={customer.accountDTO.status ? 'danger' : 'success'}
+                                onClick={() => handleHideCustomer(customer)}
+                                >
+                                {customer.accountDTO.status ? 'Vô Hiệu Hóa' : 'Mở Tài Khoản'}
+                                </Button>
                             </td>
                         </tr>
                     ))}
@@ -250,7 +254,11 @@ const CustomerManager = () => {
                     <Modal.Title>Confirm Hide Customer</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <p>Bạn có chắc chắn muốn vô hiệu hóa tài khoản này không!</p>
+                    {
+                        selectedCustomer?.accountDTO.status
+                        ? 'Bạn có chắc chắn muốn vô hiệu hóa tài khoản này không!'
+                        : 'Bạn có chắc chắc muốn mở khóa cho tài khoản này không'
+                    }
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant='secondary' onClick={() => setShowConfirmModal(false)}>

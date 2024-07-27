@@ -142,7 +142,7 @@ public class CustomerService implements ICustomer {
             accountDTO.setUsername(customer.get().getAccount().getUsername());
             accountDTO.setPassword(customer.get().getAccount().getPassword());
             accountDTO.setPassword(customer.get().getAccount().getRole());
-
+            accountDTO.setStatus(customer.get().getAccount().getStatus());
             customerDTO.setAccountDTO(accountDTO);
         }
         return customerDTO;
@@ -321,7 +321,11 @@ public class CustomerService implements ICustomer {
                 .orElseThrow(() -> new IllegalArgumentException("Invalid account ID"));
 
         if(account != null){
-            account.setStatus(0);
+            if(customer.getAccountDTO().getStatus() == 1){
+                account.setStatus(0);
+            }else if(customer.getAccountDTO().getStatus() == 0){
+                account.setStatus(1);
+            }
             accountRepository.save(account);
             return true;
         }

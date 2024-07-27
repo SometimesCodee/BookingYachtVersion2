@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 @Repository
 public interface YachtRepository extends JpaRepository<Yacht, String> {
-    @Query("SELECT y FROM Yacht y")
+    @Query("SELECT y FROM Yacht y WHERE y.company.exist = 1")
     List<Yacht> findAllYachts();
 
 

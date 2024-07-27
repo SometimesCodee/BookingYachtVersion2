@@ -84,11 +84,11 @@ const PaymentReturn = () => {
 
     const formatAmount = (amount) => {
         if (!amount) return 'N/A';
-        
-        const formattedAmount = (amount/100).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+
+        const formattedAmount = (amount / 100).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
         return `${formattedAmount} VND`;
     };
-    
+
     return (
         <Container className='mt-5 my-5'>
             <Row className='justify-content-md-center'>
@@ -101,7 +101,7 @@ const PaymentReturn = () => {
                         </Card.Header>
                         <Card.Body>
                             <Card.Text>
-                                {payment?.vnp_ResponseCode === '00' 
+                                {payment?.vnp_ResponseCode === '00'
                                     ? 'Thank you for your purchase!'
                                     : 'There was an issue with your payment.'}
                             </Card.Text>

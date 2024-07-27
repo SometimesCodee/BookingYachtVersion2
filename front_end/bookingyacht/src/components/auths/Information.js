@@ -9,7 +9,6 @@ import { fillInformationCustomer } from '../../services/ApiServices';
 import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
 import { information } from '../../redux/action/InformationAction';
-import { dark } from '@mui/material/styles/createPalette';
 const Information = () => {
 
     const navigate = useNavigate();
@@ -44,6 +43,10 @@ const Information = () => {
                 toast.error('Invalid Form Email')
             } else if (res && res.data.data === '2') {
                 toast.error('Invalid Phone Number')
+            } else if (res && res.data.data === '999') {
+                toast.error('Email đã tồn tại')
+            } else if (res && res.data.data === '888') {
+                toast.error('Số Điện Thoại đã tồn tại')
             } else if (res && res.data.data === '0') {
 
                 toast.success('Fill Information Successfully');

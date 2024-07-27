@@ -114,7 +114,7 @@ const Layout = () => {
 
             <ToastContainer
                 position="top-right"
-                autoClose={15000}
+                autoClose={5000}
                 hideProgressBar={false}
                 newestOnTop={false}
                 closeOnClick

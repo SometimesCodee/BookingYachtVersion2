@@ -40,6 +40,9 @@ logging:
 jwt:
   privateKey: WoOXNLcTzDlQqjp2JzMNJ7+fi7UQ3O8FAselbtKQSgM=
 
+fileUpLoad:
+  rootPath: D:\UML SWP\uploads
+
 payment:
   vnPay:
     payUrl: https://sandbox.vnpayment.vn/paymentv2/vpcpay.html

@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from 'react'
-import Modal from 'react-bootstrap/Modal';
+import _ from 'lodash';
+import React, { useEffect, useState } from 'react';
+import { Button } from 'react-bootstrap';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
+import Modal from 'react-bootstrap/Modal';
 import Row from 'react-bootstrap/Row';
-import { Button } from 'react-bootstrap'
 import { FcPlus } from "react-icons/fc";
-import { createYacht, getYachtType } from '../../../services/ApiServices';
-import { toast } from 'react-toastify';
-import _ from 'lodash';
 import { useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
+import { createYacht, getYachtType } from '../../../services/ApiServices';
 
 const ModalCreateYacht = (props) => {
     const { show, setShow, location } = props;
@@ -64,6 +64,7 @@ const ModalCreateYacht = (props) => {
         )
 
     }
+    console.log('data', data)
 
     const handelUploadImage = (event) => {
         if (event.target.files[0] && event.target && event.target.files) {
@@ -72,10 +73,11 @@ const ModalCreateYacht = (props) => {
         }
     }
     const handleCreateYacht = async () => {
-        let res = await createYacht(idCompany, data.name.trim(), image, data.launch, data.hullBody.trim(), data.description.trim(), data.rule.trim(), data.itinerary.trim(), data.location, data.yachtType);
+        console.log('data', data)
         if (!data.name || !image || !data.launch || !data.hullBody || !data.description || !data.rule || !data.itinerary || !data.location || !data.yachtType) {
             toast.error("Please fill in all fields")
         } else {
+            let res = await createYacht(idCompany, data.name.trim(), image, data.launch, data.hullBody.trim(), data.description.trim(), data.rule.trim(), data.itinerary.trim(), data.location, data.yachtType);
             if (res && res.data.data === true) {
                 toast.success('Create Successfully');
                 await props.listYacht();

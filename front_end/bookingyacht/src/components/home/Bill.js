@@ -12,7 +12,6 @@ const Bill = ({ idCustomer }) => {
   const [starRating, setStarRating] = useState(0);
   const [description, setDescription] = useState('');
   const [reviewedBills, setReviewedBills] = useState({});
-  const [idYacht, setIdYacht] = useState(0);
   const navigate = useNavigate();
 
   const toggleDetails = (idBooking) => {

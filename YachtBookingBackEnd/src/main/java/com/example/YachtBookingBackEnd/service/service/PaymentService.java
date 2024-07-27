@@ -58,7 +58,7 @@ public class PaymentService implements IPayment {
 
         // Create a new booking order
         BookingOrder bookingOrder = new BookingOrder();
-        bookingOrder.setBookingTime(LocalDateTime.now());
+        bookingOrder.setBookingTime(LocalDateTime.now().plusHours(7));
         bookingOrder.setRequirement(requirement);
         bookingOrder.setStatus(DEFAULT_STATUS);
 
@@ -181,7 +181,7 @@ public class PaymentService implements IPayment {
         // Parse vnp_PayDate using DateTimeFormatter
         String vnpPayDateStr = vnp_CreateDate;
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
-        LocalDateTime vnpPayDateFormat = LocalDateTime.parse(vnpPayDateStr, dateTimeFormatter);
+        LocalDateTime vnpPayDateFormat = LocalDateTime.parse(vnpPayDateStr, dateTimeFormatter).plusHours(7);
 
         transaction.setTransactionDate(vnpPayDateFormat);
         transaction.setStatus("Pending");

@@ -5,7 +5,7 @@ import { store } from '../redux/Store';
 
 
 const instance = axios.create({
-    baseURL: 'https://booking18-fzc0ghgvcve8f7fs.eastasia-01.azurewebsites.net',
+    baseURL: 'http://localhost:8080',
 });
 
 NProgress.configure({
@@ -16,7 +16,7 @@ NProgress.configure({
     // trickleRate: 0.5,
     // easing: 'ease',
     // speed: 200,
-    // trickle: true,
+    // trickle: true, 
     // trickleRate: 0.02
 })
 

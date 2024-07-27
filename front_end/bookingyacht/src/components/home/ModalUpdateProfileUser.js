@@ -45,9 +45,6 @@ const ModalUpdateProfileUser = (props) => {
         if (value.length < 6) {
             return 'Full name must be at least 6 characters long';
         }
-        if (customers.some(customer => customer.fullName === value && customer.fullName !== profile.fullName)) {
-            return 'Full name already exists';
-        }
         return true;
     };
 

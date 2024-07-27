@@ -22,7 +22,6 @@ const MainPage = () => {
   const [currentSection, setCurrentSection] = useState('');
   const [selectedSchedule, setSelectedSchedule] = useState('');
 
-  console.log(selectedSchedule)
 
 
   useEffect(() => {

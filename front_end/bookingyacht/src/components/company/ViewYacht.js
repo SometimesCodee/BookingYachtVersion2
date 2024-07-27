@@ -13,7 +13,7 @@ import _ from 'lodash';
 import Form from 'react-bootstrap/Form';
 import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
-const ViewYacht = (props) => {
+const ViewYacht = () => {
     const navigate = useNavigate();
     const [isShowModal, setIsShowModal] = useState(false);
     const idCompany = useSelector(state => state.account.account.idCompany);
@@ -29,6 +29,7 @@ const ViewYacht = (props) => {
 
     const [currentPage, setCurrentPage] = useState(0);
     const itemsPerPage = 3;
+
     useEffect(() => {
         listYacht();
         getLocation();
@@ -68,8 +69,6 @@ const ViewYacht = (props) => {
         let res = await getAllLocation();
         if (res && res.data && res.data.data) {
             setLocation(res.data.data);
-        } else {
-            setLocation('Not Found')
         }
     }
 

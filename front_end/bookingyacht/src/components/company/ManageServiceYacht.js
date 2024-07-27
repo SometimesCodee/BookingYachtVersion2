@@ -49,10 +49,10 @@ const ManageServiceYacht = () => {
     }
 
     const handleCreateYachtSurvice = async () => {
-        let res = await createServiceYacht(idYacht.trim(), service.trim(), price.trim());
         if (!service || !price) {
             toast.error('Please fill in all fields');
         } else {
+            let res = await createServiceYacht(idYacht.trim(), service.trim(), price.trim());
             if (res && res.data && res.data.data === true) {
                 toast.success('Create Service Yacht Successfully')
                 setService('')

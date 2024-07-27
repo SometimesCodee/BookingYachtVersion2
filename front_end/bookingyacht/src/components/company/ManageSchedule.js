@@ -44,7 +44,6 @@ const ManageSchedule = () => {
             setSchedule(res.data.data)
         } else {
             toast.error("Can not found schedule")
-            console.log("can not found schedule")
         }
     }
 

@@ -35,9 +35,7 @@ const ModalRoomType = (props) => {
             if (res && res.data.data === true) {
                 toast.success('Create Successfully')
                 getRoomType()
-                setPrice(0);
-                setType('');
-                setUtilities('');
+                handleClose()
             } else {
                 toast.error('Create Fail')
             }
@@ -103,7 +101,6 @@ const ModalRoomType = (props) => {
     }
 
     const displayedRoomTypes = roomType.slice(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage);
-    console.log('check', displayedRoomTypes)
     return (
         <div>
             <Modal

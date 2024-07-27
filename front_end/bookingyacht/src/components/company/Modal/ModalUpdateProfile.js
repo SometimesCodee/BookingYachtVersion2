@@ -29,8 +29,10 @@ const ModalUpdateProfile = (props) => {
             setName(profile.name);
             setImage(profile.logo)
             setPreviewImage(profile.logo)
+            setImage(profile.logo)
         }
     }, [profile])
+
     const handelUploadImage = (event) => {
 
 
@@ -54,20 +56,29 @@ const ModalUpdateProfile = (props) => {
 
     }
 
+<<<<<<< HEAD
     console.log('imae2', previewImage)
 
     const handleUpdateProfile = async () => {
         console.log('imae', image)
 
         let res = await updateProfileCompany(idCompany, name.trim(), address.trim(), image)
+=======
+
+    const handleUpdateProfile = async () => {
+
+>>>>>>> fiximage
         if (!name || !address) {
             toast.error("Please fill in all fields")
-        } else if (res && res.data && res.data.data === true) {
-            toast.success('Update Successfully');
-            handleClose();
-            await props.getProfile();
         } else {
-            toast.error('Update Fail')
+            let res = await updateProfileCompany(idCompany, name.trim(), address.trim(), image)
+            if (res && res.data && res.data.data === true) {
+                toast.success('Update Successfully');
+                handleClose();
+                await props.getProfile();
+            } else {
+                toast.error('Update Fail')
+            }
         }
     }
 
@@ -96,7 +107,7 @@ const ModalUpdateProfile = (props) => {
                             <Form.Control type='text' value={name} onChange={event => setName(event.target.value)} />
                         </Form.Group>
                         <div className='col-mad-12'>
-                            <label className='form-label label-upload' htmlFor='labelCreateImage'> <FcPlus /> Upload File IMAGE</label>
+                            <label style={{ width: 'fit-content' }} className='form-label label-upload' htmlFor='labelCreateImage'> <FcPlus /> Upload File IMAGE</label>
                             <input
                                 type='file'
                                 accept='image/*'

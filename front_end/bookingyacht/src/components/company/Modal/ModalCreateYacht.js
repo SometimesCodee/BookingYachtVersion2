@@ -200,7 +200,7 @@ const ModalCreateYacht = (props) => {
                             />
                         </Row>
                         <div className='col-mad-12'>
-                            <label className='form-label label-upload' htmlFor='labelUpload'> <FcPlus /> Upload File IMAGE</label>
+                            <label style={{ width: 'fit-content' }} className='form-label label-upload' htmlFor='labelUpload'> <FcPlus /> Upload File IMAGE</label>
                             <input
                                 type='file'
                                 accept='image/*'

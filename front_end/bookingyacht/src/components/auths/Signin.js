@@ -53,7 +53,7 @@ const Signin = () => {
                         navigate(`/information/${res.data.idAccount}`)
                     } else if (resAccount && resAccount.data && resAccount.data.data !== '0') {
                         toast.success("Đăng Nhập Thành Công");
-                        // navigate(-2);
+                        navigate('/');
                     }
                 }
             } else {

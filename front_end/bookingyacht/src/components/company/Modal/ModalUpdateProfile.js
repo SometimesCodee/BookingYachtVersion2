@@ -18,7 +18,7 @@ const ModalUpdateProfile = (props) => {
     const [email, setEmail] = useState('');
     const [address, setAddress] = useState('');
     const [name, setName] = useState('');
-    const [image, setImage] = useState("");
+    const [image, setImage] = useState('');
     const [previewImage, setPreviewImage] = useState("");
 
 
@@ -27,18 +27,38 @@ const ModalUpdateProfile = (props) => {
             setEmail(profile.email);
             setAddress(profile.address);
             setName(profile.name);
+            setImage(profile.logo)
             setPreviewImage(profile.logo)
         }
     }, [profile])
     const handelUploadImage = (event) => {
-        if (event.target.files[0] && event.target && event.target.files) {
-            setPreviewImage(URL.createObjectURL(event.target.files[0]));
-            setImage(event.target.files[0]);
+
+
+
+        const file = event.target.files ? event.target.files[0] : null;
+        const url = event.target.value ? event.target.value : null;
+
+        if (file) {
+            setPreviewImage(URL.createObjectURL(file));
+            setImage(file);
+        } else if (url) {
+            setPreviewImage(url);
+            setImage(url);
         }
+
+
+        // if (event.target.files[0] && event.target && event.target.files) {
+        //     setPreviewImage(URL.createObjectURL(event.target.files[0]));
+        //     setImage(event.target.files[0]);
+        // }
 
     }
 
+    console.log('imae2', previewImage)
+
     const handleUpdateProfile = async () => {
+        console.log('imae', image)
+
         let res = await updateProfileCompany(idCompany, name.trim(), address.trim(), image)
         if (!name || !address) {
             toast.error("Please fill in all fields")

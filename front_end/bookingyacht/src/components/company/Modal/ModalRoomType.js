@@ -15,7 +15,7 @@ const ModalRoomType = (props) => {
 
     const [isShowModalUpdateRoomType, setIsShowModalUpdateRoomType] = useState(false);
     const [price, setPrice] = useState(0);
-    const [type, setType] = useState(0);
+    const [type, setType] = useState('');
     const [utilities, setUtilities] = useState('');
 
     const handleClose = () => {

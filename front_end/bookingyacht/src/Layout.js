@@ -54,14 +54,10 @@ const Layout = () => {
                         <FindYacht />
                     } />
                     <Route path='/doanhnhiep' element={<Enterprise />} />
-                    <Route path='/mainpage/:yachtId' element={
-                        <ProtectedHomepage>
-                            <MainPage />
-                        </ProtectedHomepage>
-                    } />
+                    <Route path='/mainpage/:yachtId' element={<MainPage />} />
                     <Route path='/yacht-rule' element={<YachtRule />} />
                     <Route path='/yacht-question' element={<YachtQuestion />} />
-                    <Route path='/payment-return' element={<PaymentReturn/>}/>
+                    <Route path='/payment-return' element={<PaymentReturn />} />
                 </Route>
 
                 <Route path='/signin' element={<Signin />} />

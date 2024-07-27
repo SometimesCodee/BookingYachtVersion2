@@ -28,6 +28,7 @@ const BookNowModal = ({
     const navigate = useNavigate();
 
     console.log('schedule', schedule)
+    console.log('selectedService', selectedServices)
 
     useEffect(() => {
         const getCustomer = async () => {
@@ -57,13 +58,7 @@ const BookNowModal = ({
         return selectedRooms.map(room => room.idRoom);
     };
 
-    const getSelectedServiceIds = () => {
-        let serviceIds = [];
-        for (const roomId in selectedServices) {
-            serviceIds = [...serviceIds, ...selectedServices[roomId]];
-        }
-        return serviceIds;
-    };
+
     const handleSubmit = (event) => {
         event.preventDefault();
         if (isLogged) {
@@ -83,11 +78,10 @@ const BookNowModal = ({
 
     const processPayment = async () => {
         const selectedRoomIds = getSelectedRoomIds();
-        const selectedServiceIds = getSelectedServiceIds();
-        console.log('roomid:', selectedRoomIds, 'serverviceid:', selectedServiceIds, 'requirements:', requirements, 'customer:', idCustomer, 'schedule:', selectedSchedule)
+        console.log('roomid:', selectedRoomIds, 'serverviceid:', selectedServices, 'requirements:', requirements, 'customer:', idCustomer, 'schedule:', selectedSchedule)
         try {
 
-            const res = await createPayment(selectedRoomIds, selectedServiceIds, requirements, idCustomer, selectedSchedule);
+            const res = await createPayment(selectedRoomIds, selectedServices, requirements, idCustomer, selectedSchedule);
             console.log(res);
             setUrlPayment(res.data.data);
             console.log('url', res.data.data);
@@ -124,20 +118,6 @@ const BookNowModal = ({
                         </Col>
                         <Col md={5}>
                             <h5 className='fw-bold'>{room.name}</h5>
-                            <div>
-                                {selectedServices[room.idRoom] && selectedServices[room.idRoom].map(serviceId => {
-                                    console.log(selectedServices[room.idRoom]);
-
-                                    const service = services.find(s => s.idService === serviceId);
-                                    console.log('service', services);
-                                    return (
-                                        <div key={serviceId} className="d-flex justify-content-between align-items-center mb-2">
-                                            <span style={{ color: 'black', fontSize: '14px' }}>{service ? service.service : ''} {service.price.toLocaleString()} đ</span>
-                                            <Button variant="danger" size="sm" onClick={() => handleServiceChange(room.idRoom, serviceId)}>Xóa</Button>
-                                        </div>
-                                    );
-                                })}
-                            </div>
                         </Col>
                         <Col md={3}>
                             <h6 className='fw-bold'>Giá Phòng</h6>
@@ -148,6 +128,19 @@ const BookNowModal = ({
                         </Col>
                     </Row>
                 ))}
+                <div className="my-3 p-3 border rounded border-success align-items-center">
+                    <strong>Services đã chọn</strong>
+                    {selectedServices.map(serviceId => {
+                        const service = services.find(s => s.idService === serviceId);
+                        console.log('service', services);
+                        return (
+                            <div key={serviceId} className="d-flex justify-content-between align-items-center mb-2">
+                                <span style={{ color: 'black', fontSize: '14px' }}>{service ? service.service : ''} {service.price.toLocaleString()} đ</span>
+                                <Button variant="danger" size="sm" onClick={() => handleServiceChange(serviceId)}>Xóa</Button>
+                            </div>
+                        );
+                    })}
+                </div>
                 <Form id="bookingForm" onSubmit={handleSubmit}>
                     <Form.Group controlId="formName" className="mb-3">
                         <Form.Label>Lịch trình đã chọn</Form.Label>

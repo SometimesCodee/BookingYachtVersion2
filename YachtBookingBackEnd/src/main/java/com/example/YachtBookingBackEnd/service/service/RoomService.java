@@ -148,6 +148,11 @@ public class RoomService implements IRoom {
             }else {
                 room.setDescription(room.getDescription());
             }
+            if(roomName!= null){
+                room.setName(roomName);
+            }else {
+                room.setName(room.getName());
+            }
             Map uploadResult = cloudinaryService.upload(avatar);
             String imageUrl = (String) uploadResult.get("url");
             if (imageUrl == null) {

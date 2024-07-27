@@ -127,16 +127,20 @@ const ManageRoom = () => {
                     .map((room) =>
                         <div key={room.idRoom} className='d-flex my-5 room p-3 row ' style={{ gap: 50 }}>
                             <img className='col-md-2' width={170} src={room.avatar} alt='' />
-                            <div className=' col-md-3' >
-                                <div className='room-name'>{room.name}</div>
+                            <div className=' col-md-4' >
+                                <div className='room-name'>
+                                    <p className='fw-bold'>{room.name}</p>
+                                </div>
                                 <div>{room.area} <TbMeterSquare size={25} className='pb-1' /></div>
 
-                                <div>{room.roomType.price} đ/KHÁCH</div>
+                                <div>{room.roomType.price.toLocaleString()} đ/KHÁCH</div>
                             </div>
 
-                            <div className='col-md-5'>
-                                <Button onClick={() => handlManageImageRoom(room.idRoom)} className='btn btn-warning mx-3'>Manage Room Image </Button>
-                                <Button onClick={() => handleUpdateRoom(room)} className='btn btn-primary'>Update</Button>
+                            <div className='col-md-4'>
+                                <div className='ok'>
+                                    <Button onClick={() => handlManageImageRoom(room.idRoom)} className='btn btn-warning mx-3'>Manage Room Image </Button>
+                                    <Button onClick={() => handleUpdateRoom(room)} className='btn btn-primary'>Update</Button>
+                                </div>
                             </div>
 
                         </div>

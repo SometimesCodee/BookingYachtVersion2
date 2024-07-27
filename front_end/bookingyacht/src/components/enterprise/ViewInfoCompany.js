@@ -7,7 +7,6 @@ import './Enterprise.scss';
 const CompanyList = () => {
     const [companies, setCompanies] = useState([]);
     const navigate = useNavigate();
-    // const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         getAllCompany()

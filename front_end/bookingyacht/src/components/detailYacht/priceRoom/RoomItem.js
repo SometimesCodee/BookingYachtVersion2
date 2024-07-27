@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, FormCheck } from 'react-bootstrap';
+import { FormCheck } from 'react-bootstrap';
 import { MdOutlineBedroomParent, MdOutlinePerson } from "react-icons/md";
 import ServiceSelection from './ServiceSelection';
 import './form-sel.scss';
@@ -44,7 +44,7 @@ const RoomItem = ({ room, handleDetail, handleRoomSelect, isSelected, services, 
                     />
                 </div>
 
-            </div >
+            </div>
             <div className='service-selection'>
                 <p style={{ fontWeight: 'bold', fontSize: '14px', marginTop: '7px', marginBottom: '0px' }}>Chọn dịch vụ: </p>
                 {services.map(service => (

@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { paymentReturn } from '../../services/ApiServices';
-import { Button, Card, Col, Container, Row } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import qs from 'qs';
+import React, { useEffect, useState } from 'react';
+import { Button, Card, Col, Container, Row } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 
 const PaymentReturn = () => {
 

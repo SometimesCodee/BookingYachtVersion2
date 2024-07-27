@@ -23,7 +23,6 @@ const RoomDetailModal = ({ selectedRoom, show, handleClose }) => {
         setCurrentIndex(selectedIndex);
     };
 
-    // const getImageApi = `http://localhost:8080/api/customer/file/`;
     const utilities = selectedRoom.roomType?.utilities ? selectedRoom.roomType.utilities.split('.').filter(sentence => sentence.trim()) : [];
 
     const renderUtilities = () => {

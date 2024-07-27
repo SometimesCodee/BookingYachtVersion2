@@ -1,6 +1,5 @@
 server:
   port: 8080
-
 spring:
   datasource:
     url: "jdbc:mysql://localhost:3306/project_swp"
@@ -9,6 +8,7 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
+      dialect: org.hibernate.dialect.MySQL8Dialect
     show-sql: true
     open-in-view: false
   h2:
@@ -39,12 +39,15 @@ logging:
 jwt:
   privateKey: WoOXNLcTzDlQqjp2JzMNJ7+fi7UQ3O8FAselbtKQSgM=
 
+fileUpLoad:
+  rootPath: D:\UML SWP\uploads
+
 payment:
   vnPay:
     payUrl: https://sandbox.vnpayment.vn/paymentv2/vpcpay.html
     tmnCode: OCFL0E29
     secretKey: IOMD65I4028IUX9GDIKR3NO583UOKRNW
-    returnUrl: https://yb.sh.io.vn/payment-return
+    returnUrl: http://localhost:3000/payment-return
     apiUrl: https://sandbox.vnpayment.vn/merchant_webapi/api/transaction
     version: 2.1.0
     command: pay

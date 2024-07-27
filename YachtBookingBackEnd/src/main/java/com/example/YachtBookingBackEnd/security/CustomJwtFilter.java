@@ -51,6 +51,7 @@ public class CustomJwtFilter extends OncePerRequestFilter {
                 //Tạo đối tượng UsernamePasswordAuthenticationToken để đại diện cho thông tin xác thực của người dùng
                 UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
                         username, null, Collections.singletonList(new SimpleGrantedAuthority(role)) // Tạo đối tượng xác thực
+                        //Đối số thứ hai (null) là mật khẩu, vì mật khẩu không cần thiết khi xác thực dựa trên token JWT.
                 );
 
                 authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));// Đặt chi tiết xác thực

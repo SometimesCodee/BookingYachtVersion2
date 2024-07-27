@@ -15,7 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.time.LocalDateTime;
 import java.time.LocalDate;
 
-@CrossOrigin("https://yb.sh.io.vn")
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/api/companies")
 @RequiredArgsConstructor

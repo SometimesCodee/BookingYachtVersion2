@@ -25,7 +25,9 @@ const Information = () => {
         if (!email || !fullName || !phoneNumber || !address) {
             toast.error('Vui Lòng Nhập Đầy Đủ Thông Tin')
         } else {
-            let res = await fillInformationCustomer(idAccount, fullName, email, phoneNumber, address);
+
+            let res = await fillInformationCustomer(idAccount, fullName.trim(), email.trim(), phoneNumber.trim(), address.trim());
+            console.log(res)
             if (res && res.data.data === '1') {
                 toast.error('Email Không Tồn Tại')
             } else if (res && res.data.data === '2') {

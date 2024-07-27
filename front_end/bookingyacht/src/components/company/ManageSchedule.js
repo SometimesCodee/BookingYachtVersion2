@@ -56,7 +56,7 @@ const ManageSchedule = () => {
 
         const now = Date.now();
         if (new Date(getStartDate).getTime() <= now) {
-            toast.error('Start date must before ' + formatDateTime(now));
+            toast.error('Start date must after ' + formatDateTime(now));
             return;
         }
 

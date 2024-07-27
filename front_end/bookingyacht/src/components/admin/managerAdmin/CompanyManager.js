@@ -116,7 +116,7 @@ const CompanyManager = () => {
         const password = form.elements.password.value.trim();
         const confirmPassword = form.elements.confirmPassword.value.trim();
         // Kiểm tra điều kiện cho tên tài khoản
-        if (username.length < 3 || !/^[a-zA-Z]/.test(username) || username.includes('')) {
+        if (username.length < 3 || !/^[a-zA-Z]/.test(username) || username.includes(' ')) {
             toast.error('Tên tài khoản phải bắt đầu bằng một chữ cái và có ít nhất 3 ký tự và không chứa dấu cách!');
             return;
         }

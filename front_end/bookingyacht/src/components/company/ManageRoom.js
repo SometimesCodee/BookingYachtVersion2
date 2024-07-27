@@ -63,7 +63,9 @@ const ManageRoom = () => {
     const getAllRoom = async () => {
         let res = await getAllRoomByYacht(idYacht);
         if (res && res.data && res.data.data) {
-            setListRoom(res.data.data)
+            setListRoom(res.data.data.sort((a, b) => {
+                return a.name.toLowerCase().localeCompare(b.name.toLowerCase());
+            }))
         } else {
             toast.info('Not Found Room By Yacht');
         }

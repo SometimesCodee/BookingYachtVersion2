@@ -14,7 +14,7 @@ const Header = () => {
     const dispatch = useDispatch();
     const handleLogout = () => {
         dispatch(doLogout());
-        toast.success('Logout Successfully')
+        toast.success('Đăng Xuất Thành Công')
     }
     return (
         <Navbar expand="lg" className="bg-body-tertiary header">

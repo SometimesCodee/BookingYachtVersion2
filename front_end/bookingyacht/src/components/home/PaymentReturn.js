@@ -109,29 +109,29 @@ const PaymentReturn = () => {
                             {payment && (
                                 <>
                                     <Card.Text>
-                                        <strong>Payment Details</strong><br />
-                                        Transaction ID: {payment.vnp_TransactionNo || 'N/A'}<br />
-                                        Date and Time: {formatDate(payment.vnp_PayDate)}<br />
-                                        Amount Paid: {formatAmount(payment.vnp_Amount)}<br />
-                                        Payment Method: {payment.vnp_CardType || 'N/A'}
+                                        <strong>Chi Tiết Giao Dịch</strong><br />
+                                        Mã Giao Dịch: {payment.vnp_TransactionNo || 'N/A'}<br />
+                                        Ngày và Giờ: {formatDate(payment.vnp_PayDate)}<br />
+                                        Tổng Tiền: {formatAmount(payment.vnp_Amount)}<br />
+                                        Phương Thức Thanh Toán: {payment.vnp_CardType || 'N/A'}
                                     </Card.Text>
                                     <hr />
                                     <Card.Text>
-                                        <strong>Order Summary</strong><br />
-                                        Order Number: {payment.vnp_TxnRef || 'N/A'}<br />
-                                        Items Purchased: {decodeURIComponent(payment.vnp_OrderInfo) || 'N/A'}<br />
+                                        <strong>Tóm Tắt Đơn Đặt Chỗ</strong><br />
+                                        Mã Tham Chiếu: {payment.vnp_TxnRef || 'N/A'}<br />
+                                        Các mặt hàng đã mua: {decodeURIComponent(payment.vnp_OrderInfo) || 'N/A'}<br />
                                     </Card.Text>
                                     <hr />
                                     <Card.Text>
-                                        <strong>Customer Information</strong><br />
-                                        Bank Code: {payment.vnp_BankCode || 'N/A'}<br />
-                                        Bank Transaction No: {payment.vnp_BankTranNo || 'N/A'}
+                                        <strong>Thông Tin Khách Hàng</strong><br />
+                                        Mã Ngân Hàng: {payment.vnp_BankCode || 'N/A'}<br />
+                                        Số Giao Dịch Ngân Hàng: {payment.vnp_BankTranNo || 'N/A'}
                                     </Card.Text>
                                     <hr />
                                     <div className="button-group">
-                                        <Button variant="secondary" onClick={() => navigate('/duthuyen')}>Continue Booking</Button>
+                                        <Button variant="secondary" onClick={() => navigate('/duthuyen')}>Tiếp Tục Đặt Thuyền</Button>
                                         {payment?.vnp_ResponseCode === '00' && (
-                                            <Button variant="info" onClick={() => navigate('/profile')}>View Booking Order</Button>
+                                            <Button variant="info" onClick={() => navigate('/profile')}>Xem Lịch Sử Đặt Thuyền</Button>
                                         )}
                                     </div>
                                 </>

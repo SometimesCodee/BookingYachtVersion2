@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Button, ButtonGroup, Col, Row } from 'react-bootstrap';
+import { Button, Col, Row } from 'react-bootstrap';
 import Accordion from 'react-bootstrap/Accordion';
-import { getAllLocation, getYachtById, getYachtByIdYacht, getYachtType, updateYacht } from '../../services/ApiServices';
+import { getAllLocation, getYachtByIdYacht, getYachtType, updateYacht } from '../../services/ApiServices';
 import Form from 'react-bootstrap/Form';
 import { FcPlus } from "react-icons/fc";
 import _ from 'lodash'
@@ -209,7 +209,7 @@ const ManageInforYacht = (props) => {
                             </div>
                             <div className='col-md-12 img-preview'>
                                 {previewImage ?
-                                    <img src={previewImage} />
+                                    <img src={previewImage} alt='image upload' />
                                     :
                                     <span>Update Avartar</span>
                                 }

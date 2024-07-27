@@ -126,7 +126,7 @@ public class CompanyService implements ICompany {
         } else {
             company.setExist(1);
         }
-
+        accountRepository.save(account);
         companyRepository.save(company);
 
         return true;

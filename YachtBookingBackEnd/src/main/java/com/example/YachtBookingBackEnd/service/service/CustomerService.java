@@ -176,7 +176,7 @@ public class CustomerService implements ICustomer {
     }
 
     @Override
-    public String  updateCustomer(String customerId, String fullName, String email, String phone, String address) {
+    public boolean  updateCustomer(String customerId, String fullName, String email, String phone, String address) {
         //System.out.println(customerId);
         Optional<Customer> customer = customerRepository.findById(customerId);
         System.out.println(customer);
@@ -184,27 +184,6 @@ public class CustomerService implements ICustomer {
             Customer customerEntity = customer.get();
             System.out.println(customerEntity);
             try {
-
-                if (!isValidEmail(email)) {
-                    log.error("Invalid email format");
-                    return "1001";
-                }
-                if (!isValidPhoneNumber(phone)) {
-                    log.error("Invalid phone number format");
-                    return "1000";
-                }
-
-                Customer customerCheckMail = customerRepository.findCustomerByEmail(email);
-                if(customerCheckMail!=null){
-                    log.error("Duplicated mail");
-                    return "999";
-                }
-
-                Customer customerCheckPhone = customerRepository.findCustomerByPhoneNumber(phone);
-                if(customerCheckPhone!=null){
-                    log.error("Duplicated phone number");
-                    return "888";
-                }
 
                 customerEntity.setFullName(fullName);
 
@@ -214,16 +193,16 @@ public class CustomerService implements ICustomer {
                 customerEntity.setAddress(address);
 
                 customerRepository.save(customerEntity);
-                return "200";
+                return true;
 
             } catch (Exception e) {
                 log.error("Update fail");
-                return "1005";
+                return false;
 
             }
         } else {
             log.error("Not found customer");
-            return "1005";
+            return false;
         }
 
     }

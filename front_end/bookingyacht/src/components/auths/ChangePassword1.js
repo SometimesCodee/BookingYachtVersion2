@@ -52,7 +52,7 @@ export default function ChangePassword1() {
                         </label>
                         <input
                           onChange={(password)=> setPassword(password.target.value)}
-                          type="text"
+                          type="password"
                           className="form-control"
                           name="password"
                           id="password"
@@ -64,7 +64,7 @@ export default function ChangePassword1() {
                         </label>
                         <input
                           onChange={(rePassword)=> setRePassword(rePassword.target.value)}
-                          type="text"
+                          type="password"
                           className="form-control"
                           name="rePassword"
                           id="rePassword" />

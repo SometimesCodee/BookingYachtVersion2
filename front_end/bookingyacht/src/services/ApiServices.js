@@ -1,4 +1,3 @@
-import { store } from '../redux/Store';
 import axios from '../utils/CustomizeApi';
 
 
@@ -301,8 +300,10 @@ export const confirmBooking = (idCompany, idBookingOrder) => {
     return axios.put(`/api/companies/${idCompany}/confirm/${idBookingOrder}`)
 }
 
-export const canelBooking = (idCompany, idBookingOrder) => {
-    return axios.put(`/api/companies/${idCompany}/cancel/${idBookingOrder}`)
+export const canelBooking = (idCompany, idBookingOrder, reason) => {
+    const data = new FormData();
+    data.append('reason', reason);
+    return axios.put(`/api/companies/${idCompany}/cancel/${idBookingOrder}`, data)
 }
 
 export const getBookingByAmount = (idCompany, min, max) => {

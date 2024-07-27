@@ -43,7 +43,7 @@ const ModalCreateImageYacht = (props) => {
 
     }
     return (
-        <div>
+        <div className='my-4'>
             <Modal size='xl'
                 show={show}
                 onHide={handleClose}

@@ -2,8 +2,7 @@
     gap: 16px;
 
     .child {
-        border: solid;
-        padding: 50px;
+        padding: 20px;
         border-radius: 10px;
         width: 258px;
         margin-top: 10px;
@@ -11,11 +10,17 @@
 }
 
 .revenue {
+    gap: 10px;
+
     .child1 {
-        border: solid;
-        padding: 43px;
+        padding: 20px;
         margin-top: 10px;
         border-radius: 10px;
-        width: 260px;
+        width: 290px;
     }
+}
+
+.graph {
+    display: flex;
+    justify-content: center;
 }

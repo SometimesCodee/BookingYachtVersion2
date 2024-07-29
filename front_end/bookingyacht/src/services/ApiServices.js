@@ -432,3 +432,37 @@ export const paymentReturn = (data) => {
 export const getIdCustomer = (idAccount) => {
     return axios.get(`/api/customer/idCustomer/${idAccount}`);
 }
+
+export const getStatisticBooking = (idCompany, month, year) => {
+
+    return axios.get(`/api/companies/statistic/booking/${idCompany}`, {
+        params: {
+            month: month,
+            year: year
+        }
+    })
+}
+export const getStatisticService = (idCompany, month, year) => {
+    return axios.get(`/api/companies/statistic/service/${idCompany}`, {
+        params: {
+            month: month,
+            year: year
+        }
+    })
+}
+export const getAllBooking = (idCompany, month, year) => {
+    return axios.get(`/api/companies/allBooking/${idCompany}`, {
+        params: {
+            month: month,
+            year: year
+        }
+    })
+}
+
+export const getBookingByYear = (idCompany, year) => {
+    return axios.get(`/api/companies/bookingByYear/${idCompany}`, {
+        params: {
+            year: year
+        }
+    })
+} 

@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 import java.time.LocalDate;
+import java.util.Map;
 
 @CrossOrigin("*")
 @RestController
@@ -35,6 +36,7 @@ public class CompanyController {
     IYachtType iYachtType;
     ILocation iLocation;
     IForgotPassword iForgotPassword;
+    IStatistic iStatistic;
     @PostMapping("/forgotPassword/verifyEmail")
     public ResponseEntity<?> verifyEmail(@RequestParam String  email) {
         DataResponse dataResponse = new DataResponse<>();
@@ -415,6 +417,32 @@ public class CompanyController {
         return new ResponseEntity<>(dataResponse, HttpStatus.OK);
     }
 
+    @GetMapping("/statistic/booking/{idCompany}")
+    public ResponseEntity<?> getStatistic(@PathVariable String idCompany, @RequestParam String month, @RequestParam String year){
+        DataResponse dataResponse = new DataResponse();
+        dataResponse.setData(iStatistic.getRevenueBooking(idCompany, month, year));
+        return new ResponseEntity<>(dataResponse, HttpStatus.OK);
+    }
+
+    @GetMapping("/statistic/service/{idCompany}")
+    public ResponseEntity<?> getStatisticService(@PathVariable String idCompany, @RequestParam String month, @RequestParam String year){
+        DataResponse dataResponse = new DataResponse();
+        try {
+         dataResponse.setData(iStatistic.getRevenueService(idCompany, month, year));
+         return new ResponseEntity<>(dataResponse, HttpStatus.OK);
+     }catch (Exception e){
+         dataResponse.setDesc(e.getMessage());
+         dataResponse.setSuccess(false);
+         return new ResponseEntity<>(dataResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+     }
+    }
+
+    @GetMapping("/allBooking/{idCompany}")
+    public ResponseEntity<?> getAllBooking(@PathVariable String idCompany, @RequestParam String month, @RequestParam String year){
+        DataResponse dataResponse = new DataResponse();
+        dataResponse.setData(iStatistic.getTotalBooking(idCompany, month, year));
+        return new ResponseEntity<>(dataResponse, HttpStatus.OK);
+    }
 
 
 }

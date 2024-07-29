@@ -1,6 +1,5 @@
 import Card from 'react-bootstrap/Card';
-import { NavLink, useNavigate } from "react-router-dom";
-import Button from 'react-bootstrap/Button';
+import { NavLink } from "react-router-dom";
 import { useEffect, useState } from 'react';
 import { FaLocationDot } from "react-icons/fa6";
 import { GrFormNextLink } from "react-icons/gr";
@@ -8,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import i_content from '../../assets/image_1.webp';
 import { getYachtListApi } from '../../redux/action/YachtListAction';
 import { getHighestAndLowestPriceByYacht } from '../../services/ApiServices';
+import { useTranslation } from 'react-i18next';
 
 
 const ShowYacht = () => {
@@ -39,18 +39,20 @@ const ShowYacht = () => {
         }
     }, [yachtList]);
 
+    const { t } = useTranslation();
+
 
     return (
         <>
             <div className='yacht-header row'>
                 <div className='yacht-title col-md'>
-                    <h3 style={{ fontWeight: 'bold' }}>Du Thuyền Mới <br /> Và Phổ Biến Nhất</h3>
+                    <h3 style={{ fontWeight: 'bold' }}>{t('showyacht.message1')} <br />{t('showyacht.message2')} </h3>
                     <div>
                         <img src={i_content} />
                     </div>
                 </div>
                 <label style={{ width: "488px", color: '#475467' }} className='col-md mb-5'>
-                    Tận hưởng sự xa hoa và đẳng cấp tối đa trên du thuyền mới nhất và phổ biến nhất.Khám phá một hành trình tuyệt vời đưa bạn vào thế giới của sự sang trọng,tiện nghi và trải nghiệm không thể quên.
+                    {t('showyacht.message3')}
                 </label>
             </div>
             <div className='yacht-content'>
@@ -65,8 +67,8 @@ const ShowYacht = () => {
                                         <Card.Title style={{ fontWeight: 600, fontSize: 18, color: '#475467', marginBottom: 0 }}>{`${item.name}`}</Card.Title>
                                         <div style={{ padding: '5px' }} className='location'><FaLocationDot />{item.location.name}</div>
                                         <div className='row d-flex align-items-center mt-2'>
-                                            <p className='col-7' style={{ color: '#475467', fontWeight: '700', marginBottom: 0 }}>Giá từ: {priceData[item.idYacht] ? `${priceData[item.idYacht].lowestPrice.toLocaleString()} đ` : 'Loading...'}</p>
-                                            <button className='col-5 btn btn-warning' style={{ color: '#475467', borderRadius: 25, width: 100, fontSize: '14px' }}>Đặt ngay</button>
+                                            <p className='col-7' style={{ color: '#475467', fontWeight: '700', marginBottom: 0 }}>{t('showyacht.price')}{priceData[item.idYacht] ? `${priceData[item.idYacht].lowestPrice.toLocaleString()} đ` : 'Loading...'}</p>
+                                            <button className='col-5 btn btn-warning' style={{ color: '#475467', borderRadius: 25, width: 100, fontSize: '14px' }}>{t('showyacht.book')}</button>
                                         </div>
                                     </Card.Body>
                                 </Card>
@@ -79,7 +81,7 @@ const ShowYacht = () => {
             <div className='view-all-yacht d-flex'>
                 <NavLink to='/duthuyen' className='nav-link'>
                     <button>
-                        Xem tất cả
+                        {t('showyacht.all')}
                         <GrFormNextLink className='icon-next ml-2' />
                     </button>
                 </NavLink>

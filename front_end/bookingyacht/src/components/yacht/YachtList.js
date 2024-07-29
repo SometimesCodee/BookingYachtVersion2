@@ -10,6 +10,7 @@ import { getYachtListApi } from '../../redux/action/YachtListAction';
 import { getHighestAndLowestPriceByYacht } from '../../services/ApiServices';
 import { useSearchTrigger } from '../home/TriggerFormSearch';
 import NotFound from '../page404/NotFound';
+import { useTranslation } from 'react-i18next';
 const YachtList = () => {
     const [pagging, setPagging] = useState([]); // page 1, 2, 3, ...
     const [paggingYacht, setPaggingYacht] = useState([]); // yachts in a page
@@ -88,6 +89,8 @@ const YachtList = () => {
         navigate(`/mainpage/${idYacht}`);
     }
 
+    const { t } = useTranslation();
+
     return (
         <div className="infor-body">
             {yachtList.length > 0 ? (
@@ -103,11 +106,11 @@ const YachtList = () => {
                                         <div className='card-content'>
                                             <div style={{ padding: '10px', color: '#475467', width: '80px' }} className='location'><FaLocationDot />{yacht.location.name}</div>
                                             <h4 className='name' style={{ marginBottom: 0, fontWeight: 'bold' }}>{yacht.name}</h4>
-                                            <p style={{ margin: '0px' }}>Hạ thủy: {yacht.launch} - Vỏ Tàu {yacht.hullBody}</p>
+                                            <p style={{ margin: '0px' }}>{t('yachtlist.launch')} {yacht.launch} - {t('yachtlist.hullBody')} {yacht.hullBody}</p>
                                             <div style={{ fontWeight: 'bold' }}> <RiShipLine /> {yacht.itinerary} </div>
                                             <div className='price d-flex' style={{ justifyContent: 'space-between', alignItems: 'center' }}>
-                                                <p style={{ color: '#475467', fontWeight: '700' }}>Price: {priceData[yacht.idYacht] ? `${priceData[yacht.idYacht].lowestPrice.toLocaleString()} - ${priceData[yacht.idYacht].highestPrice.toLocaleString()}đ` : 'Loading...'}</p>
-                                                <button style={{ borderRadius: 25 }} className='btn btn-warning'>Đặt ngay</button>
+                                                <p style={{ color: '#475467', fontWeight: '700' }}>{t('yachtlist.price')}: {priceData[yacht.idYacht] ? `${priceData[yacht.idYacht].lowestPrice.toLocaleString()} - ${priceData[yacht.idYacht].highestPrice.toLocaleString()}đ` : 'Loading...'}</p>
+                                                <button style={{ borderRadius: 25 }} className='btn btn-warning'>{t('yachtlist.book')}</button>
                                             </div>
                                         </div>
                                     </div>

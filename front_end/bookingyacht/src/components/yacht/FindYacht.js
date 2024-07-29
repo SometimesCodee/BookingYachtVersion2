@@ -10,6 +10,7 @@ import { getAllServiceApi } from "../../redux/action/YachtServiceAction";
 import { getAllYachtTypeApi } from './../../redux/action/YachtTypeAction';
 import { FILTER_YACHT } from "../../redux/type/Type";
 import { useParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const FindYacht = () => {
     const { services } = useSelector(state => state.YachtServiceReducer)
@@ -93,6 +94,8 @@ const FindYacht = () => {
         setSelectedTypes([]);
     };
 
+    const { t } = useTranslation();
+
     return (
         <div className="find-yacht-body">
             <div className="find-yacht-content container">
@@ -101,7 +104,7 @@ const FindYacht = () => {
                 </div>
                 <div className='feedback-header my-5 row'>
                     <div className='yacht-title col-md mx-4'>
-                        <h2 style={{ fontWeight: 'bold' }}>Tìm Thấy Kết Quả</h2>
+                        <h2 style={{ fontWeight: 'bold' }}>{t('findyacht.message1')}</h2>
                         <div>
                             <img src={i_content} alt="" />
                         </div>
@@ -111,11 +114,11 @@ const FindYacht = () => {
                     <div className="col-3 filter-body">
                         <div className="filter-body-header d-flex">
                             <div className="filter-body-content">
-                                Lọc Kết Quả
+                                {t('findyacht.filter')}
                             </div>
                             <div>
                                 <button onClick={() => { handleResetFilters() }}>
-                                    Đặt Lại
+                                    {t('findyacht.reset')}
                                 </button>
                             </div>
                         </div>
@@ -124,13 +127,13 @@ const FindYacht = () => {
 
                         <div className="filter-star d-flex">
                             <div className="star-body-content">
-                                Xếp hạng sao
+                                {t('findyacht.star')}
                             </div>
                             {renderYachtType()}
                         </div>
                         <div className="filter-extention d-flex">
                             <div className="extention-body-content">
-                                Tiện ích
+                                {t('findyacht.service')}
                             </div>
                             {renderService()}
                         </div>

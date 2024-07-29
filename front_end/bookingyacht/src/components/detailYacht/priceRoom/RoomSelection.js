@@ -8,6 +8,7 @@ import BookNowModal from './BookNowModal';
 import './FormRoom.scss';
 import RoomDetailModal from './RoomDetailModal';
 import RoomItem from './RoomItem';
+import { useTranslation } from 'react-i18next';
 
 const RoomSelection = ({ yacht, selectedSchedule }) => {
     const [originalRooms, setOriginalRooms] = useState([]);
@@ -127,9 +128,11 @@ const RoomSelection = ({ yacht, selectedSchedule }) => {
         setFilteredRooms(filtered);
     }
 
+    const { t } = useTranslation();
+
     return (
         <Container>
-            <h5 className='mb-3'>Phòng trống:</h5>
+            <h5 className='mb-3'>{t('roomslect.message1')}</h5>
             {renderRoomType()}
             <div className='form-select mt-3'>
                 {filteredRooms.map(room => (
@@ -146,7 +149,7 @@ const RoomSelection = ({ yacht, selectedSchedule }) => {
 
                 <hr></hr>
                 <div className='service-selection'>
-                    <p style={{ fontWeight: 'bold', fontSize: '14px', marginTop: '7px', marginBottom: '0px' }}>Chọn dịch vụ: </p>
+                    <p style={{ fontWeight: 'bold', fontSize: '14px', marginTop: '7px', marginBottom: '0px' }}>{t('roomslect.message2')}</p>
                     {services.map(service => (
                         <Form.Check
                             style={{ fontSize: '14px' }}
@@ -162,12 +165,12 @@ const RoomSelection = ({ yacht, selectedSchedule }) => {
                 <div className='my-3'>
                     <div className="row">
                         <div className="col-md-6 col-12">
-                            <Button className='mb-3' variant="outline-danger" onClick={handleReset}>Xóa lựa chọn</Button>
-                            <h5><span className='fw-bold'>Tổng tiền:</span> {totalPrice.toLocaleString()} đ</h5>
+                            <Button className='mb-3' variant="outline-danger" onClick={handleReset}>{t('roomslect.message3')}</Button>
+                            <h5><span className='fw-bold'>{t('roomslect.message4')}</span> {totalPrice.toLocaleString()} đ</h5>
                         </div>
                         <div className="col-md-6 col-12 text-end">
-                            <Button variant="secondary" className='rent' onClick={() => { hanldeRentWhole() }}>Thuê trọn tàu</Button>
-                            <Button variant="custom ms-2" onClick={handleBookNow}>Đặt ngay <FaArrowRightLong /></Button>
+                            <Button variant="secondary" className='rent' onClick={() => { hanldeRentWhole() }}>{t('roomslect.message5')}</Button>
+                            <Button variant="custom ms-2" onClick={handleBookNow}>{t('roomslect.message6')} <FaArrowRightLong /></Button>
                         </div>
                     </div>
                 </div>

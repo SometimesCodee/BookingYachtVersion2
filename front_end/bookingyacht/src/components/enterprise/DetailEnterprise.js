@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { Card, Col, Image, Row } from 'react-bootstrap';
+import { Card, Col, Image, Nav, Row } from 'react-bootstrap';
 import { FaLocationDot } from "react-icons/fa6";
 import { IoMdBoat, IoMdMail } from "react-icons/io";
 import { LuMapPin } from "react-icons/lu";
@@ -9,6 +9,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { getHighestAndLowestPriceByYacht } from '../../services/ApiServices';
 import '../yacht/FindYacht.scss';
 import './InfoCompany.scss';
+import { useTranslation } from 'react-i18next';
+import Language from '../header/Language';
 const ProfilePage = () => {
     const { idCompany } = useParams();
     const navigate = useNavigate();
@@ -93,20 +95,24 @@ const ProfilePage = () => {
     const hanldeSelectedYacht = (idYacht) => {
         navigate(`/mainpage/${idYacht}`);
     }
+    const { t } = useTranslation();
 
     return (
         <div className='mainpage'>
             <div className='container'>
                 <Row className="justify-content-center">
                     <Col xs={12} className="text-center cover-photo-container">
+                        <div style={{ float: 'inline-end' }}>
+                            <Nav>
+                                <Language />
+                            </Nav>
+                        </div>
                         {company && (
                             <div className="profile-info container">
                                 <Image src={`${company.logo}`} className="profile-photo" />
                                 <div className="profile-text">
                                     <h2 style={{ fontWeight: 'bold', fontSize: '50px', color: '#0E4F4F', fontFamily: 'Roboto, sans-serif' }}><IoMdBoat />{company.name}</h2>
-                                    <p style={{ fontWeight: 'bold' }}><i>Chào mừng bạn đến với du thuyền, điểm đến hàng đầu cho những trải nghiệm du thuyền
-                                        sang trọng và đẳng cấp! Chúng tôi tự hào mang đến cho khách hàng những chuyến hải trình
-                                        đáng nhớ, kết hợp giữa sự thoải mái, tiện nghi và phong cách thượng lưu.</i></p>
+                                    <p style={{ fontWeight: 'bold' }}><i>{t('detailenterprise.message1')}</i></p>
                                 </div>
                             </div>
                         )}
@@ -116,11 +122,11 @@ const ProfilePage = () => {
                     <Col md={4}>
                         <Card>
                             <Card.Body>
-                                <Card.Title style={{ fontWeight: 'bold' }}>Giới thiệu</Card.Title>
+                                <Card.Title style={{ fontWeight: 'bold' }}>{t('detailenterprise.message2')}</Card.Title>
                                 {
                                     company && (
                                         <Card.Text>
-                                            <p><LuMapPin /> Địa điểm: <strong>{company.address}</strong></p>
+                                            <p><LuMapPin />{t('detailenterprise.message3')}  <strong>{company.address}</strong></p>
                                             <p><IoMdMail /> Email: <strong>{company.email}</strong></p>
                                         </Card.Text>
                                     )
@@ -130,7 +136,7 @@ const ProfilePage = () => {
                     </Col>
                     <Col md={7}>
                         <div style={{ marginLeft: '30px' }}>
-                            <h3>Tất cả các thuyền</h3>
+                            <h3>{t('detailenterprise.message4')}</h3>
                             <div className="infor-body">
                                 {
                                     paggingYacht.map((yacht) => {
@@ -144,11 +150,11 @@ const ProfilePage = () => {
                                                         <div className='card-content'>
                                                             <div style={{ padding: '10px', color: '#475467', width: '80px' }} className='location'><FaLocationDot />{yacht.location.name}</div>
                                                             <h4 className='name' style={{ marginBottom: 0, fontWeight: 'bold' }}>{yacht.name}</h4>
-                                                            <p style={{ margin: '0px' }}>Hạ thủy: {yacht.launch} - Vỏ Tàu {yacht.hullBody}</p>
+                                                            <p style={{ margin: '0px' }}>{t('detailenterprise.message5')} {yacht.launch} - {t('detailenterprise.message6')} {yacht.hullBody}</p>
                                                             <div style={{ fontWeight: 'bold' }}> <RiShipLine /> {yacht.itinerary} </div>
                                                             <div className='price d-flex' style={{ justifyContent: 'space-between', alignItems: 'center' }}>
-                                                                <p style={{ color: '#475467', fontWeight: '700' }}>Price: {priceData[yacht.idYacht] ? `${priceData[yacht.idYacht].lowestPrice.toLocaleString()} - ${priceData[yacht.idYacht].highestPrice.toLocaleString()}đ` : 'Loading...'}</p>
-                                                                <button style={{ borderRadius: 25 }} className='btn btn-warning'>Đặt ngay</button>
+                                                                <p style={{ color: '#475467', fontWeight: '700' }}>{t('detailenterprise.message7')} {priceData[yacht.idYacht] ? `${priceData[yacht.idYacht].lowestPrice.toLocaleString()} - ${priceData[yacht.idYacht].highestPrice.toLocaleString()}đ` : 'Loading...'}</p>
+                                                                <button style={{ borderRadius: 25 }} className='btn btn-warning'>{t('detailenterprise.message8')}</button>
                                                             </div>
                                                         </div>
                                                     </div>

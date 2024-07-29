@@ -28,7 +28,6 @@ import Profile from './components/home/Profile';
 import FindYacht from './components/yacht/FindYacht';
 import YachtQuestion from './components/yacht/YachtQuestion';
 import YachtRule from './components/yacht/YachtRule';
-
 import { useSelector } from 'react-redux';
 import ChangePassword1 from './components/auths/ChangePassword1';
 import VerifyOTP from './components/auths/VerifyOTP';
@@ -37,11 +36,14 @@ import ManageServiceYacht from './components/company/ManageServiceYacht';
 import Page404 from './components/page404/Page404';
 import ProtectedRoute from './components/routers/ProtectedRoute';
 import PaymentReturn from './components/home/PaymentReturn';
+import { Suspense } from 'react';
+import Dashboard from './components/company/Dashboard';
+
 
 const Layout = () => {
     const { role } = useSelector((state) => state.loginAdmin);
     return (
-        <>
+        <Suspense fallback="...is loading">
             <Routes>
                 <Route path="/" element={
                     <App />
@@ -80,7 +82,8 @@ const Layout = () => {
                     </ProtectedRoute>
 
                 } >
-                    <Route index element={<ViewBooking />} />
+                    <Route index element={<Dashboard />} />
+                    <Route path='booking' element={<ViewBooking />} />
                     <Route path='view-yacht' element={<ViewYacht />} />
                     <Route path='profile' element={<ProfileCompany />} />
 
@@ -119,7 +122,7 @@ const Layout = () => {
                 pauseOnHover
                 theme="light"
             />
-        </>
+        </Suspense>
     );
 };
 

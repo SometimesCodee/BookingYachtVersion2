@@ -16,6 +16,7 @@ import { Link, NavLink, useParams } from 'react-router-dom';
 import { ImProfile } from "react-icons/im";
 import { useDispatch } from 'react-redux';
 import { doLogout } from '../../redux/action/UserAction';
+import { MdDashboard } from "react-icons/md";
 const Sidebar = (props) => {
     const { collapsed, toggled, handleToggleSidebar } = props;
 
@@ -53,10 +54,19 @@ const Sidebar = (props) => {
                 <SidebarContent>
                     <Menu iconShape="circle">
                         <MenuItem
+                            icon={<MdDashboard />}
+                        >
+                            Dashboard
+                            <Link to='/manage-company' />
+                        </MenuItem>
+
+                    </Menu>
+                    <Menu iconShape="circle">
+                        <MenuItem
                             icon={<TbBrandBooking />}
                         >
                             Customer Booking
-                            <Link to='/manage-company' />
+                            <Link to='/manage-company/booking' />
                         </MenuItem>
 
                     </Menu>

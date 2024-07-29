@@ -11,6 +11,7 @@ import { getServiceByYacht } from '../../../services/ApiServices';
 import { useSelector, useDispatch } from 'react-redux';
 import { getServiceByYachtApi } from '../../../redux/action/ServiceByYachtAction';
 import { FcBookmark } from "react-icons/fc";
+import { useTranslation } from 'react-i18next';
 
 
 const SectionHeader = ({ yacht }) => {
@@ -24,11 +25,13 @@ const SectionHeader = ({ yacht }) => {
     }, [yacht.idYacht])
 
     const description = yacht.description ? yacht.description.split('.').filter(sentence => sentence.trim()) : [];
+
+    const { t } = useTranslation();
     return (
         <div className="section-header">
             <div className="info_yacht1 mr-4">
                 <div>
-                    <h4 className='mb-4'>Đặc điểm nổi bật</h4>
+                    <h4 className='mb-4'>{t('sectionheader.message1')}</h4>
                 </div>
                 <div className="overview">
                     {services.map((item, index) => (
@@ -47,11 +50,11 @@ const SectionHeader = ({ yacht }) => {
             </div>
             <div className="shipcart">
                 <div className='cart_cart'>
-                    <div className='ShipDetail' style={{ fontWeight: 'bold' }}>Thông tin du thuyền</div>
+                    <div className='ShipDetail' style={{ fontWeight: 'bold' }}>{t('sectionheader.message2')}</div>
                     <div className='shipDetail flex flex-col gap-16'>
                         <div className='flex gap-24 align-start md'>
                             <div className='flex align-center gap-8'>
-                                <p><MdOutlineAnchor /> Hạ Thủy</p>
+                                <p><MdOutlineAnchor />{t('sectionheader.message3')}</p>
                             </div>
                             <label>{yacht.launch}</label>
                         </div>
@@ -63,19 +66,19 @@ const SectionHeader = ({ yacht }) => {
                         </div> */}
                         <div className='flex gap-24 align-start md'>
                             <div className='flex align-center gap-8'>
-                                <p><LuShip /> Thân vỏ</p>
+                                <p><LuShip />{t('sectionheader.message4')}</p>
                             </div>
                             <label>{yacht.hullBody}</label>
                         </div>
                         <div className='flex gap-24 align-start md'>
                             <div className='flex align-center gap-8'>
-                                <p><PiMapPinAreaLight /> Hành trình</p>
+                                <p><PiMapPinAreaLight />{t('sectionheader.message5')}</p>
                             </div>
                             <label>{yacht.itinerary}</label>
                         </div>
                         <div className='flex gap-24 align-start md'>
                             <div className='flex align-center gap-8'>
-                                <p><PiShoppingBagOpen /> Điều hành</p>
+                                <p><PiShoppingBagOpen />{t('sectionheader.message6')}</p>
                             </div>
                             <label>{yacht.company ? yacht.company.name : 'N/A'}</label>
                         </div>

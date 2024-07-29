@@ -2,24 +2,30 @@ import React, { useState } from "react";
 import { NavLink, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { verifyOTP } from "../../services/ApiServices";
+import { Nav } from "react-bootstrap";
+import Language from "../header/Language";
+import { useTranslation } from "react-i18next";
 
 
 export default function VerifyOTP() {
-  const[otp, setOTP]=useState("")
+  const [otp, setOTP] = useState("")
   const navigate = useNavigate();
-  const {email} = useParams();
+  const { email } = useParams();
+  const { t } = useTranslation();
+
   const handleVerify = async (event) => {
-    event.preventDefault(); 
+    event.preventDefault();
+
 
     if (!otp) {
-      toast.error("Không được để trống!");
+      toast.error(t('forgot.errinput'));
     } else {
-      let res = await verifyOTP(email,otp);
+      let res = await verifyOTP(email, otp);
 
       if (res && res.data && res.data.data === true) {
         navigate(`/changePasswordByEmail/${email}`)
-      }else{
-        toast.error("OTP không tồn tại");
+      } else {
+        toast.error(t('otp.errotp'));
       }
     }
   };
@@ -34,10 +40,14 @@ export default function VerifyOTP() {
               <div className="row">
                 <div className="col-12">
                   <div className="mb-5">
-                    <h2 className="h3">Quên mật khẩu</h2>
+                    <div className="f-flex justify-content-between">
+                      <h2 className="h3">{t('forgot.forgotpass')}</h2>
+                      <Nav>
+                        <Language />
+                      </Nav>
+                    </div>
                     <h3 className="fs-6 fw-normal text-secondary m-0">
-                      Nhập OTP được gửi trong email của bạn để khôi phục mật
-                      khẩu.
+                      {t('otp.enterotp')}
                     </h3>
                   </div>
                 </div>
@@ -49,7 +59,7 @@ export default function VerifyOTP() {
                       OTP <span className="text-danger">*</span>
                     </label>
                     <input
-                      onChange={(otp)=> setOTP(otp.target.value)}
+                      onChange={(otp) => setOTP(otp.target.value)}
                       type="text"
                       className="form-control"
                       name="otp"
@@ -60,7 +70,7 @@ export default function VerifyOTP() {
                   <div className="col-12">
                     <div className="d-grid">
                       <button className="btn btn-lg btn-primary">
-                        Xác thực OTP
+                        {t('otp.vertyotp')}
                       </button>
                     </div>
                   </div>

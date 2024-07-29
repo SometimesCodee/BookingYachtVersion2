@@ -75,11 +75,11 @@ public interface BookingOrderRepository extends JpaRepository<BookingOrder, Stri
             "WHERE  y.company.idCompany = :idCompany " +
             "AND b.status = 'Confirmed'" +
             "AND MONTH (b.bookingTime) = :month " +
-            "and YEAR(b.bookingTime) = :year")
-    List<BookingOrder> getTotalBooking(@Param("idCompany") String idCompany,
-                                       @Param("month") String month,
-                                       @Param("year") String year
-                                       );
+            "AND YEAR(b.bookingTime) = :year")
+    List<BookingOrder> getBooking(@Param("idCompany") String idCompany,
+                                     @Param("month") String month,
+                                     @Param("year") String year
+    );
 
 
     @Query("SELECT b FROM BookingOrder b " +
@@ -92,7 +92,7 @@ public interface BookingOrderRepository extends JpaRepository<BookingOrder, Stri
             "AND b.status = 'Confirmed' " +
             "AND MONTH(b.bookingTime) = :month " +
             "AND YEAR(b.bookingTime) = :year")
-    List<BookingOrder> getTotalBookingByYacht(@Param("idCompany") String idCompany,
+    List<BookingOrder> getTotalBookingByCompany(@Param("idCompany") String idCompany,
                                               @Param("month") String month,
                                               @Param("year") String year);
 
@@ -107,4 +107,5 @@ public interface BookingOrderRepository extends JpaRepository<BookingOrder, Stri
                                        @Param("month") String month,
                                        @Param("year") String year
     );
+
 }

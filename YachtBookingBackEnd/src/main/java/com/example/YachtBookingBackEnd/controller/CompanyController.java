@@ -444,5 +444,12 @@ public class CompanyController {
         return new ResponseEntity<>(dataResponse, HttpStatus.OK);
     }
 
+    @GetMapping("/bookingByYear/{idCompany}")
+    public ResponseEntity<?> bookingByYear(@PathVariable String idCompany, @RequestParam String year){
+        DataResponse dataResponse = new DataResponse();
+        dataResponse.setData(iStatistic.getBookingByYear(idCompany, year));
+        return new ResponseEntity<>(dataResponse, HttpStatus.OK);
+    }
+
 
 }

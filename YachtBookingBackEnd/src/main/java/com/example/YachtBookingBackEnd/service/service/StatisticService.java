@@ -25,16 +25,16 @@ public class StatisticService implements IStatistic {
         if(month.isEmpty() && year.isEmpty()){
             String currentMonth = Integer.toString(LocalDate.now().getMonthValue());
             String currenYear = Integer.toString(LocalDate.now().getYear());
-            bookingOrders = bookingOrderRepository.getAllBooking(idCompany, currentMonth, currenYear);
+            bookingOrders = bookingOrderRepository.getBooking(idCompany, currentMonth, currenYear);
 
         } else if (month.isEmpty()) {
             String currentMonth = Integer.toString(LocalDate.now().getMonthValue());
-            bookingOrders = bookingOrderRepository.getAllBooking(idCompany, currentMonth, year);
+            bookingOrders = bookingOrderRepository.getBooking(idCompany, currentMonth, year);
         } else if (year.isEmpty()) {
             String currenYear = Integer.toString(LocalDate.now().getYear());
-            bookingOrders = bookingOrderRepository.getAllBooking(idCompany, month, currenYear);
+            bookingOrders = bookingOrderRepository.getBooking(idCompany, month, currenYear);
         } else {
-            bookingOrders = bookingOrderRepository.getAllBooking(idCompany, month, year);
+            bookingOrders = bookingOrderRepository.getBooking(idCompany, month, year);
         }
 
         double totalAmount = 0;
@@ -54,16 +54,16 @@ public class StatisticService implements IStatistic {
         if(month.isEmpty() && year.isEmpty()){
             String currentMonth = Integer.toString(LocalDate.now().getMonthValue());
             String currenYear = Integer.toString(LocalDate.now().getYear());
-            bookingOrders = bookingOrderRepository.getTotalBookingByYacht(idCompany, currentMonth, currenYear);
+            bookingOrders = bookingOrderRepository.getTotalBookingByCompany(idCompany, currentMonth, currenYear);
 
         } else if (month.isEmpty()) {
             String currentMonth = Integer.toString(LocalDate.now().getMonthValue());
-            bookingOrders = bookingOrderRepository.getTotalBookingByYacht(idCompany, currentMonth, year);
+            bookingOrders = bookingOrderRepository.getTotalBookingByCompany(idCompany, currentMonth, year);
         } else if (year.isEmpty()) {
             String currenYear = Integer.toString(LocalDate.now().getYear());
-            bookingOrders = bookingOrderRepository.getTotalBookingByYacht(idCompany, month, currenYear);
+            bookingOrders = bookingOrderRepository.getTotalBookingByCompany(idCompany, month, currenYear);
         } else {
-            bookingOrders = bookingOrderRepository.getTotalBookingByYacht(idCompany, month, year);
+            bookingOrders = bookingOrderRepository.getTotalBookingByCompany(idCompany, month, year);
         }
         double totalAmount = 0;
         if(bookingOrders.isEmpty()){
@@ -103,6 +103,46 @@ public class StatisticService implements IStatistic {
                 totalBooking.merge(status, count, Integer::sum);
         }
         return totalBooking;
+    }
+
+    @Override
+    public List<Map<String, Object>> getBookingByYear(String idCompany, String year) {
+        List<Map<String, Object> > bookingByYear = new ArrayList<>();
+        String[] months = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
+        for (int month = 1; month <= 12;month++) {
+            String monthStr = String.valueOf(month);
+            List<BookingOrder> bookingOrders;
+            if(year.isEmpty()){
+                String currenYear = Integer.toString(LocalDate.now().getYear());
+                bookingOrders = bookingOrderRepository.getAllBooking(idCompany, monthStr, currenYear);
+            }else {
+                bookingOrders = bookingOrderRepository.getAllBooking(idCompany, monthStr, year);
+            }
+
+            int pendingCount = 0;
+            int cancelCount = 0;
+            int confirmCount = 0;
+
+            for (BookingOrder bookingOrder : bookingOrders) {
+                String status = bookingOrder.getStatus();
+                if ("Pending".equalsIgnoreCase(status)) {
+                    pendingCount++;
+                } else if ("Cancelled".equalsIgnoreCase(status)) {
+                    cancelCount++;
+                } else if ("Confirmed".equalsIgnoreCase(status)) {
+                    confirmCount++;
+                }
+            }
+            Map<String, Object> monthResult = new HashMap<>();
+            monthResult.put("Month", months[month - 1]);
+            monthResult.put("pending", pendingCount);
+            monthResult.put("cancel", cancelCount);
+            monthResult.put("confirm", confirmCount);
+            bookingByYear.add(monthResult);
+
+        }
+
+        return bookingByYear;
     }
 
 

@@ -7,9 +7,9 @@ import { FaCalendarCheck } from "react-icons/fa";
 import { FaCalendarTimes } from "react-icons/fa";
 import { FaCalendarDay } from "react-icons/fa";
 import { FaMoneyCheckAlt } from "react-icons/fa";
-import { getAllBooking, getBookingByYear, getStatisticBooking, getStatisticService } from '../../services/ApiServices';
+import { exportBookingOrder, getAllBooking, getBookingByYear, getStatisticBooking, getStatisticService } from '../../services/ApiServices';
 import { useSelector } from 'react-redux';
-import { set } from 'lodash';
+import { RiFileExcel2Fill } from "react-icons/ri";
 const Dashboard = () => {
 
 
@@ -27,6 +27,7 @@ const Dashboard = () => {
         getTotalService();
         getAllBookingStatus();
         getAllBookingByYear();
+        reportBookingOrder();
     }, [month, year])
 
     const getTotalBooking = async () => {
@@ -58,34 +59,52 @@ const Dashboard = () => {
             setAllBookingByYear(res.data.data);
         }
     }
-    console.log('totalb', totalBooking)
+
+    const reportBookingOrder = async () => {
+        let res = await exportBookingOrder(idCompany);
+        // Tạo URL và tải file về
+        const url = window.URL.createObjectURL(new Blob([res.data]));
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', `YachtBooking_${month}/${year}.xls`); // Tên file khi tải về
+        document.body.appendChild(link);
+        link.click();
+    }
     const total = Object.values(allBooking).reduce((sum, count) => sum + count, 0);
 
     return (
         <div>
             <div className='p-2 container'>
-                <div className='d-flex'>
-                    <Form.Select onChange={(event) => setMonth(event.target.value)} style={{ width: 'fit-content' }} >
-                        <option value='7'>July</option>
-                        <option value="1">January</option>
-                        <option value="2">February</option>
-                        <option value="3">March</option>
-                        <option value="4">April</option>
-                        <option value="5">May</option>
-                        <option value="6">June</option>
-                        <option value="8">August</option>
-                        <option value="9">September</option>
-                        <option value="10">October</option>
-                        <option value="11">November</option>
-                        <option value="12">December</option>
-                    </Form.Select>
-                    <Form.Select onChange={(event) => setYear(event.target.value)} className='mx-3' style={{ width: 'fit-content' }} >
-                        <option value="2024">2024</option>
-                        <option value="2025">2025</option>
-                        <option value="2026">2026</option>
-                        <option value="2027">2027</option>
-                        <option value="2028">2028</option>
-                    </Form.Select>
+                <div className='d-flex justify-content-between'>
+                    <div className='d-flex'>
+                        <Form.Select onChange={(event) => setMonth(event.target.value)} style={{ width: 'fit-content' }} >
+                            <option value='7'>July</option>
+                            <option value="1">January</option>
+                            <option value="2">February</option>
+                            <option value="3">March</option>
+                            <option value="4">April</option>
+                            <option value="5">May</option>
+                            <option value="6">June</option>
+                            <option value="8">August</option>
+                            <option value="9">September</option>
+                            <option value="10">October</option>
+                            <option value="11">November</option>
+                            <option value="12">December</option>
+                        </Form.Select>
+                        <Form.Select onChange={(event) => setYear(event.target.value)} className='mx-3' style={{ width: 'fit-content' }} >
+                            <option value="2024">2024</option>
+                            <option value="2025">2025</option>
+                            <option value="2026">2026</option>
+                            <option value="2027">2027</option>
+                            <option value="2028">2028</option>
+                        </Form.Select>
+                    </div>
+                    <div className='mx-3 '>
+                        <button onClick={reportBookingOrder} className='btn btn-success d-flex'>
+                            <RiFileExcel2Fill style={{ marginRight: 5, marginTop: 5 }} />
+                            Export Booking Order
+                        </button>
+                    </div>
                 </div>
                 <div className='d-flex booking'>
                     <div style={{ backgroundColor: '#F8F0E3' }} className='child'>

@@ -465,4 +465,14 @@ export const getBookingByYear = (idCompany, year) => {
             year: year
         }
     })
+}
+export const exportBookingOrder = (idCompany, year, month) => {
+    return axios.get(`/api/companies/exportBooking/excel/${idCompany}`, {
+        params: {
+            month: '7',
+            year: '2024'
+        },
+        responseType: 'blob'// Để xử lý dữ liệu dưới dạng binary
+    });
+
 } 

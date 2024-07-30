@@ -2,16 +2,21 @@ package com.example.YachtBookingBackEnd.controller;
 
 import com.example.YachtBookingBackEnd.payload.response.DataResponse;
 import com.example.YachtBookingBackEnd.service.implement.*;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.LocalDate;
 import java.util.Map;
@@ -37,6 +42,7 @@ public class CompanyController {
     ILocation iLocation;
     IForgotPassword iForgotPassword;
     IStatistic iStatistic;
+    IReport iReport;
     @PostMapping("/forgotPassword/verifyEmail")
     public ResponseEntity<?> verifyEmail(@RequestParam String  email) {
         DataResponse dataResponse = new DataResponse<>();
@@ -451,5 +457,14 @@ public class CompanyController {
         return new ResponseEntity<>(dataResponse, HttpStatus.OK);
     }
 
+    @GetMapping("/exportBooking/excel/{idCompany}")
+    public ResponseEntity<Resource> exportBooking(HttpServletResponse response, @PathVariable String idCompany, @RequestParam String month, @RequestParam String year) throws IOException {
+        ByteArrayResource resource = iReport.reportBooking(response, idCompany, month, year);
+        String fileName = "Booking_Order_" + month + "_" + year + ".xls";
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + fileName)
+                .contentType(MediaType.parseMediaType("application/vnd.ms-excel"))
+                .body(resource);
 
+    }
 }

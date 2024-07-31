@@ -35,7 +35,7 @@ public class ReportService implements IReport {
     BookingOrderRepository bookingOrderRepository;
     public static String[] Header = {
             "ID_Booking",
-            "Amount",
+            "Amount(VNĐ)",
             "Booking Time",
             "Customer Requirement",
             "Status",

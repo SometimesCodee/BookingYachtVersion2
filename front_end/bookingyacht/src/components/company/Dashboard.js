@@ -27,48 +27,71 @@ const Dashboard = () => {
         getTotalService();
         getAllBookingStatus();
         getAllBookingByYear();
-        reportBookingOrder();
     }, [month, year])
 
     const getTotalBooking = async () => {
-        let res = await getStatisticBooking(idCompany, month, year)
-        console.log('nkk', res)
-        if (res && res.data && res.data.data) {
-            setTotalBooking(res.data.data);
-        } else if (res.data.data === 0) {
-            setTotalBooking(res.data.data)
+        try {
+            let res = await getStatisticBooking(idCompany, month, year)
+            if (res && res.data && res.data.data) {
+                setTotalBooking(res.data.data);
+            } else if (res.data.data === 0) {
+                setTotalBooking(res.data.data)
+            }
+
+        } catch (error) {
+            console.log('Get Total Booking Error')
         }
     }
     const getTotalService = async () => {
-        let res = await getStatisticService(idCompany, month, year)
-        if (res && res.data && res.data.data) {
-            setTotalService(res.data.data);
-        } else if (res.data.data === 0) {
-            setTotalService(res.data.data)
+        try {
+            let res = await getStatisticService(idCompany, month, year)
+            if (res && res.data && res.data.data) {
+                setTotalService(res.data.data);
+            } else if (res.data.data === 0) {
+                setTotalService(res.data.data)
+            }
+
+        } catch (error) {
+            console.log('Get Total Service Error')
         }
     }
     const getAllBookingStatus = async () => {
-        let res = await getAllBooking(idCompany, month, year)
-        if (res && res.data && res.data.data) {
-            setAllBooking(res.data.data);
+        try {
+
+            let res = await getAllBooking(idCompany, month, year)
+            if (res && res.data && res.data.data) {
+                setAllBooking(res.data.data);
+            }
+        } catch (error) {
+            console.log('Get Booking By Status Error')
         }
     }
     const getAllBookingByYear = async () => {
-        let res = await getBookingByYear(idCompany, year)
-        if (res && res.data && res.data.data) {
-            setAllBookingByYear(res.data.data);
+        try {
+
+            let res = await getBookingByYear(idCompany, year)
+            if (res && res.data && res.data.data) {
+                setAllBookingByYear(res.data.data);
+            }
+        } catch (error) {
+            console.log('Get Booking By Year Error')
         }
     }
 
     const reportBookingOrder = async () => {
-        let res = await exportBookingOrder(idCompany);
-        // Tạo URL và tải file về
-        const url = window.URL.createObjectURL(new Blob([res.data]));
-        const link = document.createElement('a');
-        link.href = url;
-        link.setAttribute('download', `YachtBooking_${month}/${year}.xls`); // Tên file khi tải về
-        document.body.appendChild(link);
-        link.click();
+        try {
+
+            let res = await exportBookingOrder(idCompany);
+            // Tạo URL và tải file về
+            const url = window.URL.createObjectURL(new Blob([res.data]));
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', `YachtBooking_${month}/${year}.xls`); // Tên file khi tải về
+            document.body.appendChild(link);
+            link.click();
+        } catch (error) {
+            console.log('Export error')
+        }
     }
     const total = Object.values(allBooking).reduce((sum, count) => sum + count, 0);
 
@@ -153,16 +176,21 @@ const Dashboard = () => {
                     </div>
                 </div>
             </div>
-            <div className='my-5 graph'>
-                <BarChart width={1100} height={250} data={allBookingByYear}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="Month" />
-                    <YAxis />
-                    <Tooltip />
-                    <Legend />
-                    <Bar dataKey="confirm" fill="#82ca9d" />
-                    <Bar dataKey="cancel" fill="red" />
-                </BarChart>
+            <div className='my-5'>
+                <div className='mx-5'>
+                    <h4 className='fw-bold'>BarChart Status Of Booking In Year {year ? year : '2024'}</h4>
+                </div>
+                <div className='my-3 graph'>
+                    <BarChart width={1100} height={250} data={allBookingByYear}>
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <XAxis dataKey="Month" />
+                        <YAxis />
+                        <Tooltip />
+                        <Legend />
+                        <Bar dataKey="confirm" fill="#82ca9d" />
+                        <Bar dataKey="cancel" fill="red" />
+                    </BarChart>
+                </div>
             </div>
         </div>
     );

@@ -4,6 +4,7 @@ import Col from 'react-bootstrap/Col';
 import i_content from '../../assets/image_1.webp';
 import './Blog.scss';
 import blogData from './DataBlog';
+import { useTranslation } from 'react-i18next';
 
 const HeaderComponent = () => {
   const [blog, setBlog] = useState([]);
@@ -12,12 +13,14 @@ const HeaderComponent = () => {
     setBlog(blogData);
   }, [blogData]);
 
+  const { t } = useTranslation();
+
   const renderTitle = () => {
     return (
       <div className='title'>
         <h4>
-          Hạ Long: Khám phá Sự đặc sắc <br />
-          và Cập nhật tin tức mới nhất
+          {t('blog.message1')}<br />
+          {t('blog.message2')}
         </h4>
       </div>
     );
@@ -27,12 +30,12 @@ const HeaderComponent = () => {
     return (
       <div>
         <label className='lg'>
-          Hạ Long: Bí mật và Cuộc sống trong Vịnh - Khám phá và Cập
+          {t('blog.messag3')}
           <br />
-          nhật những tin tức hấp dẫn từ điểm đến tuyệt vời này.
+          {t('blog.message4')}
         </label>
-        <br/>
-        <img src={i_content} className='lg' alt="Blog content"/>
+        <br />
+        <img src={i_content} className='lg' alt="Blog content" />
       </div>
     );
   }
@@ -54,7 +57,7 @@ const HeaderComponent = () => {
               </Card.Text>
               <div className='d-flex justify-content-between align-items-center'>
                 <Card.Text className='mb-0'>{blog.date}</Card.Text>
-                <a href={blog.url} target='_blank' className='btn' style={{backgroundColor : '#5AB9B4'}}>Xem chi tiết</a>
+                <a href={blog.url} target='_blank' className='btn' style={{ backgroundColor: '#5AB9B4' }}>Xem chi tiết</a>
               </div>
             </Card.Body>
           </div>
@@ -62,7 +65,7 @@ const HeaderComponent = () => {
       </Col>
     );
   };
-  
+
 
   return (
     <div className='headerBlog'>

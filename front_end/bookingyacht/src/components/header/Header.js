@@ -12,11 +12,14 @@ import { useTranslation } from 'react-i18next';
 const Header = () => {
     const isAuthenticated = useSelector(state => state.account.isAuthenticated);
     const role = useSelector(state => state.account.account.role)
+
+
     const dispatch = useDispatch();
     const handleLogout = () => {
         dispatch(doLogout());
         toast.success('Đăng Xuất Thành Công')
     }
+
     const { t } = useTranslation();
     return (
         <Navbar expand="lg" className="bg-body-tertiary header">

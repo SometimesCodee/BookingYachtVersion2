@@ -10,6 +10,9 @@ import { doLogin } from '../../redux/action/UserAction';
 import { useDispatch } from 'react-redux';
 import { jwtDecode } from "jwt-decode";
 import { BiSolidHome } from "react-icons/bi";
+import { useTranslation } from 'react-i18next';
+import Language from '../header/Language';
+import { Nav } from 'react-bootstrap';
 
 const Signin = () => {
     const [userName, setUserName] = useState('');
@@ -26,13 +29,13 @@ const Signin = () => {
     const handleLogin = async () => {
         setLoading(true)
         if (userName === '' || password === '') {
-            toast.error('Vui Lòng Nhập Đầy Đủ Thông Tin');
+            toast.error(t('login.input'));
             setLoading(false);
         } else {
             let res = await login(userName.trim(), password.trim());
             console.log('login', res)
             if (res === undefined) {
-                toast.error("Tài Khoản Của Bạn Không Tồn Tại")
+                toast.error(t("login.accountExits"))
                 setLoading(false);
                 return;
             } else if (res && res.data && res.data.data) {
@@ -41,12 +44,12 @@ const Signin = () => {
 
                 dispatch(doLogin(res.data.data, role.role, res.data.idCompany ? res.data.idCompany : "", res.data.idCustomer ? res.data.idCustomer : ""))
                 if (res && res.data && res.data.data === 'Invalid credentials') {
-                    toast.error('Tài Khoản Hoặc Mật Khẩu Không Đúng')
+                    toast.error(t('login.erruser'))
                     setLoading(false);
                 }
                 if (role && role.role === 'ROLE_COMPANY') {
                     setLoading(false);
-                    toast.success("Đăng Nhập Thành Công");
+                    toast.success(t('login.success'));
                     navigate(`/manage-company`);
                 } else if (role && role.role === 'ROLE_CUSTOMER') {
                     setLoading(false);
@@ -54,14 +57,14 @@ const Signin = () => {
                         toast.error("Hãy Điền Thông Tin Của Bạn")
                         navigate(`/information/${res.data.idAccount}`)
                     } else if (resAccount && resAccount.data && resAccount.data.data !== '0') {
-                        toast.success("Đăng Nhập Thành Công");
+                        toast.success(t('login.success'));
                         navigate('/');
                     }
                 } else if (role && role.role === 'ROLE_ADMIN') {
                     navigate('/admin')
                 }
             } else {
-                toast.error('Tài Khoản Hoặc Mật Khẩu Không Đúng')
+                toast.error(t('login.erraccount'))
                 setLoading(false);
 
             }
@@ -76,20 +79,26 @@ const Signin = () => {
         }
     }
 
+    const { t } = useTranslation();
+
     return (
         <>
+            <Nav style={{ display: 'flex', flexFlow: "row-reverse", marginRight: '30px' }}>
+                <Language />
+            </Nav>
             <section className="vh-100">
                 <div className="container py-5 h-100">
+
                     <div className="row d-flex align-items-center justify-content-center h-100">
                         <div className="col-md-8 col-lg-7 col-xl-6">
                             <NavLink to='/' className='navbar-brand' style={{ width: '150px' }}><img src={logo} className="img-fluid" alt="logo" /></NavLink>
                         </div>
                         <div className="col-md-7 col-lg-5 col-xl-5 offset-xl-1 text-center">
-                            <h1 className='text-center'>Đăng Nhập</h1>
+                            <h1 className='text-center'>{t('login.signin')}</h1>
 
                             <div className="form-outline mb-4">
                                 <input type="text"
-                                    placeholder='UserName'
+                                    placeholder={t('login.username')}
                                     className="form-control form-control-lg"
                                     value={userName}
                                     onKeyDown={e => hanldeKeyDown(e)}
@@ -98,7 +107,7 @@ const Signin = () => {
                             </div>
                             <div className="form-outline mb-4 show-password">
                                 <input type={showPassword === true ? 'text' : 'password'}
-                                    placeholder='Password'
+                                    placeholder={t('login.password')}
                                     className="form-control form-control-lg"
                                     value={password}
                                     onKeyDown={e => hanldeKeyDown(e)}
@@ -110,9 +119,9 @@ const Signin = () => {
                             </div>
                             <div className='account d-flex'>
                                 <div>
-                                    Chưa có tài khoản <Link to='/signup'>Đăng kí</Link>
+                                    {t('login.dontaccount')} <Link to='/signup'>{t('login.register')}</Link>
                                 </div>
-                                <NavLink to='/forgotpassowd'>Quên mật khẩu?</NavLink>
+                                <NavLink to='/forgotpassowd'>{t('login.forgot')}?</NavLink>
                             </div>
                             <div>
 
@@ -124,9 +133,9 @@ const Signin = () => {
 
                                 >
                                     {loading === true && <ImSpinner10 className='loaderIcon' />}
-                                    <span>Đăng nhập</span>
+                                    <span>{t('login.dosingin')}</span>
                                 </button>
-                                <Link to='/' className='my-5' style={{ textDecoration: "none" }}><BiSolidHome className='mb-1' />Home</Link>
+                                <Link to='/' className='my-5' style={{ textDecoration: "none" }}><BiSolidHome className='mb-1' />{t('login.home')}</Link>
                             </div>
 
 

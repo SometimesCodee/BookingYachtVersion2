@@ -67,4 +67,45 @@ public interface BookingOrderRepository extends JpaRepository<BookingOrder, Stri
             "AND b.status = 'Confirmed' " +
             "OR b.status = 'Pending'")
     boolean findBySchedule(@Param("schedule") Schedule schedule);
+
+    @Query("SELECT b FROM BookingOrder b " +
+            "JOIN FETCH b.bookingRoomSet br " +
+            "JOIN FETCH  br.room r " +
+            "JOIN FETCH  r.yacht y " +
+            "WHERE  y.company.idCompany = :idCompany " +
+            "AND b.status = 'Confirmed'" +
+            "AND MONTH (b.bookingTime) = :month " +
+            "AND YEAR(b.bookingTime) = :year")
+    List<BookingOrder> getBooking(@Param("idCompany") String idCompany,
+                                     @Param("month") String month,
+                                     @Param("year") String year
+    );
+
+
+    @Query("SELECT b FROM BookingOrder b " +
+            "JOIN FETCH b.bookingRoomSet br " +
+            "JOIN FETCH br.room r " +
+            "JOIN FETCH r.yacht y " +
+            "JOIN FETCH b.bookingServiceSet bs " +
+            "JOIN FETCH bs.service s " +
+            "WHERE  y.company.idCompany = :idCompany " +
+            "AND b.status = 'Confirmed' " +
+            "AND MONTH(b.bookingTime) = :month " +
+            "AND YEAR(b.bookingTime) = :year")
+    List<BookingOrder> getTotalBookingByCompany(@Param("idCompany") String idCompany,
+                                              @Param("month") String month,
+                                              @Param("year") String year);
+
+    @Query("SELECT b FROM BookingOrder b " +
+            "JOIN FETCH b.bookingRoomSet br " +
+            "JOIN FETCH  br.room r " +
+            "JOIN FETCH  r.yacht y " +
+            "WHERE  y.company.idCompany = :idCompany " +
+            "AND MONTH (b.bookingTime) = :month " +
+            "and YEAR(b.bookingTime) = :year")
+    List<BookingOrder> getAllBooking(@Param("idCompany") String idCompany,
+                                       @Param("month") String month,
+                                       @Param("year") String year
+    );
+
 }

@@ -11,6 +11,7 @@ import Map from '../scheduleDetail/Map';
 import SectionHeader from '../sectionHeader/SectionHeade';
 import SimpleSlider from '../sliderPage/SliderImg';
 import './MainPage.scss';
+import { useTranslation } from 'react-i18next';
 
 
 
@@ -113,15 +114,17 @@ const MainPage = () => {
     };
   }, [dispatch]);
 
+  const { t } = useTranslation();
+
   return (
     <div className="container">
       <nav className="navbar-sticky StickyNav">
-        <a href="#title" className={currentSection === 'title' ? 'active' : ''}>Đầu trang</a>
-        <a href="#features" className={currentSection === 'features' ? 'active' : ''}>Đặc điểm</a>
-        <a href="#rooms" className={currentSection === 'rooms' ? 'active' : ''}>Phòng & giá</a>
-        <a href="#about" className={currentSection === 'about' ? 'active' : ''}>Giới thiệu</a>
-        <a href="#rules" className={currentSection === 'rules' ? 'active' : ''}>Quy định</a>
-        <a href="#reviews" className={currentSection === 'reviews' ? 'active' : ''}>Đánh giá</a>
+        <a href="#title" className={currentSection === 'title' ? 'active' : ''}>{t('mainpage.message1')}</a>
+        <a href="#features" className={currentSection === 'features' ? 'active' : ''}>{t('mainpage.message2')}</a>
+        <a href="#rooms" className={currentSection === 'rooms' ? 'active' : ''}>{t('mainpage.message3')}</a>
+        <a href="#about" className={currentSection === 'about' ? 'active' : ''}>{t('mainpage.message4')}</a>
+        <a href="#rules" className={currentSection === 'rules' ? 'active' : ''}>{t('mainpage.message5')}</a>
+        <a href="#reviews" className={currentSection === 'reviews' ? 'active' : ''}>{t('mainpage.message6')}</a>
       </nav>
 
       <div id="title" className="content-section-sticky1">
@@ -132,12 +135,12 @@ const MainPage = () => {
       </div>
 
       <Col md={8}>
-        <h2 className='mb-4' style={{ fontWeight: 'bold' }}>Các loại phòng & giá</h2>
+        <h2 className='mb-4' style={{ fontWeight: 'bold' }}>{t('mainpage.message7')}</h2>
 
         <div id="schedule" className="content-section-sticky3 mb-3 ml-2 container" style={{ display: 'flex', alignItems: 'center' }}>
-          <h5 style={{ marginRight: '10px' }}>Lịch trình hiện có</h5>
+          <h5 style={{ marginRight: '10px' }}>{t('mainpage.message8')}</h5>
           <select onChange={hanleScheduleChange} value={selectedSchedule} className="form-select border border-info selectpicker btn-info" aria-label="Default select example" style={{ width: '300px' }}>
-            <option value={""} style={{ color: '#0E4F4F', fontWeight: 'bold' }}>Chọn lịch trình</option>
+            <option value={""} style={{ color: '#0E4F4F', fontWeight: 'bold' }}>{t('mainpage.message9')}</option>
             {renderSchedule()}
           </select>
         </div>

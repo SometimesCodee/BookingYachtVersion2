@@ -10,6 +10,7 @@ import { useEffect, useState } from 'react';
 import { getAllLocationCustomer } from '../../services/ApiServices';
 import { useDispatch } from 'react-redux';
 import { SEARCH_YACHT, SET_SELECTED_LOCATION } from '../../redux/type/Type';
+import { useTranslation } from 'react-i18next';
 
 const ShowIsland = () => {
     const [locations, setLocation] = useState([]);
@@ -35,6 +36,8 @@ const ShowIsland = () => {
         });
     };
 
+    const { t } = useTranslation();
+
     const renderLocation = () => {
         return locations.map((location, index) => {
             return (
@@ -43,7 +46,7 @@ const ShowIsland = () => {
                         <Card.Img variant="top" src={index === 0 ? HaLong1 : index === 1 ? HaLong2 : HaLong3} style={{ height: 220 }} className='object-fit-cover' />
                         <Card.Body>
                             <Card.Title>{location.name}</Card.Title>
-                            <button className='btn btn-outline-dark'>Xem</button>
+                            <button className='btn btn-outline-dark'>{t('showisland.view')}</button>
                         </Card.Body>
                     </Card>
                 </NavLink>
@@ -54,10 +57,10 @@ const ShowIsland = () => {
         <>
             <div className='island-header text-center my-5'>
                 <div className='yacht-title'>
-                    <h2 style={{ fontWeight: 'bold' }}>Các điểm đến của Yacht Cruise</h2>
+                    <h2 style={{ fontWeight: 'bold' }}>{t('showisland.message1')}</h2>
                 </div>
                 <p>
-                    Khám phá vẻ đẹp tuyệt vời của Du thuyền Hạ Long: Hành trình đến thiên đường thiên nhiên
+                    {t('showisland.message2')}
                 </p>
                 <div>
                     <img src={i_content} />

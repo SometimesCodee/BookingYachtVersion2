@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { removeRoomAction } from '../../../redux/action/OrderAction';
 import { getScheduleByIdApi } from '../../../redux/action/ScheduleAction';
 import { createPayment, getCustomerById } from '../../../services/ApiServices';
+import { useTranslation } from 'react-i18next';
 
 const BookNowModal = ({
     selectedRooms,
@@ -105,10 +106,12 @@ const BookNowModal = ({
         return `${hours}:${formattedMinutes} ${day}/${month}/${year}`;
     };
 
+    const { t } = useTranslation();
+
     return (
         <Modal show={show} onHide={handleClose} size='lg'>
             <Modal.Header closeButton style={{ backgroundColor: 'orange' }}>
-                <Modal.Title className='fw-bold'>Đặt Phòng</Modal.Title>
+                <Modal.Title className='fw-bold'>{t('booknow.message1')}</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 {selectedRooms.map(room => (
@@ -120,55 +123,55 @@ const BookNowModal = ({
                             <h5 className='fw-bold'>{room.name}</h5>
                         </Col>
                         <Col md={3}>
-                            <h6 className='fw-bold'>Giá Phòng</h6>
+                            <h6 className='fw-bold'>{t('booknow.message2')}</h6>
                             <h5>{room?.roomType?.price?.toLocaleString()} đ</h5>
                         </Col>
                         <Col md={2} className="d-flex align-items-center justify-content-end">
-                            <Button onClick={() => handleRemoveRoom(room)} className='btn btn-danger'>Hủy</Button>
+                            <Button onClick={() => handleRemoveRoom(room)} className='btn btn-danger'>{t('booknow.message3')}Hủy</Button>
                         </Col>
                     </Row>
                 ))}
                 <div className="my-3 p-3 border rounded border-success align-items-center">
-                    <strong>Services đã chọn</strong>
+                    <strong>{t('booknow.message4')}</strong>
                     {selectedServices.map(serviceId => {
                         const service = services.find(s => s.idService === serviceId);
                         console.log('service', services);
                         return (
                             <div key={serviceId} className="d-flex justify-content-between align-items-center mb-2">
                                 <span style={{ color: 'black', fontSize: '14px' }}>{service ? service.service : ''} {service.price.toLocaleString()} đ</span>
-                                <Button variant="danger" size="sm" onClick={() => handleServiceChange(serviceId)}>Xóa</Button>
+                                <Button variant="danger" size="sm" onClick={() => handleServiceChange(serviceId)}>{t('booknow.message5')}Xóa</Button>
                             </div>
                         );
                     })}
                 </div>
                 <Form id="bookingForm" onSubmit={handleSubmit}>
                     <Form.Group controlId="formName" className="mb-3">
-                        <Form.Label>Lịch trình đã chọn</Form.Label>
-                        <Form.Control type="text" placeholder="" readOnly value={schedule ? `${formatDate(schedule.startDate)} - ${formatDate(schedule.endDate)}` : 'Loading...'} />
+                        <Form.Label>{t('booknow.message6')}</Form.Label>
+                        <Form.Control type="text" readOnly value={schedule ? `${formatDate(schedule.startDate)} - ${formatDate(schedule.endDate)}` : 'Loading...'} />
                     </Form.Group>
                     <Form.Group controlId="formName" className="mb-3">
-                        <Form.Label>Họ và tên</Form.Label>
-                        <Form.Control type="text" placeholder="Nhập họ và tên" readOnly value={customer ? customer.fullName : ''} />
+                        <Form.Label>{t('booknow.message7')}</Form.Label>
+                        <Form.Control type="text" readOnly value={customer ? customer.fullName : ''} />
                     </Form.Group>
                     <Form.Group controlId="formPhone" className="mb-3">
-                        <Form.Label>Số điện thoại</Form.Label>
-                        <Form.Control type="text" placeholder="Nhập số điện thoại" readOnly value={customer ? customer.phone : ''} />
+                        <Form.Label>{t('booknow.message8')}</Form.Label>
+                        <Form.Control type="text" readOnly value={customer ? customer.phone : ''} />
                     </Form.Group>
                     <Form.Group controlId="formEmail" className="mb-3">
-                        <Form.Label>Địa chỉ email</Form.Label>
-                        <Form.Control type="email" placeholder="Nhập email" readOnly value={customer ? customer.email : ''} />
+                        <Form.Label>{t('booknow.message9')}</Form.Label>
+                        <Form.Control type="email" readOnly value={customer ? customer.email : ''} />
                     </Form.Group>
                     <Form.Group controlId="formRequests" className="mb-3">
-                        <Form.Label>Yêu cầu của bạn</Form.Label>
-                        <Form.Control as="textarea" rows={3} placeholder="Nhập yêu cầu của bạn" value={requirements} onChange={handleOnChange} />
+                        <Form.Label>{t('booknow.message10')}</Form.Label>
+                        <Form.Control as="textarea" rows={3} value={requirements} onChange={handleOnChange} />
                     </Form.Group>
-                    <p style={{ color: 'red', fontSize: '12px' }}>* Đã bao gồm tất cả các dịch vụ khi bạn thuê trọn tàu</p>
+                    <p style={{ color: 'red', fontSize: '12px' }}>* {t('booknow.message11')}</p>
                 </Form>
             </Modal.Body>
             <Modal.Footer>
-                <h5 className="me-auto">Tổng tiền: {totalPrice.toLocaleString()} đ</h5>
-                <Button variant="secondary" onClick={handleClose}>Đóng</Button>
-                <Button variant='warning' type="submit" form="bookingForm"><GoCheckCircle style={{ marginRight: '5px' }} />Thanh toán</Button>
+                <h5 className="me-auto">{t('booknow.message12')} {totalPrice.toLocaleString()} đ</h5>
+                <Button variant="secondary" onClick={handleClose}>{t('booknow.message13')}</Button>
+                <Button variant='warning' type="submit" form="bookingForm"><GoCheckCircle style={{ marginRight: '5px' }} />{t('booknow.message14')}Thanh toán</Button>
             </Modal.Footer>
         </Modal>
     );

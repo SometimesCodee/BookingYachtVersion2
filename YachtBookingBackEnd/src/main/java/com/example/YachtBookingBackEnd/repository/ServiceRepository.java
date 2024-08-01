@@ -13,4 +13,5 @@ import java.util.Optional;
 public interface ServiceRepository extends JpaRepository<Service,String> {
 //    Optional<Service> findByService(String service);
     Service findByService(String service);
+
 }

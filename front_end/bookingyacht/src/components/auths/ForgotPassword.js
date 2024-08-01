@@ -2,26 +2,31 @@ import React, { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { verifyEmail } from "../../services/ApiServices";
 import { toast } from "react-toastify";
+import Language from '../header/Language';
+import { Nav } from "react-bootstrap";
+import { useTranslation } from "react-i18next";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
   const navigate = useNavigate();
 
   const handleVerify = async (event) => {
-    event.preventDefault(); 
+    event.preventDefault();
 
     if (!email) {
-      toast.error("Không được để trống!");
+      toast.error(t('forgot.errinput'));
     } else {
       let res = await verifyEmail(email);
       if (res && res.data && res.data.data === true) {
-        toast.success("Kiểm tra email của bạn!");
+        toast.success(t('forgot.checkmail'));
         navigate(`/verifyOTP/${email}`);
       } else {
-        toast.error("Email không tồn tại");
+        toast.error(t('forgot.erremail'));
       }
     }
   };
+
+  const { t } = useTranslation();
 
   return (
     <div className="py-3 py-md-5 my-5">
@@ -32,9 +37,14 @@ const ForgotPassword = () => {
               <div className="row">
                 <div className="col-12">
                   <div className="mb-5">
-                    <h2 className="h3">Quên mật khẩu</h2>
+                    <div className="d-flex justify-content-between">
+                      <h2 className="h3">{t('forgot.forgotpass')}</h2>
+                      <Nav>
+                        <Language />
+                      </Nav>
+                    </div>
                     <h3 className="fs-6 fw-normal text-secondary m-0">
-                      Cung cấp địa chỉ email được liên kết với tài khoản của bạn để khôi phục mật khẩu.
+                      {t('forgot.emailinput')}
                     </h3>
                   </div>
                 </div>
@@ -59,12 +69,12 @@ const ForgotPassword = () => {
                       <button
                         type="submit"
                         className="btn btn-lg btn-primary">
-                        Xác thực Email
+                        {t('forgot.vertymail')}
                       </button>
                     </div>
                     <div className="text-center">
                       <NavLink to="/signin" className="my-4">
-                        Quay lại
+                        {t('forgot.back')}
                       </NavLink>
                     </div>
                   </div>
@@ -74,7 +84,7 @@ const ForgotPassword = () => {
           </div>
         </div>
       </div>
-      
+
     </div>
   );
 };

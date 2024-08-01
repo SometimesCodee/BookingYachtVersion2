@@ -10,7 +10,7 @@ import { store, persistor } from './redux/Store'
 import Layout from './Layout';
 import { PersistGate } from 'redux-persist/integration/react'
 import TriggerFormSearch from './components/home/TriggerFormSearch';
-
+import './utils/I18n'
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Provider store={store}>

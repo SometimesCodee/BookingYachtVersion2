@@ -2,7 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { Button, ButtonGroup, Col, Container, Row } from 'react-bootstrap';
 import { getFeedbackByIdYacht } from '../../../services/ApiServices';
 import ReviewList from './ReviewList';
-const Rating = ({yachtId}) => {
+import { useTranslation } from 'react-i18next';
+import { gt } from 'lodash';
+const Rating = ({ yachtId }) => {
     const [reviews, setReviews] = useState([]);
     const [selectedRating, setSelectedRating] = useState(null);
     const [ratingCounts, setRatingCounts] = useState({
@@ -13,14 +15,14 @@ const Rating = ({yachtId}) => {
         1: 0
     });
     const [averageRating, setAverageRating] = useState(0);
-    useEffect(() =>{
-        const fetchReviews = async () =>{
-            try{
+    useEffect(() => {
+        const fetchReviews = async () => {
+            try {
                 const response = await getFeedbackByIdYacht(yachtId)
                 const data = response.data.data;
                 setReviews(data)
                 calculateRatings(data)
-            }catch(error){
+            } catch (error) {
                 console.log('Error fetching reviews:', error)
             }
         }
@@ -41,21 +43,23 @@ const Rating = ({yachtId}) => {
             setAverageRating(0);
         }
     };
-    
+
     const handleSelectRating = (rating) => {
         setSelectedRating(rating === selectedRating ? null : rating);
     };
 
     const filteredReviews = selectedRating !== null
-    ? reviews.filter(review => review.starRating === selectedRating)
-    : reviews;
+        ? reviews.filter(review => review.starRating === selectedRating)
+        : reviews;
+
+    const { t } = useTranslation();
 
     return (
         <Container>
-            
+
             <Row className="align-items-center mb-3">
                 <Col>
-                    <h4 style={{ fontWeight: 'bold' }} className="mb-0">Đánh giá sản phẩm</h4>
+                    <h4 style={{ fontWeight: 'bold' }} className="mb-0">{t('rating.message1')}</h4>
                 </Col>
                 <Col className="text-end">
                     <span style={{ fontSize: '2rem', color: 'red' }}>
@@ -68,7 +72,7 @@ const Rating = ({yachtId}) => {
                     variant={selectedRating === null ? 'dark' : 'outline-dark'}
                     onClick={() => handleSelectRating(null)}
                 >
-                    Tất cả({reviews.length})
+                    {t('rating.message2')}({reviews.length})
                 </Button>
                 {[5, 4, 3, 2, 1].map((rating) => (
                     <Button
@@ -76,7 +80,7 @@ const Rating = ({yachtId}) => {
                         variant={selectedRating === rating ? 'dark' : 'outline-dark'}
                         onClick={() => handleSelectRating(rating)}
                     >
-                        {rating} Sao ({ratingCounts[rating]})
+                        {rating} {t('rating.message3')} ({ratingCounts[rating]})
                     </Button>
                 ))}
             </ButtonGroup>

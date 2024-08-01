@@ -1,0 +1,233 @@
+{
+    "login": {
+        "signin": "Signin",
+        "username": "Username",
+        "password": "Password",
+        "input": "Please enter complete information.",
+        "accountExits": "Your account does not exist.",
+        "erruser": "The account or password is incorrect.",
+        "success": "Login Successfully",
+        "erraccount": "Username or Password Incorrect",
+        "dontaccount": "Not have a account",
+        "register": "Signup",
+        "forgot": "Forgot Password",
+        "dosingin": "Signin",
+        "home": "Home"
+    },
+    "register": {
+        "errspace": "Username Cannot Contain Spaces",
+        "errcuser": "Username Must Contain At Least 3 Characters",
+        "errpass": "Password Must Contain At Least 8 Characters",
+        "errconfirm": "Confirm Password Does Not Match",
+        "success": "Registration Successful",
+        "userexit": "Username Already Exists",
+        "signup": "Sign Up",
+        "confirm": "Confirm Password",
+        "haveaccount": "Already Have An Account",
+        "signin": "Sign In",
+        "dosignup": "Sign Up",
+        "back": "Back"
+    },
+    "forgot": {
+        "errinput": "Cannot Be Empty",
+        "checkmail": "Check Your Email",
+        "erremail": "Email Does Not Exist",
+        "forgotpass": "Forgot Password",
+        "emailinput": "Provide the email address associated with your account to recover your password.",
+        "vertymail": "Verify Email",
+        "back": "Back"
+    },
+    "otp": {
+        "errotp": "OTP Does Not Exist",
+        "enterotp": "Enter the OTP sent to your email to recover your password.",
+        "vertyotp": "Verify OTP"
+    },
+    "changepass": {
+        "success": "Password Change Successful",
+        "errconfirm": "New Password and Confirm Password Must Match!",
+        "createpass": "Create New Password",
+        "newpass": "New Password",
+        "confirm": "Confirm New Password",
+        "dochange": "Change Password"
+    },
+    "fillinfor": {
+        "erremail": "Email Does Not Exist",
+        "errphone": "Phone Number Does Not Exist",
+        "dupliemail": "Email Already Exists",
+        "dupliphone": "Phone Number Already Exists",
+        "success": "Information Successfully Submitted",
+        "errfill": "Submission Failed, Please Check Your Information",
+        "inforuser": "Customer Information",
+        "fullname": "Full Name",
+        "phone": "Phone Number",
+        "address": "Address",
+        "send": "Send",
+        "message": "Start from 0 and have 10 digits"
+    },
+    "fromsearch": {
+        "message1": "Which Ha Long Bay cruise would you like to choose?",
+        "message2": "There are many cruises available for you",
+        "input": "Enter keywords",
+        "location1": "All Locations",
+        "location2": "Ha Long Bay",
+        "location3": "Lan Ha Bay",
+        "location4": "Cat Ba Island",
+        "search": "Search"
+    },
+    "header": {
+        "find": "Find Cruise",
+        "business": "Business",
+        "setting": "Settings",
+        "signin": "Sign In",
+        "signup": "Sign Up",
+        "profile": "Profile",
+        "logout": "Log Out"
+    },
+    "showyacht": {
+        "message1": "New Yacht",
+        "message2": "And Most Popular",
+        "message3": "Enjoy ultimate luxury and sophistication on the newest and most popular yachts. Discover an amazing journey that takes you into a world of luxury, comfort, and unforgettable experiences.",
+        "price": "Price from:",
+        "book": "Book Now",
+        "all": "View All"
+    },
+    "feedback": {
+        "message1": "Reviews From",
+        "message2": "Experiencers",
+        "message3": "Customers share their wonderful memories from their trips with us.",
+        "yacht": "Yacht:",
+        "customer": "Customer:"
+    },
+    "showisland": {
+        "view": "View",
+        "message1": "Yacht Cruise Destinations",
+        "message2": "Explore the stunning beauty of Ha Long Bay Cruises: A journey to a natural paradise"
+    },
+    "business": {
+        "message1": "Partners With Major",
+        "message2": "Cruise Lines",
+        "message3": "Top partner with renowned cruise lines: Exclusive offers just for you"
+    },
+    "footer": {
+        "message1": "39 Gas Station Travel and Service LLC",
+        "message2": "Village 3, Thach Hoa, Thach That, Hanoi",
+        "message3": "Business Registration Number: 9999999",
+        "message4": "Department of Planning and Investment of",
+        "message5": "Hanoi, issued on 05/06/2024",
+        "message6": "About Us",
+        "message7": "Contact",
+        "message8": "General Regulations",
+        "message9": "Frequently Asked Questions",
+        "message10": "Location",
+        "message11": "Cruise"
+    },
+    "findyacht": {
+        "message1": "List of Yachts",
+        "filter": "Filter Results",
+        "reset": "Reset",
+        "star": "Star Rating",
+        "service": "Amenities"
+    },
+    "yachtlist": {
+        "launch": "Launch:",
+        "hullBody": "HullBody",
+        "price": "Price",
+        "book": "Booking"
+    },
+    "mainpage": {
+        "message1": "Top",
+        "message2": "Features",
+        "message3": "Rooms & Prices",
+        "message4": "Introduction",
+        "message5": "Regulations",
+        "message6": "Reviews",
+        "message7": "Room Types & Prices",
+        "message8": "Available Itineraries",
+        "message9": "Select Itinerary"
+    },
+    "sectionheader": {
+        "message1": "Key Features",
+        "message2": "Cruise Information",
+        "message3": "Launch",
+        "message4": "Hull",
+        "message5": "Itinerary",
+        "message6": "Operation"
+    },
+    "roomslect": {
+        "message1": "Available Rooms:",
+        "message2": "Select Service:",
+        "message3": "Clear Selection",
+        "message4": "Total Amount:",
+        "message5": "Charter the Entire Ship",
+        "message6": "Book Now"
+    },
+    "map": {
+        "message1": "Itinerary Map",
+        "message2": "Important Information:",
+        "message3": "Heritage Bình Chuẩn Cat Ba Cruise departs from Lux Cruises, Lot 28, Tuan Chau International Port",
+        "message4": "You can view the detailed 2-day 1-night itinerary.",
+        "message5": "here"
+    },
+    "rating": {
+        "message1": "Product Rating",
+        "message2": "All",
+        "message3": "Stars"
+    },
+    "booknow": {
+        "message1": "Book Room",
+        "message2": "Room Price",
+        "message3": "Cancel",
+        "message4": "Selected Services",
+        "message5": "Remove",
+        "message6": "Selected Itinerary",
+        "message7": "Full Name",
+        "message8": "Phone Number",
+        "message9": "Email Address",
+        "message10": "Your Request",
+        "message11": "Includes all services when you charter the entire ship",
+        "message12": "Total Amount:",
+        "message13": "Close",
+        "message14": "Payment"
+    },
+    "businesspage": {
+        "message1": "Ha Long Bay Cruise: Connecting Businesses, Exploring Natural Beauty",
+        "message2": "With real-world experience, our company, 39 Gas Station Travel and Service LLC, aims to make Ha Long Bay Cruises a top choice for businesses. We offer a variety of attractive travel programs to ensure satisfaction and convenience for your company. Ha Long Bay Cruises also make a meaningful gift for your employees. Additionally, Ha Long Bay Cruises are ideal for corporate workshops, investment collaborations, or networking events.",
+        "message3": "Contact Us",
+        "message4": "Itineraries Tailored to Business Needs",
+        "message5": "The cruise will arrange itineraries tailored to your business events: employee appreciation trips, workshops, or partner meetings.",
+        "message6": "Diverse Selection of Cruises",
+        "message7": "Based on your company's needs, we will recommend suitable cruises regarding: the number of cabins, spacious decks, or reasonable costs.",
+        "message8": "Flexible Timing",
+        "message9": "We will advise on the most flexible timing to suit the nature of the event and your company's schedule before and after the trip.",
+        "message10": "Welcome to the Largest and Most Reputable Businesses",
+        "message11": "And Our Esteemed Services."
+    },
+    "detailenterprise": {
+        "message1": "Welcome to the cruise, the top destination for luxurious and high-class cruise experiences! We are proud to offer our customers memorable journeys, combining comfort, convenience, and upscale style.",
+        "message2": "Introduction",
+        "message3": "Location:",
+        "message4": "All Boats",
+        "message5": "Launch:",
+        "message6": "Hull",
+        "message7": "Price",
+        "message8": "Book Now"
+    },
+    "blog": {
+        "message1": "Ha Long: Discover the Uniqueness",
+        "message2": "and Get the Latest News",
+        "message3": "Ha Long: Secrets and Life in the Bay - Discover and Get",
+        "message4": "the Latest Exciting News from This Wonderful Destination.",
+        "message5": "Mother Keo's Shop - Discover a 70-year-old Hue Beef Noodle Shop...",
+        "message6": "Mother Keo's shop is one of the oldest beef noodle stalls, over half a century old, in the ancient capital of Hue...",
+        "message7": "Top 5 Cafes with Beautiful Views in Ha Long",
+        "message8": "To welcome the large number of tourists coming to Ha Long, besides hotel services, entertainment,... the cafes with unique and beautiful designs have also developed to serve the needs of tourists, especially the large number of young visitors when they set foot in Ha Long.",
+        "message9": "Top 5 Famous and Beautiful Resorts in Ha Long.",
+        "message10": "If you haven't found a luxurious resort in Ha Long, let Mixi Vivu suggest you 6 Ha Long resorts worth experiencing during your journey to explore this beautiful land!",
+        "message11": "Explore 3 Famous Pagodas in Quang Ninh",
+        "message12": "Not only known as a famous tourist destination including: Ha Long Bay, Tuan Chau Island, ... but the tourist city of Quang Ninh also attracts visitors with its spiritual tourism sites.",
+        "message13": "Top Quang Ninh Specialties to Buy as Gifts",
+        "message14": "After exciting travel experiences, many tourists look for Quang Ninh specialties as gifts for relatives and friends. There are many famous and attractive Quang Ninh specialties that will surely make the recipient very happy.",
+        "message15": "Top 3 Delicious and Famous Restaurants in Ha Long",
+        "message16": "Ha Long is not only known for its beautiful attractions with golden sunshine, white sand, blue sea, and famous caves. This place also boasts a diverse and rich culinary culture. Here are 3 highly rated restaurants for you to consider!"
+    }
+}

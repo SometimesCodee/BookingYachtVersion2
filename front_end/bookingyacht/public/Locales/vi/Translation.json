@@ -1,0 +1,233 @@
+{
+    "login": {
+        "signin": "Đăng Nhập",
+        "username": "Tài Khoản",
+        "password": "Mật Khẩu",
+        "input": "Vui Lòng Nhập Đầy Đủ Thông Tin",
+        "accountExits": "Tài Khoản Của Bạn Không Tồn Tại",
+        "erruser": "Tài Khoản Hoặc Mật Khẩu Không Đúng",
+        "success": "Đăng Nhập Thành Công",
+        "erraccount": "Tài Khoản Hoặc Mật Khẩu Không Đúng",
+        "dontaccount": "Chưa Có Tài Khoản",
+        "register": "Đăng Ký",
+        "forgot": "Quên Mật Khẩu",
+        "dosingin": "Đăng Nhập",
+        "home": "Trang Chủ"
+    },
+    "register": {
+        "errspace": "Tài Khoản Không Được Để Khoảng Trắng",
+        "errcuser ": "Tài Khoản Phải Chứa Ít Nhất 3 Ký Tự",
+        "errpass": "Mật Khẩu Phải Chứa Ít Nhất 8 Ký Tự",
+        "errconfirm": "Mật Khẩu Xác Nhận Không Khớp",
+        "success": "Đăng Ký Thành Công",
+        "userexit": "Tài Khoản Đã Tồn Tại",
+        "signup": "Đăng Ký",
+        "confirm": "Xác Nhận Mật Khẩu",
+        "haveaccount": "Đã có tài khoản",
+        "signin": "Đăng nhập",
+        "dosignup": "Đăng Ký",
+        "back": "Trở về"
+    },
+    "forgot": {
+        "errinput": "Không được để trống",
+        "checkmail": "Kiểm tra email của bạn",
+        "erremail": "Email không tồn tại",
+        "forgotpass": "Quên mật khẩu",
+        "emailinput": "Cung cấp địa chỉ email được liên kết với tài khoản của bạn để khôi phục mật khẩu.",
+        "vertymail": "Xác thực Email",
+        "back": "Trở về"
+    },
+    "otp": {
+        "errotp": "OTP không tồn tại",
+        "enterotp": "Nhập OTP được gửi trong email của bạn để khôi phục mật khẩu.",
+        "vertyotp": "Xác thực OTP"
+    },
+    "changepass": {
+        "success": "Đổi mật khẩu thành công",
+        "errconfirm": "Mật khẩu mới và mật khẩu xác nhận phải trùng nhau!",
+        "createpass": "Tạo mật khẩu mới",
+        "newpass": "Mật khẩu mới",
+        "confirm": "Xác nhận lại mật khẩu mới",
+        "dochange": "Đổi mật khẩu"
+    },
+    "fillinfor": {
+        "erremail": "Email Không Tồn Tại",
+        "errphone": "Số Điện Thoại Không Tồn Tại",
+        "dupliemail": "Email Đã Tồn Tại",
+        "dupliphone": "Số Điện Thoại Đã Tồn Tại",
+        "success": "Điền Thông Tin Thành Công",
+        "errfill": "Không Thành Công Kiểm Tra Lại Thông Tin Của Bạn",
+        "inforuser": "Thông tin khách hàng",
+        "fullname": "Họ Và Tên",
+        "phone": "Số Điện Thoại",
+        "address": "Địa Chỉ",
+        "send": "Gửi",
+        "message": "Bắt đầu từ 0 và có 10 số"
+    },
+    "fromsearch": {
+        "message1": "Bạn lựa chọn du thuyền Hạ Long nào ?",
+        "message2": "Có rất nhiều du thuyền dành cho bạn",
+        "input": "Nhập từ khóa",
+        "location1": "Tất cả các địa điểm",
+        "location2": "Vịnh Hạ Long",
+        "location3": "Vịnh Lan Hạ",
+        "location4": "Đảo Cát Bà",
+        "search": "Tìm kiếm"
+    },
+    "header": {
+        "find": "Tìm Du Thuyền",
+        "business": "Doanh Nghiệp",
+        "setting": "Cài Đặt",
+        "signin": "Đăng Nhập",
+        "signup": "Đăng Ký",
+        "profile": "Hồ Sơ",
+        "logout": "Đăng Xuất"
+    },
+    "showyacht": {
+        "message1": "Du Thuyền Mới",
+        "message2": "Và Phổ Biến Nhất",
+        "message3": "Tận hưởng sự xa hoa và đẳng cấp tối đa trên du thuyền mới nhất và phổ biến nhất.Khám phá một hành trình tuyệt vời đưa bạn vào thế giới của sự sang trọng,tiện nghi và trải nghiệm không thể quên.",
+        "price": "Giá từ:",
+        "book": "Đặt ngay",
+        "all": "Xem tất cả"
+    },
+    "feedback": {
+        "message1": "Đánh Giá Từ",
+        "message2": "Người Trải Nghiệm",
+        "message3": "Khách hàng chia sẻ về những kỷ niệm tuyệt vời trên chuyến du lịch với chúng tôi.",
+        "yacht": "Du Thuyền:",
+        "customer": "Khách Hàng:"
+    },
+    "showisland": {
+        "view": "Xem",
+        "message1": "Các điểm đến của Yacht Cruise",
+        "message2": "Khám phá vẻ đẹp tuyệt vời của Du thuyền Hạ Long: Hành trình đến thiên đường thiên nhiên"
+    },
+    "business": {
+        "message1": "Đối tác Cùng các",
+        "message2": "Hãng Du thuyền Lớn",
+        "message3": "Đối tác hàng đầu với các hãng du thuyền danh tiếng: Ưu đãi độc quyền dành riêng cho bạn"
+    },
+    "footer": {
+        "message1": "Công ty TNHH Du Lịch và Dịch Vụ Cây xăng 39",
+        "message2": "Thôn 3 Thạch Hòa Thạch Thất Hà Nội",
+        "message3": "Mã số doanh nghiệp:9999999 ",
+        "message4": "Sở Kế hoạch và Đầu tư Thành phố",
+        "message5": "Hà Nội cấp ngày 05/06/2024",
+        "message6": "Giới Thiệu",
+        "message7": "Liên Hệ",
+        "message8": "Quy Định Chung",
+        "message9": "Câu Hỏi Thường Gặp",
+        "message10": "Địa Điểm",
+        "message11": "Du Thuyền"
+    },
+    "findyacht": {
+        "message1": "Danh Sách Du Thuyền",
+        "filter": "Lọc Kết Quả",
+        "reset": "Đặt Lại",
+        "star": "Xếp hạng sao",
+        "service": "Tiện ích"
+    },
+    "yachtlist": {
+        "launch": "Hạ thủy:",
+        "hullBody": "Vỏ Tàu",
+        "price": "Giá",
+        "book": "Đặt Ngay"
+    },
+    "mainpage": {
+        "message1": "Đầu trang",
+        "message2": "Đặc điểm",
+        "message3": "Phòng & giá",
+        "message4": "Giới thiệu",
+        "message5": "Quy định",
+        "message6": "Đánh giá",
+        "message7": "Các loại phòng & giá",
+        "message8": "Lịch trình hiện có",
+        "message9": "Chọn lịch trình"
+    },
+    "sectionheader": {
+        "message1": "Đặc điểm nổi bật",
+        "message2": "Thông tin du thuyền",
+        "message3": "Hạ Thủy",
+        "message4": "Thân vỏ",
+        "message5": "Hành trình",
+        "message6": "Điều hành"
+    },
+    "roomslect": {
+        "message1": "Phòng trống:",
+        "message2": "Chọn dịch vụ:",
+        "message3": "Xóa lựa chọn",
+        "message4": "Tổng tiền:",
+        "message5": "Thuê trọn tàu",
+        "message6": "Đặt ngay"
+    },
+    "map": {
+        "message1": "Bản đồ lịch trình",
+        "message2": "Thông tin cần biết:",
+        "message3": "Du thuyền Du thuyền Heritage Bình Chuẩn Cát Bà xuất phát từ Lux Cruises, Lô 28 Cảng Quốc Tế Tuần Châu",
+        "message4": "Bạn có thể xem chi tiết lịch trình 2 ngày 1 đêm.",
+        "message5": "tại đây"
+    },
+    "rating": {
+        "message1": "Đánh giá sản phẩm",
+        "message2": "Tất cả",
+        "message3": "Sao"
+    },
+    "booknow": {
+        "message1": "Đặt Phòng",
+        "message2": "Giá Phòng",
+        "message3": "Hủy",
+        "message4": "Services đã chọn",
+        "message5": "Xóa",
+        "message6": "Lịch trình đã chọn",
+        "message7": "Họ và tên",
+        "message8": "Số điện thoại",
+        "message9": "Địa chỉ email",
+        "message10": "Yêu cầu của bạn",
+        "message11": "Đã bao gồm tất cả các dịch vụ khi bạn thuê trọn tàu",
+        "message12": "Tổng tiền:",
+        "message13": "Đóng",
+        "message14": "Thanh Toán"
+    },
+    "businesspage": {
+        "message1": "Tour Du thuyền Hạ Long: Kết nối doanh nghiệp, khám phá vẻ đẹp tự nhiên",
+        "message2": "Với sự trải nghiệm thực tế, Công ty TNHH Du lịch và Dịch vụ của chúng tôi mong muốn đưa du thuyền Hạ Long trở thành một lựa chọn đầu tiên cho doanh nghiệp. Nhiều chương trình du lịch hấp dẫn, đa dạng được kết hợp sẽ đem đến cho quý doanh nghiệp sự hài lòng và thuận tiện. Du thuyền Hạ Long cũng sẽ là một món quà tri ân vô cùng ý nghĩa dành cho nhân viên của quý doanh nghiệp. Bên cạnh đó, du thuyền Hạ Long còn rất phù hợp cho những cuộc hội thảo, hợp tác đầu tư hay giao lưu của quý doanh nghiệp.",
+        "message3": "Liên Hệ Chúng Tôi",
+        "message4": "Lịch trình phù hợp với yêu cầu của doanh nghiệp",
+        "message5": "Du thuyền sẽ sắp xếp lịch trình phù hợp với từng sự kiện của doanh nghiệp: du lịch của công ty tri ân nhân viên, hội thảo hay làm việc với đối tác.",
+        "message6": "Đa dạng trong sự lựa chọn các du thuyền",
+        "message7": "Tùy vào nhu cầu của doanh nghiệp, chúng tôi sẽ tư vấn cung cấp du thuyền phù hợp về: số lượng phòng nghỉ, boong tàu rộng rãi hay chi phí hợp lý.",
+        "message8": "Thời gian linh hoạt",
+        "message9": "Chúng tôi sẽ tư vấn thời gian linh hoạt nhất phù hợp với tính chất của sự kiện và lịch làm việc trước và sau chuyến đi của quý doanh nghiệp.",
+        "message10": "Chào Mừng Bạn Đến Với Các Doanh Nghiệp Lớn Nhất",
+        "message11": "Và Uy Tín Của Chúng Tôi."
+    },
+    "detailenterprise": {
+        "message1": "Chào mừng bạn đến với du thuyền, điểm đến hàng đầu cho những trải nghiệm du thuyềnsang trọng và đẳng cấp! Chúng tôi tự hào mang đến cho khách hàng những chuyến hải trình đáng nhớ, kết hợp giữa sự thoải mái, tiện nghi và phong cách thượng lưu.",
+        "message2": "Giới thiệu",
+        "message3": "Địa điểm:",
+        "message4": "Tất cả các thuyền",
+        "message5": "Hạ thủy:",
+        "message6": "Vỏ Tàu",
+        "message7": "Giá",
+        "message8": "Đặt ngay"
+    },
+    "blog": {
+        "message1": "Hạ Long: Khám phá Sự đặc sắc",
+        "message2": "và Cập nhật tin tức mới nhất",
+        "message3": "Hạ Long: Bí mật và Cuộc sống trong Vịnh - Khám phá và Cập",
+        "message4": "nhật những tin tức hấp dẫn từ điểm đến tuyệt vời này.",
+        "message5": "Quán mẹ Kéo - Khám phá quán bún bò Huế 70 năm luôn ...",
+        "message6": "Quán mẹ Kéo là một trong những gánh bún bò có tuổi đời lâu nhất, hơn nửa thế kỷ ở mảnh đất Cố đô Huế...",
+        "message7": "Top 5 quán cafe view đẹp ở Hạ Long",
+        "message8": "Để tiếp đón lượng khách du lịch lớn khi đến Hạ Long, ngoài các dịch vụ khách sạn, vui chơi giải trí,… thì các quán cà phê với thiết kế cực đẹp và lạ cũng phát triển để phục vụ cho nhu cầu của du khách, đặc biệt là lượng lớn du khách trẻ khi đặt chân đến Hạ Long.",
+        "message9": "Top 5 resort nổi tiếng ở Hạ Long tuyệt đẹp.",
+        "message10": "Nếu bạn chưa tìm được khu nghỉ dưỡng sang xịn tại Hạ Long, hãy để Mixi Vivu gợi ý giúp bạn 6 resort Hạ Long đáng để trải nghiệm trong chuyến du lịch khám phá vùng đất tươi đẹp nơi đây nhé!",
+        "message11": "Khám phá 3 ngôi chùa nổi tiếng ở Quảng Ninh",
+        "message12": "Không chỉ được biết đến là một địa điểm du lịch nổi tiếng bao gồm: Vịnh Hạ Long, đảo Tuần Châu, …Ngoài ra, thành phố du lịch Quảng Ninh còn thu hút du khách bởi những địa điểm du lịch tâm linh.",
+        "message13": "TOP ĐẶC SẢN QUẢNG NINH LÀM QUÀ NỔI TIẾNG",
+        "message14": "Sau những trải nghiệm du lịch hấp dẫn, nhiều du khách tìm kiếm đặc sản QUẢNG NINH làm quà cho người thân, bạn bè. Có nhiều loại đặc sản Quảng Ninh mua về làm quà nổi tiếng, hấp dẫn, chắc chắn khi bạn tặng người nhận sẽ rất hài lòng.",
+        "message15": "Top 3 nhà hàng ngon và nổi tiếng ở Hạ Long",
+        "message16": "Hạ Long không chỉ được biết đến với những điểm tham quan đẹp với nắng vàng, cát trắng, biển xanh hay những hang động nổi tiếng. Nơi đây còn mang trong mình vẻ đẹp của nền ẩm thực đa dạng và phong phú. Dưới đây là 3 nhà hàng được đánh giá “chất lượng” cho bạn tham khảo nhé!"
+    }
+}

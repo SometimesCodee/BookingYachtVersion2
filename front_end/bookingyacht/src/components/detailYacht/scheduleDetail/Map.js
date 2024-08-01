@@ -1,25 +1,27 @@
 import React from 'react';
 import { Alert } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 import { FaArrowRightLong } from "react-icons/fa6";
 
 const Map = () => {
+    const { t } = useTranslation();
     return (
         <div>
             {/* <h4>Quy định chung và lưu ý</h4>
             <p>Bạn có thể xem Quy định chung và lưu ý: Tại đây<FaArrowRightLong /></p> */}
-            <h4>Bản đồ lịch trình</h4>
+            <h4>{t('map.message1')}</h4>
             <Alert variant="info" className="d-flex align-items-center mt-3">
                 <i className="bi bi-info-circle-fill me-2"></i>
                 <div>
                     <p className="mb-0">
-                        <strong>Thông tin cần biết:</strong>
+                        <strong>{t('map.message2')}</strong>
                     </p>
                     <ul>
                         <li>
-                            Du thuyền Du thuyền Heritage Bình Chuẩn Cát Bà xuất phát từ Lux Cruises, Lô 28 Cảng Quốc Tế Tuần Châu
+                            {t('map.message3')}
                         </li>
                         <li>
-                            Bạn có thể xem chi tiết lịch trình 2 ngày 1 đêm. <a href="https://docs.google.com/document/d/1mEUXbaHQZmmjGfAuyuYHpRQimyt0y0YJRWjLZnvCa7U/edit" target='_blank'>tại đây</a>.
+                            {t('map.message4')} <a href="https://docs.google.com/document/d/1mEUXbaHQZmmjGfAuyuYHpRQimyt0y0YJRWjLZnvCa7U/edit" target='_blank'>{t('map.message5')}</a>.
                         </li>
                     </ul>
                 </div>

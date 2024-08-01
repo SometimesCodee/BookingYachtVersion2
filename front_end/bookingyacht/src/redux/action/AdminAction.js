@@ -18,10 +18,9 @@ export const fetchCustomers = () => async dispatch => {
         const response = await axios(config);
         const data = response.data.data;
 
-        const filterData = data.filter(customer => customer.accountDTO.status === 1);
         dispatch({
             type: GET_ALL_CUSTOMERS,
-            payload: filterData
+            payload: data
         });
 
     } catch (error) {

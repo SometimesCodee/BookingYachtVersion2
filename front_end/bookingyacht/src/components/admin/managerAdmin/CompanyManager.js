@@ -164,8 +164,8 @@ const CompanyManager = () => {
     const handleSubmitCompanyDetail = async event => {
         event.preventDefault();
         const { address, email, logo, name } = companyDetail;
-        if(!email.endsWith('@gmail.com')){
-            toast.error('Email phải kết thúc với @gmail.com');
+        if (!email.includes('@')) {
+            toast.error('Email phải đúng định dạng');
             return;
         }
         const data = new FormData();

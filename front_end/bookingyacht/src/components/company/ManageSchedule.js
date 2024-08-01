@@ -39,9 +39,10 @@ const ManageSchedule = () => {
         let res = await getScheduleYacht(yachtId.idYacht)
         //check data empty or not
         if (res && res.data.data) {
-            const totalPages = Math.ceil(res.data.data.length / itemsPerPage);
+            const sortedSchedule = res.data.data.sort((a, b) => new Date(b.startDate) - new Date(a.startDate));
+            const totalPages = Math.ceil(sortedSchedule.length / itemsPerPage);
             setPageCount(totalPages);
-            setSchedule(res.data.data)
+            setSchedule(sortedSchedule)
         } else {
             toast.error("Can not found schedule")
         }
@@ -117,6 +118,11 @@ const ManageSchedule = () => {
     const endIndex = startIndex + itemsPerPage;
     const slicedSchedule = getSchedule.slice(startIndex, endIndex);
 
+    const isPastDate = (endDate) => {
+        const now = Date.now();
+        return new Date(endDate).getTime() < now;
+    }
+
     return (
         <div>
             <div>
@@ -176,7 +182,7 @@ const ManageSchedule = () => {
 
                             {
                                 slicedSchedule && slicedSchedule.length > 0 && slicedSchedule.map((schedule) =>
-                                    <tr key={schedule.idSchedule}>
+                                    <tr key={schedule.idSchedule} className={isPastDate(schedule.endDate) ? 'table-danger' : ''}>
                                         <td>{formatDateTime(schedule.startDate)}</td>
                                         <td>{formatDateTime(schedule.endDate)}</td>
                                         <td className="d-flex" style={{ gap: 50, justifyContent: 'center' }}>
@@ -184,6 +190,7 @@ const ManageSchedule = () => {
                                                 variant="primary"
                                                 className="mx-2"
                                                 onClick={() => handleUpdateScheduleYacht(schedule)}
+                                                disabled={isPastDate(schedule.endDate)}
                                             >
                                                 Edit
                                             </Button>
@@ -191,6 +198,7 @@ const ManageSchedule = () => {
                                                 variant="danger"
                                                 className="mx-2"
                                                 onClick={() => handleDeleteScheduleYacht(schedule)}
+                                                disabled={isPastDate(schedule.endDate)}
                                             >
                                                 Delete
                                             </Button>

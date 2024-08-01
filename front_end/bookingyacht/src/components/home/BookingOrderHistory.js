@@ -50,14 +50,14 @@ const BookingOrderHistory = () => {
     }
 
     const handleCancelBooking = async () => {
-        try{
+        try {
             const response = await cancelBookingByCustomer(idCustomer, selectedBooking.idBooking, cancelReason)
-            if(response.data.data === false){
+            if (response.data.data === false) {
                 toast.success('Cancel Booking Successfully')
                 getBookingOrder()
                 setShowModalCancel(false);
             }
-        }catch(error){
+        } catch (error) {
             toast.error('Cancel Booking Fail')
         }
     }
@@ -130,7 +130,7 @@ const BookingOrderHistory = () => {
                                     <p className="card-text">
                                         <strong>Trạng thái:</strong>
                                         <span style={{
-                                            color: bookingOrder.status === 'Pending' ? 'gray' :
+                                            color: bookingOrder.status === 'Pending' ? 'orange' :
                                                 (bookingOrder.status === 'Confirmed' ? 'green' :
                                                     (bookingOrder.status === 'Cancelled' ? 'red' : 'black'))
                                         }}> {bookingOrder.status}
